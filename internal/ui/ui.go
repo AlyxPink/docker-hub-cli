@@ -13,9 +13,10 @@ import (
 )
 
 type Model struct {
-	keys utils.KeyMap
-	tabs tabs.Model
-	ctx  context.ProgramContext
+	keys       utils.KeyMap
+	tabs       tabs.Model
+	currViewId int
+	ctx        context.ProgramContext
 }
 
 func NewModel() Model {
@@ -39,11 +40,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
-		case key.Matches(msg, m.keys.PrevSection):
-			fmt.Println(msg)
+		case key.Matches(msg, m.keys.PrevView):
+			view := m.getViewAt(m.getPrevViewId())
+			m.setCurrViewId(view.View.Id)
 
-		case key.Matches(msg, m.keys.NextSection):
-			fmt.Println(msg)
+		case key.Matches(msg, m.keys.NextView):
+			view := m.getViewAt(m.getNextViewId())
+			m.setCurrViewId(view.View.Id)
 
 		case key.Matches(msg, m.keys.Down):
 			fmt.Println(msg)
@@ -66,4 +69,34 @@ func (m Model) View() string {
 	s := strings.Builder{}
 	s.WriteString(m.tabs.View(m.ctx))
 	return s.String()
+}
+
+func (m *Model) getViewAt(id int) config.ViewConfig {
+	views := m.ctx.Config.Views
+	return views[id]
+}
+
+func (m *Model) getPrevViewId() int {
+	viewsConfigs := m.ctx.Config.Views
+	m.currViewId = (m.currViewId - 1) % len(viewsConfigs)
+	if m.currViewId < 0 {
+		m.currViewId += len(viewsConfigs)
+	}
+
+	return m.currViewId
+}
+
+func (m *Model) getNextViewId() int {
+	viewsConfigs := m.ctx.Config.Views
+	m.currViewId = (m.currViewId + 1) % len(viewsConfigs)
+	if m.currViewId < 0 {
+		m.currViewId += len(viewsConfigs)
+	}
+
+	return m.currViewId
+}
+
+func (m *Model) setCurrViewId(newViewId int) {
+	m.currViewId = newViewId
+	m.tabs.SetCurrViewId(newViewId)
 }

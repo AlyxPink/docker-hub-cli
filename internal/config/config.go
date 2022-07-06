@@ -1,38 +1,46 @@
 package config
 
-import "strings"
+import (
+	"strings"
 
-type SectionConfig struct {
-	Name string
-	Icon string
-}
+	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/view"
+)
 
 type Config struct {
-	Sections []SectionConfig
+	Views []ViewConfig
 }
 
-func (sc SectionConfig) Title() string {
+type ViewConfig struct {
+	Name string
+	Icon string
+	View view.Model
+}
+
+func (v ViewConfig) Title() string {
 	s := strings.Builder{}
-	s.WriteString(sc.Icon)
+	s.WriteString(v.Icon)
 	s.WriteString(" ")
-	s.WriteString(sc.Name)
+	s.WriteString(v.Name)
 	return s.String()
 }
 
 func DefaultConfig() Config {
 	return Config{
-		Sections: []SectionConfig{
+		Views: []ViewConfig{
 			{
 				Name: "Explore",
 				Icon: "",
+				View: view.NewModel(0),
 			},
 			{
 				Name: "My Repositories",
 				Icon: "",
+				View: view.NewModel(1),
 			},
 			{
 				Name: "My Organizations",
 				Icon: "",
+				View: view.NewModel(2),
 			},
 		},
 	}
