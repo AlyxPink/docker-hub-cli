@@ -1,13 +1,14 @@
 package ui
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/docker/hack-docker-access-management-cli/internal/config"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/tabs"
+	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/view"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
 	"github.com/docker/hack-docker-access-management-cli/internal/utils"
 )
@@ -37,6 +38,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd tea.Cmd
 	)
+
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
@@ -49,10 +51,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.setCurrViewId(view.View.Id)
 
 		case key.Matches(msg, m.keys.Down):
-			fmt.Println(msg)
 
 		case key.Matches(msg, m.keys.Up):
-			fmt.Println(msg)
 
 		case key.Matches(msg, m.keys.Quit):
 			cmd = tea.Quit
@@ -68,6 +68,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m Model) View() string {
 	s := strings.Builder{}
 	s.WriteString(m.tabs.View(m.ctx))
+	s.WriteString("\n")
+	mainContent := ""
+	mainContent = lipgloss.JoinHorizontal(
+		lipgloss.Top,
+		m.getCurrView().View(),
+	)
+	s.WriteString(mainContent)
+	s.WriteString("\n")
 	return s.String()
 }
 
@@ -77,20 +85,20 @@ func (m *Model) getViewAt(id int) config.ViewConfig {
 }
 
 func (m *Model) getPrevViewId() int {
-	viewsConfigs := m.ctx.Config.Views
-	m.currViewId = (m.currViewId - 1) % len(viewsConfigs)
+	views := m.ctx.Config.Views
+	m.currViewId = (m.currViewId - 1) % len(views)
 	if m.currViewId < 0 {
-		m.currViewId += len(viewsConfigs)
+		m.currViewId += len(views)
 	}
 
 	return m.currViewId
 }
 
 func (m *Model) getNextViewId() int {
-	viewsConfigs := m.ctx.Config.Views
-	m.currViewId = (m.currViewId + 1) % len(viewsConfigs)
+	views := m.ctx.Config.Views
+	m.currViewId = (m.currViewId + 1) % len(views)
 	if m.currViewId < 0 {
-		m.currViewId += len(viewsConfigs)
+		m.currViewId += len(views)
 	}
 
 	return m.currViewId
@@ -99,4 +107,9 @@ func (m *Model) getNextViewId() int {
 func (m *Model) setCurrViewId(newViewId int) {
 	m.currViewId = newViewId
 	m.tabs.SetCurrViewId(newViewId)
+}
+
+func (m *Model) getCurrView() view.Model {
+	views := m.ctx.Config.Views
+	return views[m.currViewId].View
 }
