@@ -13,7 +13,6 @@ type Config struct {
 
 func (sc SectionConfig) Title() string {
 	s := strings.Builder{}
-	// TODO: Remove icon if not supported (requires Nerd font)
 	s.WriteString(sc.Icon)
 	s.WriteString(" ")
 	s.WriteString(sc.Name)
