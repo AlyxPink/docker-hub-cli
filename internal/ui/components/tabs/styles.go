@@ -28,18 +28,4 @@ var (
 		BorderBottom(true).
 		BorderStyle(lipgloss.ThickBorder()).
 		BorderBottomForeground(styles.DefaultTheme.Border)
-
-	activeView = lipgloss.NewStyle().
-			Foreground(styles.DefaultTheme.MainText).
-			Bold(true).
-			Background(styles.DefaultTheme.SelectedBackground)
-
-	viewsSeparator = lipgloss.NewStyle().
-			BorderForeground(styles.DefaultTheme.Border).
-			BorderStyle(lipgloss.NormalBorder()).
-			BorderRight(true)
-
-	inactiveView = lipgloss.NewStyle().
-			Background(styles.DefaultTheme.FaintBorder).
-			Foreground(styles.DefaultTheme.SecondaryText)
 )
