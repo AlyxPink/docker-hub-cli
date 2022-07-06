@@ -7,12 +7,12 @@ import (
 )
 
 type Model struct {
-	CurrSectionId int
+	currViewId int
 }
 
 func NewModel() Model {
 	return Model{
-		CurrSectionId: 0,
+		currViewId: 0,
 	}
 }
 
@@ -21,11 +21,11 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 func (m Model) View(ctx context.ProgramContext) string {
-	sections := ctx.Config.Sections
+	sections := ctx.Config.Views
 	var tabs []string
 	for i, section := range sections {
 		title := section.Title()
-		if m.CurrSectionId == i {
+		if m.currViewId == i {
 			tabs = append(tabs, activeTab.Render(title))
 		} else {
 			tabs = append(tabs, tab.Render(title))
@@ -42,4 +42,8 @@ func (m Model) View(ctx context.ProgramContext) string {
 		Width(ctx.ScreenWidth).
 		MaxWidth(ctx.ScreenWidth).
 		Render(lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs))
+}
+
+func (m *Model) SetCurrViewId(id int) {
+	m.currViewId = id
 }
