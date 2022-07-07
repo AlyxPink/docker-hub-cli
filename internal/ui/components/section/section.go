@@ -1,4 +1,4 @@
-package view
+package section
 
 import "fmt"
 
@@ -13,5 +13,5 @@ func NewModel(id int) Model {
 }
 
 func (m Model) View() string {
-	return fmt.Sprintf("Hello from view %d", m.Id)
+	return fmt.Sprintf("Hello from Section %d", m.Id)
 }

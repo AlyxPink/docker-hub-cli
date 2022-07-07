@@ -7,17 +7,17 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/docker/hack-docker-access-management-cli/internal/config"
+	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/tabs"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/view"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
 	"github.com/docker/hack-docker-access-management-cli/internal/utils"
 )
 
 type Model struct {
-	keys       utils.KeyMap
-	tabs       tabs.Model
-	currViewId int
-	ctx        context.ProgramContext
+	keys          utils.KeyMap
+	tabs          tabs.Model
+	currSectionId int
+	ctx           context.ProgramContext
 }
 
 func NewModel() Model {
@@ -42,13 +42,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
-		case key.Matches(msg, m.keys.PrevView):
-			view := m.getViewAt(m.getPrevViewId())
-			m.setCurrViewId(view.View.Id)
+		case key.Matches(msg, m.keys.PrevSection):
+			Section := m.getSectionAt(m.getPrevSectionId())
+			m.setCurrSectionId(Section.Section.Id)
 
-		case key.Matches(msg, m.keys.NextView):
-			view := m.getViewAt(m.getNextViewId())
-			m.setCurrViewId(view.View.Id)
+		case key.Matches(msg, m.keys.NextSection):
+			Section := m.getSectionAt(m.getNextSectionId())
+			m.setCurrSectionId(Section.Section.Id)
 
 		case key.Matches(msg, m.keys.Down):
 
@@ -67,49 +67,49 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m Model) View() string {
 	s := strings.Builder{}
-	s.WriteString(m.tabs.View(m.ctx))
+	s.WriteString(m.tabs.Section(m.ctx))
 	s.WriteString("\n")
 	mainContent := ""
 	mainContent = lipgloss.JoinHorizontal(
 		lipgloss.Top,
-		m.getCurrView().View(),
+		m.getCurrSection().View(),
 	)
 	s.WriteString(mainContent)
 	s.WriteString("\n")
 	return s.String()
 }
 
-func (m *Model) getViewAt(id int) config.ViewConfig {
-	views := m.ctx.Config.Views
-	return views[id]
+func (m *Model) getSectionAt(id int) config.SectionConfig {
+	Sections := m.ctx.Config.Sections
+	return Sections[id]
 }
 
-func (m *Model) getPrevViewId() int {
-	views := m.ctx.Config.Views
-	m.currViewId = (m.currViewId - 1) % len(views)
-	if m.currViewId < 0 {
-		m.currViewId += len(views)
+func (m *Model) getPrevSectionId() int {
+	Sections := m.ctx.Config.Sections
+	m.currSectionId = (m.currSectionId - 1) % len(Sections)
+	if m.currSectionId < 0 {
+		m.currSectionId += len(Sections)
 	}
 
-	return m.currViewId
+	return m.currSectionId
 }
 
-func (m *Model) getNextViewId() int {
-	views := m.ctx.Config.Views
-	m.currViewId = (m.currViewId + 1) % len(views)
-	if m.currViewId < 0 {
-		m.currViewId += len(views)
+func (m *Model) getNextSectionId() int {
+	Sections := m.ctx.Config.Sections
+	m.currSectionId = (m.currSectionId + 1) % len(Sections)
+	if m.currSectionId < 0 {
+		m.currSectionId += len(Sections)
 	}
 
-	return m.currViewId
+	return m.currSectionId
 }
 
-func (m *Model) setCurrViewId(newViewId int) {
-	m.currViewId = newViewId
-	m.tabs.SetCurrViewId(newViewId)
+func (m *Model) setCurrSectionId(newSectionId int) {
+	m.currSectionId = newSectionId
+	m.tabs.SetCurrSectionId(newSectionId)
 }
 
-func (m *Model) getCurrView() view.Model {
-	views := m.ctx.Config.Views
-	return views[m.currViewId].View
+func (m *Model) getCurrSection() section.Model {
+	Sections := m.ctx.Config.Sections
+	return Sections[m.currSectionId].Section
 }
