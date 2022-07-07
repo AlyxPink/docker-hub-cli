@@ -12,7 +12,7 @@ type KeyMap struct {
 	FirstItem     key.Binding
 	LastItem      key.Binding
 	TogglePreview key.Binding
-	OpenGithub    key.Binding
+	OpenDockerHub key.Binding
 	Refresh       key.Binding
 	PageDown      key.Binding
 	PageUp        key.Binding
@@ -69,7 +69,7 @@ var (
 			key.WithKeys("p"),
 			key.WithHelp("p", "open in Preview"),
 		),
-		OpenGithub: key.NewBinding(
+		OpenDockerHub: key.NewBinding(
 			key.WithKeys("o"),
 			key.WithHelp("o", "open in GitHub"),
 		),
