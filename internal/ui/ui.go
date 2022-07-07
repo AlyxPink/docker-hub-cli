@@ -104,19 +104,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case key.Matches(msg, m.keys.Refresh):
 			cmd = currSection.FetchSectionRows()
 
-		case key.Matches(msg, m.keys.SwitchView):
-			m.ctx.View = m.switchSelectedView()
-			m.syncMainContentWidth()
-			m.setCurrSectionId(0)
-
-			currSections := m.getCurrentViewSections()
-			if len(currSections) == 0 {
-				newSections, fetchSectionsCmds := m.fetchAllViewSections()
-				m.setCurrentViewSections(newSections)
-				cmd = fetchSectionsCmds
-			}
-			m.onViewedRowChanged()
-
 		case key.Matches(msg, m.keys.Quit):
 			cmd = tea.Quit
 
