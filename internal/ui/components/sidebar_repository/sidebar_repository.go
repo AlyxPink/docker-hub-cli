@@ -62,15 +62,21 @@ func (m *Model) renderLabels() string {
 
 func (m *Model) renderTitle() string {
 	return styles.MainTextStyle.Copy().
-		Width(m.getIndentedContentWidth()).
 		Padding(1).
 		Bold(true).
-		Render(m.renderLabels() + m.repo.Data.Name)
+		Render(m.renderName() + m.renderLabels())
+}
+
+func (m *Model) renderName() string {
+	return styles.MainTextStyle.Copy().
+		Bold(true).
+		Render(m.repo.Data.Name)
 }
 
 func (m *Model) renderArchs() string {
 	render := strings.Builder{}
-	render.WriteString(archTitle.Render("Archs:"))
+	render.WriteString(archTitle.Render("Archs"))
+	render.WriteString("\n")
 	archs := []string{"arm64v8", "arm32v6", "arm32v7", "ppc64le", "s390x", "i386", "amd64"}
 	for _, arch := range archs {
 		render.WriteString(archTag.Render(arch))
@@ -80,7 +86,8 @@ func (m *Model) renderArchs() string {
 
 func (m *Model) renderTags() string {
 	render := strings.Builder{}
-	render.WriteString(dockerImageTitle.Render("Tags:"))
+	render.WriteString(dockerImageTitle.Render("Tags"))
+	render.WriteString("\n")
 	tags := []string{"3.16.0", "3.16", "3", "latest"}
 	for _, tag := range tags {
 		render.WriteString(dockerImageTag.Render(tag))
@@ -90,7 +97,7 @@ func (m *Model) renderTags() string {
 
 func (m *Model) renderPullCmd() string {
 	render := strings.Builder{}
-	render.WriteString(dockerPullCmdTitle.Render("Pull cmd:"))
+	render.WriteString(dockerPullCmdTitle.Render("Pull cmd"))
 	render.WriteString("\n")
 	cmd := fmt.Sprintf("$ docker pull %s", m.repo.Data.Name)
 	render.WriteString(dockerPullCmdBox.Copy().Render(cmd))
@@ -99,10 +106,6 @@ func (m *Model) renderPullCmd() string {
 }
 
 func (m *Model) renderReadme() string {
-	return styles.MainTextStyle.Copy().Width(m.getIndentedContentWidth()).
+	return styles.MainTextStyle.Copy().
 		Render("# Todo: Render README")
-}
-
-func (m *Model) getIndentedContentWidth() int {
-	return m.width - 6
 }
