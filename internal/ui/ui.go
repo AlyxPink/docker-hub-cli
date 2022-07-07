@@ -8,8 +8,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/docker/hack-docker-access-management-cli/internal/config"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/help"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/prssection"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
+	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section_explore"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/sidebar"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/tabs"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
@@ -60,9 +60,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
-		case m.isUserDefinedKeybinding(msg):
-			m.executeKeybinding(msg.String())
-
 		case key.Matches(msg, m.keys.PrevSection):
 			prevSection := m.getSectionAt(m.getPrevSectionId())
 			if prevSection != nil {
@@ -98,7 +95,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.sidebar.IsOpen = !m.sidebar.IsOpen
 			m.syncMainContentWidth()
 
-		case key.Matches(msg, m.keys.OpenGithub):
+		case key.Matches(msg, m.keys.OpenDockerHub):
 			var currRow = m.getCurrRowData()
 			if currRow != nil {
 				utils.OpenBrowser(currRow.GetUrl())
@@ -139,7 +136,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if msg.GetSectionId() == m.currSectionId {
 			switch msg.GetSectionType() {
-			case prssection.SectionType:
+			case section_explore.SectionType:
 				m.onViewedRowChanged()
 			}
 		}
@@ -225,7 +222,7 @@ func (m *Model) updateRelevantSection(msg section.SectionMsg) (cmd tea.Cmd) {
 	var updatedSection section.Section
 
 	switch msg.GetSectionType() {
-	case prssection.SectionType:
+	case section_explore.SectionType:
 		updatedSection, cmd = m.prs[msg.GetSectionId()].Update(msg)
 		m.prs[msg.GetSectionId()] = updatedSection
 	}
@@ -246,7 +243,7 @@ func (m *Model) syncSidebarPr() {
 }
 
 func (m *Model) fetchAllViewSections() ([]section.Section, tea.Cmd) {
-	return prssection.FetchAllSections(m.ctx)
+	return section_explore.FetchAllSections(m.ctx)
 }
 
 func (m *Model) getCurrentViewSections() []section.Section {

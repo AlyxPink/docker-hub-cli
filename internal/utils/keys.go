@@ -8,7 +8,7 @@ type KeyMap struct {
 	FirstLine     key.Binding
 	LastLine      key.Binding
 	TogglePreview key.Binding
-	OpenGithub    key.Binding
+	OpenDockerHub key.Binding
 	Refresh       key.Binding
 	PageDown      key.Binding
 	PageUp        key.Binding
@@ -29,7 +29,7 @@ func (k KeyMap) FullHelp() [][]key.Binding {
 		{k.FirstLine, k.LastLine},
 		{k.PrevSection, k.NextSection},
 		{k.PageDown, k.PageUp},
-		{k.TogglePreview, k.OpenGithub},
+		{k.TogglePreview, k.OpenDockerHub},
 		{k.Refresh, k.SwitchView},
 		{k.Help, k.Quit},
 	}
@@ -72,9 +72,9 @@ var Keys = KeyMap{
 		key.WithKeys("p"),
 		key.WithHelp("p", "open in Preview"),
 	),
-	OpenGithub: key.NewBinding(
+	OpenDockerHub: key.NewBinding(
 		key.WithKeys("o"),
-		key.WithHelp("o", "open in GitHub"),
+		key.WithHelp("o", "open in Docker Hub"),
 	),
 	Refresh: key.NewBinding(
 		key.WithKeys("r"),

@@ -1,4 +1,4 @@
-package prssection
+package section_explore
 
 import (
 	"fmt"
@@ -9,23 +9,23 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/docker/hack-docker-access-management-cli/internal/config"
 	"github.com/docker/hack-docker-access-management-cli/internal/data"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/pr"
+	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/repository"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/table"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
 	"github.com/docker/hack-docker-access-management-cli/internal/utils"
 )
 
-const SectionType = "prs"
+const SectionType = "explore"
 
 type Model struct {
-	Prs     []data.PullRequestData
-	section section.Model
+	Repositories []data.RepositoryData
+	section      section.Model
 }
 
 func NewModel(id int, ctx *context.ProgramContext, config config.SectionConfig) Model {
 	m := Model{
-		Prs: []data.PullRequestData{},
+		Repositories: []data.RepositoryData{},
 		section: section.Model{
 			Id:        id,
 			Config:    config,
@@ -58,8 +58,8 @@ func (m Model) Update(msg tea.Msg) (section.Section, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
-	case SectionPullRequestsFetchedMsg:
-		m.Prs = msg.Prs
+	case SectionRepositoriesFetchedMsg:
+		m.Repositories = msg.Repositories
 		m.section.IsLoading = false
 		m.section.Table.SetRows(m.BuildRows())
 
@@ -95,74 +95,80 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 }
 
 func (m *Model) GetSectionColumns() []table.Column {
+	columnTitle := lipgloss.NewStyle().Bold(true)
 	return []table.Column{
 		{
-			Title: "",
-			Width: &updatedAtCellWidth,
+			Title: columnTitle.Copy().Render("Name"),
+			Width: &nameWidth,
 		},
 		{
-			Title: "",
-			Width: &prRepoCellWidth,
+			Title: columnTitle.Copy().Foreground(labelDockerOfficial).Render(""),
+			Width: &labelDockerOfficialWidth,
 		},
 		{
-			Title: "Title",
+			Title: columnTitle.Copy().Foreground(labelVerifiedPublisher).Render("﫠"),
+			Width: &labelVerifiedPublisherWidth,
+		},
+		{
+			Title: columnTitle.Copy().Foreground(labelOpenSourceProgram).Render(""),
+			Width: &labelOpenSourceProgramWidth,
+		},
+		{
+			Title: columnTitle.Copy().Render("Organization"),
+			Width: &organizationsnameWidth,
+		},
+		{
+			Title: columnTitle.Copy().Foreground(statsDownloads).Render(""),
+			Width: &statsWidth,
+		},
+		{
+			Title: columnTitle.Copy().Foreground(statsStars).Render(""),
+			Width: &statsWidth,
+		},
+		{
+			Title: columnTitle.Copy().Render("Updated At"),
+			Width: &LastUpdateCellWidth,
+		},
+		{
+			Title: columnTitle.Copy().Render("Description"),
 			Grow:  utils.BoolPtr(true),
-		},
-		{
-			Title: "Author",
-			Width: &prAuthorCellWidth,
-		},
-		{
-			Title: "",
-			Width: utils.IntPtr(4),
-		},
-		{
-			Title: "",
-		},
-		{
-			Title: "",
-			Width: &ciCellWidth,
-		},
-		{
-			Title: "",
-			Width: &linesCellWidth,
 		},
 	}
 }
 
 func (m *Model) BuildRows() []table.Row {
 	var rows []table.Row
-	for _, currPr := range m.Prs {
-		prModel := pr.PullRequest{Data: currPr}
-		rows = append(rows, prModel.ToTableRow())
+	for _, currRepo := range m.Repositories {
+		repoModel := repository.Repository{Data: currRepo}
+		rows = append(rows, repoModel.ToTableRow())
 	}
 
 	return rows
 }
 
 func (m *Model) NumRows() int {
-	return len(m.Prs)
+	return len(m.Repositories)
 }
 
-type SectionPullRequestsFetchedMsg struct {
-	SectionId int
-	Prs       []data.PullRequestData
+type SectionRepositoriesFetchedMsg struct {
+	SectionId    int
+	Repositories []data.RepositoryData
 }
 
-func (msg SectionPullRequestsFetchedMsg) GetSectionId() int {
+func (msg SectionRepositoriesFetchedMsg) GetSectionId() int {
 	return msg.SectionId
 }
 
-func (msg SectionPullRequestsFetchedMsg) GetSectionType() string {
+func (msg SectionRepositoriesFetchedMsg) GetSectionType() string {
 	return SectionType
 }
 
 func (m *Model) GetCurrRow() data.RowData {
-	if len(m.Prs) == 0 {
+	if len(m.Repositories) == 0 {
 		return nil
 	}
-	pr := m.Prs[m.section.Table.GetCurrItem()]
-	return &pr
+	repo := m.Repositories[m.section.Table.GetCurrItem()]
+	return &repo
 }
 
 func (m *Model) NextRow() int {
@@ -185,7 +191,7 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 	if m == nil {
 		return nil
 	}
-	m.Prs = nil
+	m.Repositories = nil
 	m.section.Table.ResetCurrItem()
 	m.section.Table.Rows = nil
 	m.section.IsLoading = true
@@ -197,20 +203,20 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 		if limit == nil {
 			limit = &m.section.Ctx.Config.Defaults.PrsLimit
 		}
-		fetchedPrs, err := data.FetchPullRequests(m.section.Config.Title, *limit)
+		fetchedPrs, err := data.FetchRepositories(m.section.Config.Title, *limit)
 		if err != nil {
-			return SectionPullRequestsFetchedMsg{
-				SectionId: m.section.Id,
-				Prs:       []data.PullRequestData{},
+			return SectionRepositoriesFetchedMsg{
+				SectionId:    m.section.Id,
+				Repositories: []data.RepositoryData{},
 			}
 		}
 
 		sort.Slice(fetchedPrs, func(i, j int) bool {
-			return fetchedPrs[i].UpdatedAt.After(fetchedPrs[j].UpdatedAt)
+			return fetchedPrs[i].LastUpdate.After(fetchedPrs[j].LastUpdate)
 		})
-		return SectionPullRequestsFetchedMsg{
-			SectionId: m.section.Id,
-			Prs:       fetchedPrs,
+		return SectionRepositoriesFetchedMsg{
+			SectionId:    m.section.Id,
+			Repositories: fetchedPrs,
 		}
 	})
 
