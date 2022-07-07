@@ -42,7 +42,7 @@ func GetDefaultConfig() Config {
 	return Config{
 		Defaults: Defaults{
 			Preview: PreviewConfig{
-				Open:  true,
+				Open:  false,
 				Width: 50,
 			},
 			PrsLimit: 20,
