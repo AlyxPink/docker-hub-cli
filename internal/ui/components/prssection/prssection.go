@@ -43,7 +43,7 @@ func NewModel(id int, ctx *context.ProgramContext, config config.SectionConfig) 
 		"PR",
 		utils.StringPtr(emptyStateStyle.Render(fmt.Sprintf(
 			"No PRs were found that match the given filters: %s",
-			lipgloss.NewStyle().Italic(true).Render(m.section.Config.Filters),
+			lipgloss.NewStyle().Italic(true).Render(m.section.Config.Title),
 		))),
 	)
 
@@ -197,7 +197,7 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 		if limit == nil {
 			limit = &m.section.Ctx.Config.Defaults.PrsLimit
 		}
-		fetchedPrs, err := data.FetchPullRequests(m.section.Config.Filters, *limit)
+		fetchedPrs, err := data.FetchPullRequests(m.section.Config.Title, *limit)
 		if err != nil {
 			return SectionPullRequestsFetchedMsg{
 				SectionId: m.section.Id,

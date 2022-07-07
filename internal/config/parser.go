@@ -16,14 +16,13 @@ const DEFAULT_XDG_CONFIG_DIRNAME = ".config"
 type ViewType string
 
 const (
-	PRsView    ViewType = "prs"
-	IssuesView ViewType = "issues"
+	PRsView ViewType = "prs"
 )
 
 type SectionConfig struct {
-	Title   string
-	Filters string
-	Limit   *int `yaml:"limit,omitempty"`
+	Title string
+	Icon  string
+	Limit *int `yaml:"limit,omitempty"`
 }
 
 type PreviewConfig struct {
@@ -32,10 +31,9 @@ type PreviewConfig struct {
 }
 
 type Defaults struct {
-	Preview     PreviewConfig `yaml:"preview"`
-	PrsLimit    int           `yaml:"prsLimit"`
-	IssuesLimit int           `yaml:"issuesLimit"`
-	View        ViewType      `yaml:"view"`
+	Preview  PreviewConfig `yaml:"preview"`
+	PrsLimit int           `yaml:"prsLimit"`
+	View     ViewType      `yaml:"view"`
 }
 
 type Keybinding struct {
@@ -48,11 +46,10 @@ type Keybindings struct {
 }
 
 type Config struct {
-	PRSections     []SectionConfig   `yaml:"prSections"`
-	IssuesSections []SectionConfig   `yaml:"issuesSections"`
-	Defaults       Defaults          `yaml:"defaults"`
-	Keybindings    Keybindings       `yaml:"keybindings"`
-	RepoPaths      map[string]string `yaml:"repoPaths"`
+	PRSections  []SectionConfig   `yaml:"prSections"`
+	Defaults    Defaults          `yaml:"defaults"`
+	Keybindings Keybindings       `yaml:"keybindings"`
+	RepoPaths   map[string]string `yaml:"repoPaths"`
 }
 
 type configError struct {
@@ -70,36 +67,21 @@ func (parser ConfigParser) getDefaultConfig() Config {
 				Open:  true,
 				Width: 50,
 			},
-			PrsLimit:    20,
-			IssuesLimit: 20,
-			View:        PRsView,
+			PrsLimit: 20,
+			View:     PRsView,
 		},
 		PRSections: []SectionConfig{
 			{
-				Title:   "My Pull Requests",
-				Filters: "is:open author:@me",
+				Title: "Explore",
+				Icon:  "",
 			},
 			{
-				Title:   "Needs My Review",
-				Filters: "is:open review-requested:@me",
+				Title: "My Repositories",
+				Icon:  "",
 			},
 			{
-				Title:   "Subscribed",
-				Filters: "is:open -author:@me repo:cli/cli repo:dlvhdr/gh-dash",
-			},
-		},
-		IssuesSections: []SectionConfig{
-			{
-				Title:   "My Issues",
-				Filters: "is:open author:@me",
-			},
-			{
-				Title:   "Assigned",
-				Filters: "is:open assignee:@me",
-			},
-			{
-				Title:   "Subscribed",
-				Filters: "is:open -author:@me repo:cli/cli repo:dlvhdr/gh-dash",
+				Title: "My Organizations",
+				Icon:  "",
 			},
 		},
 		Keybindings: Keybindings{

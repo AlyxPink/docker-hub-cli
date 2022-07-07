@@ -8,7 +8,6 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/docker/hack-docker-access-management-cli/internal/config"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/help"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/issuessection"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/prssection"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/sidebar"
@@ -24,7 +23,6 @@ type Model struct {
 	currSectionId int
 	help          help.Model
 	prs           []section.Section
-	issues        []section.Section
 	ready         bool
 	isSidebarOpen bool
 	tabs          tabs.Model
@@ -235,9 +233,6 @@ func (m *Model) updateRelevantSection(msg section.SectionMsg) (cmd tea.Cmd) {
 	case prssection.SectionType:
 		updatedSection, cmd = m.prs[msg.GetSectionId()].Update(msg)
 		m.prs[msg.GetSectionId()] = updatedSection
-	case issuessection.SectionType:
-		updatedSection, cmd = m.issues[msg.GetSectionId()].Update(msg)
-		m.issues[msg.GetSectionId()] = updatedSection
 	}
 
 	return cmd
@@ -252,49 +247,25 @@ func (m *Model) syncMainContentWidth() {
 }
 
 func (m *Model) syncSidebarPr() {
-	// currRowData := m.getCurrRowData()
-	// width := m.sidebar.GetSidebarContentWidth()
-
-	// switch data := currRowData.(type) {
-	// case *data.PullRequestData:
-	// 	content := prsidebar.NewModel(data, width).View()
-	// 	m.sidebar.SetContent(content)
-	// case *data.IssueData:
-	// 	content := issuesidebar.NewModel(data, width).View()
-	// 	m.sidebar.SetContent(content)
-	// }
+	m.sidebar.SetContent("Sidebar")
 }
 
 func (m *Model) fetchAllViewSections() ([]section.Section, tea.Cmd) {
-	if m.ctx.View == config.PRsView {
-		return prssection.FetchAllSections(m.ctx)
-	} else {
-		return issuessection.FetchAllSections(m.ctx)
-	}
+	return prssection.FetchAllSections(m.ctx)
 }
 
 func (m *Model) getCurrentViewSections() []section.Section {
-	if m.ctx.View == config.PRsView {
-		return m.prs
-	} else {
-		return m.issues
-	}
+	return m.prs
 }
 
 func (m *Model) setCurrentViewSections(newSections []section.Section) {
 	if m.ctx.View == config.PRsView {
 		m.prs = newSections
-	} else {
-		m.issues = newSections
 	}
 }
 
 func (m *Model) switchSelectedView() config.ViewType {
-	if m.ctx.View == config.PRsView {
-		return config.IssuesView
-	} else {
-		return config.PRsView
-	}
+	return config.PRsView
 }
 
 func (m *Model) isUserDefinedKeybinding(msg tea.KeyMsg) bool {
