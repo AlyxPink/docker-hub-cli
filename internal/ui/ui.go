@@ -7,10 +7,12 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/docker/hack-docker-access-management-cli/internal/config"
+	"github.com/docker/hack-docker-access-management-cli/internal/data"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/help"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section_explore"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/sidebar"
+	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/sidebar_repository"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/tabs"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
 	"github.com/docker/hack-docker-access-management-cli/internal/utils"
@@ -237,7 +239,14 @@ func (m *Model) syncMainContentWidth() {
 }
 
 func (m *Model) syncSidebarExplore() {
-	m.sidebar.SetContent("Sidebar")
+	currRowData := m.getCurrRowData()
+	width := m.sidebar.GetSidebarContentWidth()
+
+	switch row_data := currRowData.(type) {
+	case *data.RepositoryData:
+		content := sidebar_repository.NewModel(row_data, width).View()
+		m.sidebar.SetContent(content)
+	}
 }
 
 func (m *Model) fetchAllViewSections() ([]section.Section, tea.Cmd) {
