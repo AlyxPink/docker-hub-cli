@@ -21,29 +21,25 @@ var (
 		Padding(0, 1).
 		Bold(false)
 
-	archTitle = label.Copy().
+	labelTitle = label.Copy().
 			Underline(true).
+			Bold(true).
+			Margin(0, 1, 1, 0)
+
+	archTitle = labelTitle
+	archTag   = label.Copy().
+			Background(archTagBg).
+			Foreground(archTagFg).
 			Margin(0, 1)
 
-	archTag = label.Copy().
-		Background(archTagBg).
-		Foreground(archTagFg).
-		Margin(0, 1)
-
-	dockerImageTitle = label.Copy().
-				Underline(true).
+	dockerImageTitle = labelTitle.Copy()
+	dockerImageTag   = label.Copy().
+				Background(dockerImageTagBg).
+				Foreground(dockerImageTagFg).
 				Margin(0, 1)
 
-	dockerImageTag = label.Copy().
-			Background(dockerImageTagBg).
-			Foreground(dockerImageTagFg).
-			Margin(0, 1)
-
-	dockerPullCmdTitle = label.Copy().
-				Underline(true).
-				Margin(0, 1)
-
-	dockerPullCmdBox = label.Copy().
+	dockerPullCmdTitle = labelTitle.Copy()
+	dockerPullCmdBox   = label.Copy().
 				Background(dockerPullCmdBoxBg).
 				Foreground(dockerPullCmdBoxFg).
 				Padding(2).
