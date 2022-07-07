@@ -41,12 +41,7 @@ func NewModel() Model {
 }
 
 func initScreen() tea.Msg {
-	config, err := config.ParseConfig()
-	if err != nil {
-		return errMsg{err}
-	}
-
-	return initMsg{Config: config}
+	return initMsg{Config: config.GetDefaultConfig()}
 }
 
 func (m Model) Init() tea.Cmd {
