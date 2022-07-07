@@ -5,17 +5,15 @@ import (
 )
 
 var (
-	labelDockerOfficial    = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#2E7F74"}
-	labelVerifiedPublisher = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#086DD7"}
-	labelOpenSourceProgram = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#7D2EFF"}
-	statsDownloads         = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#00BBF9"}
-	statsStars             = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#FFB703"}
-	archTagFg              = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#EDEDE9"}
-	archTagBg              = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#0077b6"}
-	dockerImageTagFg       = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#22223b"}
-	dockerImageTagBg       = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#EDEDE9"}
-	dockerPullCmdBoxBg     = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#8ac926"}
-	dockerPullCmdBoxFg     = lipgloss.AdaptiveColor{Light: "#FFF", Dark: "#22223b"}
+	labelDockerOfficial    = lipgloss.Color("#2E7F74")
+	labelVerifiedPublisher = lipgloss.Color("#086DD7")
+	labelOpenSourceProgram = lipgloss.Color("#7D2EFF")
+	archTagFg              = lipgloss.AdaptiveColor{Light: "#22223b", Dark: "#EDEDE9"}
+	archTagBg              = lipgloss.AdaptiveColor{Light: "#bde0fe", Dark: "#0077b6"}
+	dockerImageTagFg       = lipgloss.Color("#22223b")
+	dockerImageTagBg       = lipgloss.Color("#EDEDE9")
+	dockerPullCmdBoxBg     = lipgloss.AdaptiveColor{Light: "#00f5d4", Dark: "#8ac926"}
+	dockerPullCmdBoxFg     = lipgloss.Color("#22223b")
 
 	label = lipgloss.NewStyle().Copy().
 		Padding(0, 1).

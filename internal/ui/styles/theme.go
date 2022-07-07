@@ -2,7 +2,7 @@ package styles
 
 import "github.com/charmbracelet/lipgloss"
 
-var indigo = lipgloss.AdaptiveColor{Light: "#5A56E0", Dark: "#383B5B"}
+var indigo = lipgloss.AdaptiveColor{Light: "#ffafcc", Dark: "#383B5B"}
 
 type Theme struct {
 	MainText           lipgloss.AdaptiveColor
@@ -18,7 +18,7 @@ type Theme struct {
 	SubleMainText      lipgloss.AdaptiveColor
 }
 
-var subtleIndigo = lipgloss.AdaptiveColor{Light: "#5A57B5", Dark: "#242347"}
+var subtleIndigo = lipgloss.AdaptiveColor{Light: "#ffc8dd", Dark: "#242347"}
 
 var DefaultTheme = Theme{
 	MainText:           lipgloss.AdaptiveColor{Light: "#242347", Dark: "#E2E1ED"},
