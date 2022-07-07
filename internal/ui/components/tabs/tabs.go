@@ -3,7 +3,6 @@ package tabs
 import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/docker/hack-docker-access-management-cli/internal/config"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
 )
 
@@ -37,35 +36,17 @@ func (m Model) View(ctx context.ProgramContext) string {
 		}
 	}
 
-	viewSwitcher := m.renderViewSwitcher(ctx)
-	tabsWidth := ctx.ScreenWidth - lipgloss.Width(viewSwitcher)
 	renderedTabs := lipgloss.NewStyle().
-		Width(tabsWidth).
-		MaxWidth(tabsWidth).
+		Width(ctx.ScreenWidth).
+		MaxWidth(ctx.ScreenWidth).
 		Render(lipgloss.JoinHorizontal(lipgloss.Top, tabs...))
 
 	return tabsRow.Copy().
 		Width(ctx.ScreenWidth).
 		MaxWidth(ctx.ScreenWidth).
-		Render(lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs, viewSwitcher))
+		Render(lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs))
 }
 
 func (m *Model) SetCurrSectionId(id int) {
 	m.CurrSectionId = id
-}
-
-func (m *Model) renderViewSwitcher(ctx context.ProgramContext) string {
-	var prsStyle, issuesStyle lipgloss.Style
-	if ctx.View == config.PRsView {
-		prsStyle = activeView
-		issuesStyle = inactiveView
-	} else {
-		prsStyle = inactiveView
-		issuesStyle = activeView
-	}
-
-	prs := prsStyle.Render("[ PRs]")
-	issues := issuesStyle.Render("[ Issues]")
-	return viewSwitcher.Copy().
-		Render(lipgloss.JoinHorizontal(lipgloss.Top, prs, issues))
 }

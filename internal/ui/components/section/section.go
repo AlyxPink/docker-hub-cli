@@ -76,7 +76,6 @@ type SectionMsg interface {
 
 type SectionRowsFetchedMsg struct {
 	SectionId int
-	Issues    []data.RowData
 }
 
 func (msg SectionRowsFetchedMsg) GetSectionId() int {
