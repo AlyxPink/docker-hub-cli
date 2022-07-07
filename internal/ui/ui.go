@@ -22,9 +22,7 @@ type Model struct {
 	sidebar       sidebar.Model
 	currSectionId int
 	help          help.Model
-	prs           []section.Section
-	ready         bool
-	isSidebarOpen bool
+	explore       []section.Section
 	tabs          tabs.Model
 	ctx           context.ProgramContext
 }
@@ -200,7 +198,7 @@ func (m *Model) setCurrSectionId(newSectionId int) {
 }
 
 func (m *Model) onViewedRowChanged() {
-	m.syncSidebarPr()
+	m.syncSidebarExplore()
 }
 
 func (m *Model) onWindowSizeChanged(msg tea.WindowSizeMsg) {
@@ -223,8 +221,8 @@ func (m *Model) updateRelevantSection(msg section.SectionMsg) (cmd tea.Cmd) {
 
 	switch msg.GetSectionType() {
 	case section_explore.SectionType:
-		updatedSection, cmd = m.prs[msg.GetSectionId()].Update(msg)
-		m.prs[msg.GetSectionId()] = updatedSection
+		updatedSection, cmd = m.explore[msg.GetSectionId()].Update(msg)
+		m.explore[msg.GetSectionId()] = updatedSection
 	}
 
 	return cmd
@@ -238,7 +236,7 @@ func (m *Model) syncMainContentWidth() {
 	m.ctx.MainContentWidth = m.ctx.ScreenWidth - sideBarOffset
 }
 
-func (m *Model) syncSidebarPr() {
+func (m *Model) syncSidebarExplore() {
 	m.sidebar.SetContent("Sidebar")
 }
 
@@ -247,29 +245,15 @@ func (m *Model) fetchAllViewSections() ([]section.Section, tea.Cmd) {
 }
 
 func (m *Model) getCurrentViewSections() []section.Section {
-	return m.prs
+	return m.explore
 }
 
 func (m *Model) setCurrentViewSections(newSections []section.Section) {
-	if m.ctx.View == config.PRsView {
-		m.prs = newSections
+	if m.ctx.View == config.ExploreView {
+		m.explore = newSections
 	}
 }
 
 func (m *Model) switchSelectedView() config.ViewType {
-	return config.PRsView
-}
-
-func (m *Model) isUserDefinedKeybinding(msg tea.KeyMsg) bool {
-	if m.ctx.View != config.PRsView {
-		return false
-	}
-
-	for _, keybinding := range m.ctx.Config.Keybindings.Prs {
-		if keybinding.Key == msg.String() {
-			return true
-		}
-	}
-
-	return false
+	return config.ExploreView
 }

@@ -1,7 +1,6 @@
 package section_explore
 
 import (
-	"fmt"
 	"sort"
 
 	"github.com/charmbracelet/bubbles/spinner"
@@ -40,11 +39,8 @@ func NewModel(id int, ctx *context.ProgramContext, config config.SectionConfig) 
 		m.section.GetDimensions(),
 		m.GetSectionColumns(),
 		m.BuildRows(),
-		"PR",
-		utils.StringPtr(emptyStateStyle.Render(fmt.Sprintf(
-			"No PRs were found that match the given filters: %s",
-			lipgloss.NewStyle().Italic(true).Render(m.section.Config.Title),
-		))),
+		"Repositories",
+		utils.StringPtr(emptyStateStyle.Render("No repositories were found")),
 	)
 
 	return m
@@ -81,7 +77,7 @@ func (m *Model) View() string {
 	if m.section.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
 			spinnerStyle.Copy().Render(m.section.Spinner.View()),
-			"Fetching Pull Requests...",
+			"Fetching Repositories...",
 		))
 	}
 
@@ -199,11 +195,7 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 	cmds = append(cmds, m.section.CreateNextTickCmd(spinner.Tick))
 
 	cmds = append(cmds, func() tea.Msg {
-		limit := m.section.Config.Limit
-		if limit == nil {
-			limit = &m.section.Ctx.Config.Defaults.PrsLimit
-		}
-		fetchedPrs, err := data.FetchRepositories(m.section.Config.Title, *limit)
+		fetchedRepos, err := data.FetchRepositories(m.section.Config.Title)
 		if err != nil {
 			return SectionRepositoriesFetchedMsg{
 				SectionId:    m.section.Id,
@@ -211,12 +203,12 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 			}
 		}
 
-		sort.Slice(fetchedPrs, func(i, j int) bool {
-			return fetchedPrs[i].LastUpdate.After(fetchedPrs[j].LastUpdate)
+		sort.Slice(fetchedRepos, func(i, j int) bool {
+			return fetchedRepos[i].LastUpdate.After(fetchedRepos[j].LastUpdate)
 		})
 		return SectionRepositoriesFetchedMsg{
 			SectionId:    m.section.Id,
-			Repositories: fetchedPrs,
+			Repositories: fetchedRepos,
 		}
 	})
 
@@ -228,12 +220,12 @@ func (m *Model) GetIsLoading() bool {
 }
 
 func FetchAllSections(ctx context.ProgramContext) (sections []section.Section, fetchAllCmd tea.Cmd) {
-	fetchPRsCmds := make([]tea.Cmd, 0, len(ctx.Config.PRSections))
-	sections = make([]section.Section, 0, len(ctx.Config.PRSections))
-	for i, sectionConfig := range ctx.Config.PRSections {
+	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.ExploreSections))
+	sections = make([]section.Section, 0, len(ctx.Config.ExploreSections))
+	for i, sectionConfig := range ctx.Config.ExploreSections {
 		sectionModel := NewModel(i, &ctx, sectionConfig)
 		sections = append(sections, &sectionModel)
-		fetchPRsCmds = append(fetchPRsCmds, sectionModel.FetchSectionRows())
+		fetchReposCmds = append(fetchReposCmds, sectionModel.FetchSectionRows())
 	}
-	return sections, tea.Batch(fetchPRsCmds...)
+	return sections, tea.Batch(fetchReposCmds...)
 }

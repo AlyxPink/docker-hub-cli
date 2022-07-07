@@ -12,5 +12,5 @@ type ProgramContext struct {
 }
 
 func (ctx *ProgramContext) GetViewSectionsConfig() []config.SectionConfig {
-	return ctx.Config.PRSections
+	return ctx.Config.ExploreSections
 }
