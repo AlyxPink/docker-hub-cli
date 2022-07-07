@@ -3,20 +3,20 @@ package config
 import (
 	"strings"
 
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/view"
+	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
 )
 
 type Config struct {
-	Views []ViewConfig
+	Sections []SectionConfig
 }
 
-type ViewConfig struct {
-	Name string
-	Icon string
-	View view.Model
+type SectionConfig struct {
+	Name    string
+	Icon    string
+	Section section.Model
 }
 
-func (v ViewConfig) Title() string {
+func (v SectionConfig) Title() string {
 	s := strings.Builder{}
 	s.WriteString(v.Icon)
 	s.WriteString(" ")
@@ -26,21 +26,21 @@ func (v ViewConfig) Title() string {
 
 func DefaultConfig() Config {
 	return Config{
-		Views: []ViewConfig{
+		Sections: []SectionConfig{
 			{
-				Name: "Explore",
-				Icon: "",
-				View: view.NewModel(0),
+				Name:    "Explore",
+				Icon:    "",
+				Section: section.NewModel(0),
 			},
 			{
-				Name: "My Repositories",
-				Icon: "",
-				View: view.NewModel(1),
+				Name:    "My Repositories",
+				Icon:    "",
+				Section: section.NewModel(1),
 			},
 			{
-				Name: "My Organizations",
-				Icon: "",
-				View: view.NewModel(2),
+				Name:    "My Organizations",
+				Icon:    "",
+				Section: section.NewModel(2),
 			},
 		},
 	}
