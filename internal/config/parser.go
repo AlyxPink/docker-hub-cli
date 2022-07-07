@@ -3,12 +3,12 @@ package config
 type ViewType string
 
 const (
-	PRsView ViewType = "prs"
+	ExploreView ViewType = "explore"
 )
 
 type SectionConfig struct {
 	Title string
-	Limit *int `yaml:"limit,omitempty"`
+	Limit *int
 }
 
 type PreviewConfig struct {
@@ -17,25 +17,18 @@ type PreviewConfig struct {
 }
 
 type Defaults struct {
-	Preview  PreviewConfig `yaml:"preview"`
-	PrsLimit int           `yaml:"prsLimit"`
-	View     ViewType      `yaml:"view"`
+	Preview PreviewConfig
+	View    ViewType
 }
 
 type Keybinding struct {
-	Key     string `yaml:"key"`
-	Command string `yaml:"command"`
-}
-
-type Keybindings struct {
-	Prs []Keybinding `yaml:"prs"`
+	Key     string
+	Command string
 }
 
 type Config struct {
-	PRSections  []SectionConfig   `yaml:"prSections"`
-	Defaults    Defaults          `yaml:"defaults"`
-	Keybindings Keybindings       `yaml:"keybindings"`
-	RepoPaths   map[string]string `yaml:"repoPaths"`
+	ExploreSections []SectionConfig
+	Defaults        Defaults
 }
 
 func GetDefaultConfig() Config {
@@ -45,10 +38,9 @@ func GetDefaultConfig() Config {
 				Open:  false,
 				Width: 50,
 			},
-			PrsLimit: 20,
-			View:     PRsView,
+			View: ExploreView,
 		},
-		PRSections: []SectionConfig{
+		ExploreSections: []SectionConfig{
 			{
 				Title: " Explore",
 			},
@@ -59,9 +51,5 @@ func GetDefaultConfig() Config {
 				Title: " My Organizations",
 			},
 		},
-		Keybindings: Keybindings{
-			Prs: []Keybinding{},
-		},
-		RepoPaths: map[string]string{},
 	}
 }

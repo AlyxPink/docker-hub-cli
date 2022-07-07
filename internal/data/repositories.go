@@ -107,6 +107,6 @@ func fakeRepositories() []RepositoryData {
 	return repositories
 }
 
-func FetchRepositories(query string, limit int) ([]RepositoryData, error) {
+func FetchRepositories(query string) ([]RepositoryData, error) {
 	return fakeRepositories(), nil
 }

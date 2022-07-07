@@ -31,20 +31,20 @@ func NewModel(dimensions constants.Dimensions, itemTypeLabel string, numItems, l
 		topBoundId:    0,
 		ItemTypeLabel: itemTypeLabel,
 	}
-	model.bottomBoundId = utils.Min(model.NumItems-1, model.getNumPrsPerPage()-1)
+	model.bottomBoundId = utils.Min(model.NumItems-1, model.getNumReposPerPage()-1)
 	return model
 }
 
 func (m *Model) SetNumItems(numItems int) {
 	m.NumItems = numItems
-	m.bottomBoundId = utils.Min(m.NumItems-1, m.getNumPrsPerPage()-1)
+	m.bottomBoundId = utils.Min(m.NumItems-1, m.getNumReposPerPage()-1)
 }
 
 func (m *Model) SyncViewPort(content string) {
 	m.viewport.SetContent(content)
 }
 
-func (m *Model) getNumPrsPerPage() int {
+func (m *Model) getNumReposPerPage() int {
 	return m.viewport.Height / m.ListItemHeight
 }
 
