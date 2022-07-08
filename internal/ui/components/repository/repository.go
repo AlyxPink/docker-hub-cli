@@ -22,7 +22,7 @@ func (repo Repository) ToTableRow() table.Row {
 		repo.renderlabelDockerOfficial(),
 		repo.renderlabelVerifiedPublisher(),
 		repo.renderlabelOpenSourceProgram(),
-		repo.renderOrganization(),
+		repo.renderPublisher(),
 		repo.renderstatsDownloads(),
 		repo.renderstatsStars(),
 		repo.renderLastUpdate(),
@@ -51,9 +51,9 @@ func (repo Repository) renderlabelOpenSourceProgram() string {
 		labelOpenSourceProgram,
 		"")
 }
-func (repo Repository) renderOrganization() string {
+func (repo Repository) renderPublisher() string {
 	return lipgloss.NewStyle().
-		Render(repo.Data.Organization.Name)
+		Render(repo.Data.Publisher.Name)
 }
 func (repo Repository) renderstatsDownloads() string {
 	return lipgloss.NewStyle().
