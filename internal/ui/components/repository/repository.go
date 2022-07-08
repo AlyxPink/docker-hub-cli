@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"fmt"
+
 	"github.com/charmbracelet/lipgloss"
 	"github.com/docker/hack-docker-access-management-cli/internal/data"
 	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/table"
@@ -57,11 +59,11 @@ func (repo Repository) renderPublisher() string {
 }
 func (repo Repository) renderstatsDownloads() string {
 	return lipgloss.NewStyle().
-		Render(repo.Data.Stats.Downloads)
+		Render(repo.Data.PullCount)
 }
 func (repo Repository) renderstatsStars() string {
 	return lipgloss.NewStyle().
-		Render(repo.Data.Stats.Stars)
+		Render(fmt.Sprint(repo.Data.StarCount))
 }
 func (repo Repository) renderDescription() string {
 	return lipgloss.NewStyle().
@@ -69,7 +71,7 @@ func (repo Repository) renderDescription() string {
 }
 func (repo Repository) renderLastUpdate() string {
 	return lipgloss.NewStyle().
-		Render(utils.TimeElapsed(repo.Data.LastUpdate))
+		Render(utils.TimeElapsed(repo.Data.Updated_at))
 }
 
 func renderLabel(enable bool, color lipgloss.AdaptiveColor, label string) string {

@@ -1,17 +1,32 @@
 package data
 
 import (
+	"fmt"
+	"log"
 	"time"
+
+	"github.com/imroc/req/v3"
 )
 
+type RepositoryPage struct {
+	PageSize     int              `json:"page_size"`
+	PageId       int              `json:"page"`
+	NextUrl      string           `json:"next"`
+	PreviousUrl  string           `json:"previous"`
+	Repositories []RepositoryData `json:"summaries"`
+}
+
 type RepositoryData struct {
-	Name        string
-	Url         string
-	Labels      Labels
-	Publisher   Publisher
-	Stats       Stats
-	Description string
-	LastUpdate  time.Time
+	Name          string         `json:"name"`
+	Slug          string         `json:"slug"`
+	Publisher     Publisher      `json:"publisher"`
+	Created_at    time.Time      `json:"created_at"`
+	Updated_at    time.Time      `json:"updated_at"`
+	Architectures []Architecture `json:"architectures"`
+	Labels        Labels
+	StarCount     int    `json:"star_count"`
+	PullCount     string `json:"pull_count"`
+	Description   string `json:"short_description"`
 }
 
 type Labels struct {
@@ -21,12 +36,13 @@ type Labels struct {
 }
 
 type Publisher struct {
-	Name string
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
 
-type Stats struct {
-	Downloads string
-	Stars     string
+type Architecture struct {
+	Name  string `json:"name"`
+	Label string `json:"label"`
 }
 
 func (data RepositoryData) GetRepoNameWithOwner() string {
@@ -34,79 +50,41 @@ func (data RepositoryData) GetRepoNameWithOwner() string {
 }
 
 func (data RepositoryData) GetUrl() string {
-	return data.Url
+	if data.Publisher.Id == "docker" {
+		return fmt.Sprintf("https://hub.docker.com/_/%s", data.Slug)
+	}
+	return fmt.Sprintf("https://hub.docker.com/r/%s", data.Slug)
 }
 
 func (data RepositoryData) GetLastUpdate() time.Time {
-	return data.LastUpdate
+	return data.Updated_at
 }
 
-func fakeRepositories() []RepositoryData {
-	repositories := make([]RepositoryData, 0)
+func FetchRepositories() ([]RepositoryData, error) {
+	client := req.C().
+		SetTimeout(5 * time.Second)
 
-	repositories = append(repositories, RepositoryData{
-		Name:        "alpine",
-		Url:         "https://hub.docker.com/_/alpine",
-		Labels:      Labels{DockerOfficial: true, VerifiedPublisher: false, OpenSourceProgram: true},
-		Publisher:   Publisher{Name: "Docker"},
-		Stats:       Stats{Downloads: "1B+", Stars: "9.0K"},
-		Description: "A minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size!",
-		LastUpdate:  time.Now().Add(-(30 * 24 * time.Hour)),
-	})
+	var repositoryPage RepositoryPage
+	resp, err := client.R().
+		SetHeader("Search-Version", "v3").
+		SetResult(&repositoryPage).
+		EnableDump().
+		Get("https://hub.docker.com/api/content/v1/products/search?page_size=50")
 
-	repositories = append(repositories, RepositoryData{
-		Name:        "busybox",
-		Url:         "https://hub.docker.com/_/busybox",
-		Labels:      Labels{DockerOfficial: true, VerifiedPublisher: false, OpenSourceProgram: false},
-		Publisher:   Publisher{Name: "Docker"},
-		Stats:       Stats{Downloads: "1B+", Stars: "2.7K"},
-		Description: "Busybox base image.",
-		LastUpdate:  time.Now().Add(-(30 * 24 * time.Hour)),
-	})
+	if err != nil {
+		log.Println("error:", err)
+		log.Println("raw content:")
+		log.Println(resp.Dump())
+		return nil, err
+	}
 
-	repositories = append(repositories, RepositoryData{
-		Name:        "grafana",
-		Url:         "https://hub.docker.com/r/grafana/grafana",
-		Labels:      Labels{DockerOfficial: false, VerifiedPublisher: true, OpenSourceProgram: false},
-		Publisher:   Publisher{Name: "Grafana Labs"},
-		Stats:       Stats{Downloads: "1B+", Stars: "2.3K"},
-		Description: "The official Grafana docker container ",
-		LastUpdate:  time.Now().Add(-(24 * time.Minute)),
-	})
+	if resp.IsSuccess() {
+		return repositoryPage.Repositories, err
+	}
 
-	repositories = append(repositories, RepositoryData{
-		Name:        "ubuntu",
-		Url:         "https://hub.docker.com/_/ubuntu",
-		Labels:      Labels{DockerOfficial: true, VerifiedPublisher: false, OpenSourceProgram: false},
-		Publisher:   Publisher{Name: "Docker"},
-		Stats:       Stats{Downloads: "1B+", Stars: "10K+"},
-		Description: "Ubuntu is a Debian-based Linux operating system based on free software.",
-		LastUpdate:  time.Now().Add(-(30 * 24 * time.Hour)),
-	})
+	log.Println("unknown status", resp.Status)
+	log.Println("raw content:")
+	log.Println(resp.Dump()) // Record raw content when server returned unknown status code.
 
-	repositories = append(repositories, RepositoryData{
-		Name:        "fluent-bit",
-		Url:         "https://hub.docker.com/r/fluent/fluent-bit",
-		Labels:      Labels{DockerOfficial: true, VerifiedPublisher: false, OpenSourceProgram: false},
-		Publisher:   Publisher{Name: "Fluent organization: Fluentd project"},
-		Stats:       Stats{Downloads: "1B+", Stars: "78"},
-		Description: "Fluent Bit, lightweight logs and metrics collector and forwarder ",
-		LastUpdate:  time.Now().Add(-(16 * 24 * time.Hour)),
-	})
-
-	repositories = append(repositories, RepositoryData{
-		Name:        "nginx",
-		Url:         "https://hub.docker.com/_/nginx",
-		Labels:      Labels{DockerOfficial: true, VerifiedPublisher: false, OpenSourceProgram: false},
-		Publisher:   Publisher{Name: "Docker"},
-		Stats:       Stats{Downloads: "1B+", Stars: "10K+"},
-		Description: "Official build of Nginx.",
-		LastUpdate:  time.Now().Add(-(13 * 24 * time.Hour)),
-	})
-
-	return repositories
-}
-
-func FetchRepositories(query string) ([]RepositoryData, error) {
-	return fakeRepositories(), nil
+	return repositoryPage.Repositories, err
 }
