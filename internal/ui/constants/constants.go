@@ -26,9 +26,11 @@ type Dimensions struct {
 }
 
 var (
-	WaitingGlyph = lipgloss.NewStyle().Foreground(styles.DefaultTheme.FaintText).Render("")
-	FailureGlyph = lipgloss.NewStyle().Foreground(styles.DefaultTheme.WarningText).Render("")
-	SuccessGlyph = lipgloss.NewStyle().Foreground(styles.DefaultTheme.SuccessText).Render("")
+	LabelDockerOfficialGlyph    = ""
+	LabelVerifiedPublisherGlyph = "﫠"
+	LabelOpenSourceProgramGlyph = ""
+	StatsDownloadsGlyph         = ""
+	StatsStarsGlyph             = ""
 
 	Keys = KeyMap{
 		Up: key.NewBinding(
