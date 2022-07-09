@@ -35,40 +35,48 @@ func (repo Repository) ToTableRow() table.Row {
 func (repo Repository) renderName() string {
 	return repo.Data.Name
 }
+
 func (repo Repository) renderlabelDockerOfficial() string {
 	return renderLabel(
 		repo.Data.Labels.DockerOfficial,
 		labelDockerOfficial,
 		"")
 }
+
 func (repo Repository) renderlabelVerifiedPublisher() string {
 	return renderLabel(
 		repo.Data.Labels.VerifiedPublisher,
 		labelVerifiedPublisher,
 		"﫠")
 }
+
 func (repo Repository) renderlabelOpenSourceProgram() string {
 	return renderLabel(
 		repo.Data.Labels.OpenSourceProgram,
 		labelOpenSourceProgram,
 		"")
 }
+
 func (repo Repository) renderPublisher() string {
 	return lipgloss.NewStyle().
 		Render(repo.Data.Publisher.Name)
 }
+
 func (repo Repository) renderstatsDownloads() string {
 	return lipgloss.NewStyle().
 		Render(repo.Data.PullCount)
 }
+
 func (repo Repository) renderstatsStars() string {
 	return lipgloss.NewStyle().
 		Render(fmt.Sprint(repo.Data.StarCount))
 }
+
 func (repo Repository) renderDescription() string {
 	return lipgloss.NewStyle().
 		Render(repo.Data.Description)
 }
+
 func (repo Repository) renderLastUpdate() string {
 	return lipgloss.NewStyle().
 		Render(utils.TimeElapsed(repo.Data.Updated_at))
