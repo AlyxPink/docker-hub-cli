@@ -15,7 +15,7 @@ var (
 	dockerPullCmdBoxBg     = lipgloss.AdaptiveColor{Light: "#00f5d4", Dark: "#8ac926"}
 	dockerPullCmdBoxFg     = lipgloss.Color("#22223b")
 
-	label = lipgloss.NewStyle().Copy().
+	label = lipgloss.NewStyle().
 		Padding(0, 1).
 		Bold(false)
 
