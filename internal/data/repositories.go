@@ -17,22 +17,14 @@ type RepositoryPage struct {
 }
 
 type RepositoryData struct {
-	Name          string         `json:"name"`
-	Slug          string         `json:"slug"`
-	Publisher     Publisher      `json:"publisher"`
-	Created_at    time.Time      `json:"created_at"`
-	Updated_at    time.Time      `json:"updated_at"`
-	Architectures []Architecture `json:"architectures"`
-	Labels        Labels
-	StarCount     int    `json:"star_count"`
-	PullCount     string `json:"pull_count"`
-	Description   string `json:"short_description"`
+	Labels              labels
 }
 
-type Labels struct {
+type labels struct {
 	DockerOfficial    bool
 	VerifiedPublisher bool
 	OpenSourceProgram bool
+	Community         bool
 }
 
 type Publisher struct {
@@ -60,6 +52,15 @@ func (data RepositoryData) GetLastUpdate() time.Time {
 	return data.Updated_at
 }
 
+func (data *RepositoryData) setLabels() {
+	data.Labels = labels{
+		DockerOfficial:    (data.Source == "store"),
+		VerifiedPublisher: (data.Source == "verified_publisher"),
+		OpenSourceProgram: (data.Source == "open_source"),
+		Community:         (data.Source == "community"),
+	}
+}
+
 func FetchRepositories() ([]RepositoryData, error) {
 	client := req.C().
 		SetTimeout(5 * time.Second)
@@ -78,6 +79,9 @@ func FetchRepositories() ([]RepositoryData, error) {
 	}
 
 	if resp.IsSuccess() {
+		for i := range repositoryPage.Repositories {
+			repositoryPage.Repositories[i].setLabels()
+		}
 		return repositoryPage.Repositories, err
 	}
 
