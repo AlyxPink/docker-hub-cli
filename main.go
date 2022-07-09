@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
+	"github.com/VictorBersy/docker-hub-cli/internal/ui"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui"
 )
 
 func main() {

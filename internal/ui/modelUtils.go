@@ -1,8 +1,8 @@
 package ui
 
 import (
-	"github.com/docker/hack-docker-access-management-cli/internal/data"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
+	"github.com/VictorBersy/docker-hub-cli/internal/data"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/section"
 )
 
 func (m *Model) getCurrSection() section.Section {

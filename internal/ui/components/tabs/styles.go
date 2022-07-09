@@ -1,8 +1,8 @@
 package tabs
 
 import (
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/styles"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/styles"
 )
 
 var (
