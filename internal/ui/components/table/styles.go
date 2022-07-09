@@ -28,5 +28,6 @@ var (
 	rowStyle = lipgloss.NewStyle().
 			BorderStyle(lipgloss.NormalBorder()).
 			BorderForeground(styles.DefaultTheme.FaintBorder).
-			BorderBottom(true)
+			BorderBottom(true).
+			MaxHeight(1)
 )
