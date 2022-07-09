@@ -1,8 +1,6 @@
 package section_explore
 
 import (
-	"fmt"
-
 	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
@@ -92,10 +90,9 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 }
 
 func (m *Model) GetSectionColumns() []table.Column {
-	columnTitle := lipgloss.NewStyle().Bold(true)
 	return []table.Column{
 		{
-			Title: columnTitle.Copy().Render("Name"),
+			Title: section.ColumnTitle.Render("Name"),
 			Width: &nameWidth,
 		},
 		{
@@ -111,23 +108,23 @@ func (m *Model) GetSectionColumns() []table.Column {
 			Width: &labelWidth,
 		},
 		{
-			Title: columnTitle.Copy().Render("Organization"),
+			Title: section.ColumnTitle.Render("Organization"),
 			Width: &organizationsnameWidth,
 		},
 		{
-			Title: columnTitle.Copy().Foreground(statsDownloads).Render(""),
+			Title: columnTitleStatsDownloads.Render(constants.StatsDownloadsGlyph),
 			Width: &statsWidth,
 		},
 		{
-			Title: columnTitle.Copy().Foreground(statsStars).Render(""),
+			Title: columnTitleStatsStars.Render(constants.StatsStarsGlyph),
 			Width: &statsWidth,
 		},
 		{
-			Title: columnTitle.Copy().Render("Updated At"),
+			Title: section.ColumnTitle.Render("Updated At"),
 			Width: &LastUpdateCellWidth,
 		},
 		{
-			Title: columnTitle.Copy().Render("Description"),
+			Title: section.ColumnTitle.Render("Description"),
 			Grow:  utils.BoolPtr(true),
 		},
 	}
