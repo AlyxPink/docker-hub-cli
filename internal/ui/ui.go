@@ -249,7 +249,3 @@ func (m *Model) setCurrentViewSections(newSections []section.Section) {
 		m.explore = newSections
 	}
 }
-
-func (m *Model) switchSelectedView() config.ViewType {
-	return config.ExploreView
-}

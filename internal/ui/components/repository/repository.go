@@ -13,11 +13,6 @@ type Repository struct {
 	Data data.RepositoryData
 }
 
-type sectionRepositoriesFetchedMsg struct {
-	SectionId    int
-	Repositories []Repository
-}
-
 func (repo Repository) ToTableRow() table.Row {
 	return table.Row{
 		repo.renderName(),

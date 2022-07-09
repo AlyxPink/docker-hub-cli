@@ -10,11 +10,6 @@ var (
 	pagerHeight    = 2
 	contentPadding = 2
 
-	pillStyle = styles.MainTextStyle.Copy().
-			Foreground(styles.DefaultTheme.SubleMainText).
-			PaddingLeft(1).
-			PaddingRight(1)
-
 	sideBarStyle = lipgloss.NewStyle().
 			Padding(0, contentPadding).
 			BorderLeft(true).
