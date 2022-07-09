@@ -101,7 +101,6 @@ func FetchRepositories() ([]RepositoryData, error) {
 		SetQueryParam("page", "1").
 		SetQueryParam("type", "image").
 		Get("https://hub.docker.com/api/content/v1/products/search")
-
 	if err != nil {
 		log.Println("error:", err)
 		log.Println("raw content:")
