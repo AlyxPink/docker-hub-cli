@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/VictorBersy/docker-hub-cli/internal/data"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/styles"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/docker/hack-docker-access-management-cli/internal/data"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/repository"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/styles"
 )
 
 type Model struct {
@@ -49,13 +50,13 @@ func (m Model) View() string {
 func (m *Model) renderLabels() string {
 	render := strings.Builder{}
 	if m.repo.Data.Labels.DockerOfficial {
-		render.WriteString(label.Copy().Foreground(labelDockerOfficial).Align(lipgloss.Left).Render(""))
-	}
-	if m.repo.Data.Labels.OpenSourceProgram {
-		render.WriteString(label.Copy().Foreground(labelOpenSourceProgram).Align(lipgloss.Left).Render("﫠"))
+		render.WriteString(label.Copy().Foreground(labelDockerOfficial).Align(lipgloss.Left).Render(constants.LabelDockerOfficialGlyph))
 	}
 	if m.repo.Data.Labels.VerifiedPublisher {
-		render.WriteString(label.Copy().Foreground(labelVerifiedPublisher).Align(lipgloss.Left).Render(""))
+		render.WriteString(label.Copy().Foreground(labelVerifiedPublisher).Align(lipgloss.Left).Render(constants.LabelVerifiedPublisherGlyph))
+	}
+	if m.repo.Data.Labels.OpenSourceProgram {
+		render.WriteString(label.Copy().Foreground(labelOpenSourceProgram).Align(lipgloss.Left).Render(constants.LabelOpenSourceProgramGlyph))
 	}
 	return render.String()
 }

@@ -3,19 +3,19 @@ package ui
 import (
 	"strings"
 
+	"github.com/VictorBersy/docker-hub-cli/internal/config"
+	"github.com/VictorBersy/docker-hub-cli/internal/data"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/help"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/section"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/section_explore"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/sidebar"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/sidebar_repository"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/tabs"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
+	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/docker/hack-docker-access-management-cli/internal/config"
-	"github.com/docker/hack-docker-access-management-cli/internal/data"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/help"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/section_explore"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/sidebar"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/sidebar_repository"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/tabs"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
-	"github.com/docker/hack-docker-access-management-cli/internal/utils"
 )
 
 type Model struct {

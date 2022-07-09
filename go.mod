@@ -1,4 +1,4 @@
-module github.com/docker/hack-docker-access-management-cli
+module github.com/VictorBersy/docker-hub-cli
 
 go 1.18
 

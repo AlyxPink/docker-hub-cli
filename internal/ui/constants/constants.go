@@ -2,8 +2,6 @@ package constants
 
 import (
 	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/styles"
 )
 
 type KeyMap struct {

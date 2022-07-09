@@ -1,13 +1,13 @@
 package section
 
 import (
+	"github.com/VictorBersy/docker-hub-cli/internal/config"
+	"github.com/VictorBersy/docker-hub-cli/internal/data"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/docker/hack-docker-access-management-cli/internal/config"
-	"github.com/docker/hack-docker-access-management-cli/internal/data"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/components/table"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/constants"
-	"github.com/docker/hack-docker-access-management-cli/internal/ui/context"
 )
 
 type Model struct {
