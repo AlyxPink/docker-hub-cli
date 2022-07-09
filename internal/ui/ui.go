@@ -96,7 +96,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.syncMainContentWidth()
 
 		case key.Matches(msg, m.keys.OpenDockerHub):
-			var currRow = m.getCurrRowData()
+			currRow := m.getCurrRowData()
 			if currRow != nil {
 				utils.OpenBrowser(currRow.GetUrl())
 			}
@@ -248,8 +248,4 @@ func (m *Model) setCurrentViewSections(newSections []section.Section) {
 	if m.ctx.View == config.ExploreView {
 		m.explore = newSections
 	}
-}
-
-func (m *Model) switchSelectedView() config.ViewType {
-	return config.ExploreView
 }

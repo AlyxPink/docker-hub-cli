@@ -70,7 +70,6 @@ func FetchRepositories() ([]RepositoryData, error) {
 		SetResult(&repositoryPage).
 		EnableDump().
 		Get("https://hub.docker.com/api/content/v1/products/search?page_size=50")
-
 	if err != nil {
 		log.Println("error:", err)
 		log.Println("raw content:")
