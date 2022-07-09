@@ -99,16 +99,16 @@ func (m *Model) GetSectionColumns() []table.Column {
 			Width: &nameWidth,
 		},
 		{
-			Title: columnTitle.Copy().Foreground(labelDockerOfficial).Render(""),
-			Width: &labelDockerOfficialWidth,
+			Title: columnTitleLabelDockerOfficial.Render(constants.LabelDockerOfficialGlyph),
+			Width: &labelWidth,
 		},
 		{
-			Title: columnTitle.Copy().Foreground(labelVerifiedPublisher).Render("﫠"),
-			Width: &labelVerifiedPublisherWidth,
+			Title: columnTitleLabelVerifiedPublisher.Render(constants.LabelVerifiedPublisherGlyph),
+			Width: &labelWidth,
 		},
 		{
-			Title: columnTitle.Copy().Foreground(labelOpenSourceProgram).Render(""),
-			Width: &labelOpenSourceProgramWidth,
+			Title: columnTitleLabelOpenSourceProgram.Render(constants.LabelOpenSourceProgramGlyph),
+			Width: &labelWidth,
 		},
 		{
 			Title: columnTitle.Copy().Render("Organization"),
