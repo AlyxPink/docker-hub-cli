@@ -16,7 +16,32 @@ type RepositoryPage struct {
 	Repositories []RepositoryData `json:"summaries"`
 }
 
+type Category struct {
+	Name  string `json:"name"`
+	Label string `json:"label"`
+}
+
+type OperatingSystem struct {
+	Name  string `json:"name"`
+	Label string `json:"label"`
+}
+
 type RepositoryData struct {
+	Architectures       []Architecture    `json:"architectures"`
+	Categories          []Category        `json:"categories"`
+	CertificationStatus string            `json:"certification_status"`
+	Created_at          time.Time         `json:"created_at"`
+	Description         string            `json:"short_description"`
+	FilterType          string            `json:"filter_type"`
+	Name                string            `json:"name"`
+	OperatingSystems    []OperatingSystem `json:"operating_systems"`
+	Publisher           Publisher         `json:"publisher"`
+	PullCount           string            `json:"pull_count"`
+	Slug                string            `json:"slug"`
+	Source              string            `json:"source"`
+	StarCount           int               `json:"star_count"`
+	Type                string            `json:"type"`
+	Updated_at          time.Time         `json:"updated_at"`
 	Labels              labels
 }
 
@@ -70,7 +95,13 @@ func FetchRepositories() ([]RepositoryData, error) {
 		SetHeader("Search-Version", "v3").
 		SetResult(&repositoryPage).
 		EnableDump().
-		Get("https://hub.docker.com/api/content/v1/products/search?page_size=50")
+		SetQueryParam("image_filter", "official,store,open_source").
+		SetQueryParam("order", "desc").
+		SetQueryParam("page_size", "100").
+		SetQueryParam("page", "1").
+		SetQueryParam("type", "image").
+		Get("https://hub.docker.com/api/content/v1/products/search")
+
 	if err != nil {
 		log.Println("error:", err)
 		log.Println("raw content:")
