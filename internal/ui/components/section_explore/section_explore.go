@@ -1,8 +1,6 @@
 package section_explore
 
 import (
-	"sort"
-
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -195,7 +193,7 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 	cmds = append(cmds, m.section.CreateNextTickCmd(spinner.Tick))
 
 	cmds = append(cmds, func() tea.Msg {
-		fetchedRepos, err := data.FetchRepositories(m.section.Config.Title)
+		fetchedRepos, err := data.FetchRepositories()
 		if err != nil {
 			return SectionRepositoriesFetchedMsg{
 				SectionId:    m.section.Id,
@@ -203,9 +201,6 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 			}
 		}
 
-		sort.Slice(fetchedRepos, func(i, j int) bool {
-			return fetchedRepos[i].LastUpdate.After(fetchedRepos[j].LastUpdate)
-		})
 		return SectionRepositoriesFetchedMsg{
 			SectionId:    m.section.Id,
 			Repositories: fetchedRepos,

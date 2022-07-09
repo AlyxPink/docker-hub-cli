@@ -77,9 +77,9 @@ func (m *Model) renderArchs() string {
 	render := strings.Builder{}
 	render.WriteString(archTitle.Render("Archs"))
 	render.WriteString("\n")
-	archs := []string{"arm64v8", "arm32v6", "arm32v7", "ppc64le", "s390x", "i386", "amd64"}
+	archs := m.repo.Data.Architectures
 	for _, arch := range archs {
-		render.WriteString(archTag.Render(arch))
+		render.WriteString(archTag.Render(arch.Label))
 	}
 	return render.String()
 }
@@ -99,7 +99,7 @@ func (m *Model) renderPullCmd() string {
 	render := strings.Builder{}
 	render.WriteString(dockerPullCmdTitle.Render("Pull cmd"))
 	render.WriteString("\n")
-	cmd := fmt.Sprintf("$ docker pull %s", m.repo.Data.Name)
+	cmd := fmt.Sprintf("$ docker pull %s", m.repo.Data.Slug)
 	render.WriteString(dockerPullCmdBox.Copy().Render(cmd))
 
 	return render.String()
