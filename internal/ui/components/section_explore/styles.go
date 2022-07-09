@@ -9,7 +9,7 @@ var (
 	labelDockerOfficialWidth    = 4
 	labelVerifiedPublisherWidth = 4
 	labelOpenSourceProgramWidth = 4
-	statsWidth                  = 5
+	statsWidth                  = 8
 
 	labelDockerOfficial    = lipgloss.AdaptiveColor{Light: "#2E7F74", Dark: "#2E7F74"}
 	labelVerifiedPublisher = lipgloss.AdaptiveColor{Light: "#086DD7", Dark: "#086DD7"}
