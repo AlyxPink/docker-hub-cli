@@ -1,7 +1,7 @@
 package my_repos
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/section"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -15,8 +15,8 @@ var (
 	statsDownloads = lipgloss.AdaptiveColor{Light: "#00BBF9", Dark: "#00BBF9"}
 	statsStars     = lipgloss.AdaptiveColor{Light: "#FFB703", Dark: "#FFB703"}
 
-	columnTitleStatsDownloads = section.ColumnTitle.Copy().Foreground(statsDownloads)
-	columnTitleStatsStars     = section.ColumnTitle.Copy().Foreground(statsStars)
+	columnTitleStatsDownloads = view.ColumnTitle.Copy().Foreground(statsDownloads)
+	columnTitleStatsStars     = view.ColumnTitle.Copy().Foreground(statsStars)
 
 	ContainerPadding = 1
 

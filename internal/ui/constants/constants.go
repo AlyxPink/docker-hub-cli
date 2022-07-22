@@ -15,8 +15,8 @@ type KeyMap struct {
 	Refresh       key.Binding
 	PageDown      key.Binding
 	PageUp        key.Binding
-	NextSection   key.Binding
-	PrevSection   key.Binding
+	NextView      key.Binding
+	PrevView      key.Binding
 	Help          key.Binding
 	Quit          key.Binding
 }
@@ -56,13 +56,13 @@ var (
 			key.WithKeys("G", "end"),
 			key.WithHelp("G/end", "last item"),
 		),
-		PrevSection: key.NewBinding(
+		PrevView: key.NewBinding(
 			key.WithKeys("left", "h"),
-			key.WithHelp("/h", "previous section"),
+			key.WithHelp("/h", "previous view"),
 		),
-		NextSection: key.NewBinding(
+		NextView: key.NewBinding(
 			key.WithKeys("right", "l"),
-			key.WithHelp("/l", "next section"),
+			key.WithHelp("/l", "next view"),
 		),
 		PageUp: key.NewBinding(
 			key.WithKeys("ctrl+u"),

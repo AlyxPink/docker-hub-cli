@@ -11,6 +11,6 @@ type ProgramContext struct {
 	View              config.ViewType
 }
 
-func (ctx *ProgramContext) GetViewSectionsConfig() []config.SectionConfig {
-	return ctx.Config.ExploreSections
+func (ctx *ProgramContext) GetViewsConfig() []config.ViewConfig {
+	return ctx.Config.ExploreViews
 }

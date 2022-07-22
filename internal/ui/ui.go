@@ -6,11 +6,11 @@ import (
 	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/help"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/section"
-	section_explore "github.com/VictorBersy/docker-hub-cli/internal/ui/components/section/explore"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/sidebar"
 	sidebar_repository "github.com/VictorBersy/docker-hub-cli/internal/ui/components/sidebar/repository"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/tabs"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
+	view_explore "github.com/VictorBersy/docker-hub-cli/internal/ui/components/view/explore"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
 	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	"github.com/charmbracelet/bubbles/key"
@@ -19,14 +19,14 @@ import (
 )
 
 type Model struct {
-	keys          utils.KeyMap
-	err           error
-	sidebar       sidebar.Model
-	currSectionId int
-	help          help.Model
-	explore       []section.Section
-	tabs          tabs.Model
-	ctx           context.ProgramContext
+	keys       utils.KeyMap
+	err        error
+	sidebar    sidebar.Model
+	currViewId int
+	help       help.Model
+	explore    []view.View
+	tabs       tabs.Model
+	ctx        context.ProgramContext
 }
 
 func NewModel() Model {
@@ -34,7 +34,7 @@ func NewModel() Model {
 	return Model{
 		keys:    utils.Keys,
 		help:    help.NewModel(),
-		explore: []section.Section{},
+		explore: []view.View{},
 		tabs:    tabsModel,
 		ctx: context.ProgramContext{
 			Config: &config.Config{},
@@ -52,45 +52,45 @@ func (m Model) Init() tea.Cmd {
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
-		cmd         tea.Cmd
-		sidebarCmd  tea.Cmd
-		helpCmd     tea.Cmd
-		cmds        []tea.Cmd
-		currSection = m.getCurrSection()
+		cmd        tea.Cmd
+		sidebarCmd tea.Cmd
+		helpCmd    tea.Cmd
+		cmds       []tea.Cmd
+		currView   = m.getCurrView()
 	)
 
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
-		case key.Matches(msg, m.keys.PrevSection):
-			prevSection := m.getSectionAt(m.getPrevSectionId())
-			if prevSection != nil {
-				m.setCurrSectionId(prevSection.Id())
+		case key.Matches(msg, m.keys.PrevView):
+			prevView := m.getViewAt(m.getPrevViewId())
+			if prevView != nil {
+				m.setCurrViewId(prevView.Id())
 				m.onViewedRowChanged()
 			}
 
-		case key.Matches(msg, m.keys.NextSection):
-			nextSectionId := m.getNextSectionId()
-			nextSection := m.getSectionAt(nextSectionId)
-			if nextSection != nil {
-				m.setCurrSectionId(nextSection.Id())
+		case key.Matches(msg, m.keys.NextView):
+			nextViewId := m.getNextViewId()
+			nextView := m.getViewAt(nextViewId)
+			if nextView != nil {
+				m.setCurrViewId(nextView.Id())
 				m.onViewedRowChanged()
 			}
 
 		case key.Matches(msg, m.keys.Down):
-			currSection.NextRow()
+			currView.NextRow()
 			m.onViewedRowChanged()
 
 		case key.Matches(msg, m.keys.Up):
-			currSection.PrevRow()
+			currView.PrevRow()
 			m.onViewedRowChanged()
 
 		case key.Matches(msg, m.keys.FirstLine):
-			currSection.FirstItem()
+			currView.FirstItem()
 			m.onViewedRowChanged()
 
 		case key.Matches(msg, m.keys.LastLine):
-			currSection.LastItem()
+			currView.LastItem()
 			m.onViewedRowChanged()
 
 		case key.Matches(msg, m.keys.TogglePreview):
@@ -104,7 +104,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 		case key.Matches(msg, m.keys.Refresh):
-			cmd = currSection.FetchSectionRows()
+			cmd = currView.FetchViewRows()
 
 		case key.Matches(msg, m.keys.Quit):
 			cmd = tea.Quit
@@ -116,16 +116,16 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.ctx.View = m.ctx.Config.Defaults.View
 		m.sidebar.IsOpen = msg.Config.Defaults.Preview.Open
 		m.syncMainContentWidth()
-		newSections, fetchSectionsCmds := m.fetchAllViewSections()
-		m.setCurrentViewSections(newSections)
-		cmd = fetchSectionsCmds
+		newViews, fetchViewsCmds := m.fetchAllViews()
+		m.setCurrentViews(newViews)
+		cmd = fetchViewsCmds
 
-	case section.SectionMsg:
-		cmd = m.updateRelevantSection(msg)
+	case view.ViewMsg:
+		cmd = m.updateRelevantView(msg)
 
-		if msg.GetSectionId() == m.currSectionId {
-			switch msg.GetSectionType() {
-			case section_explore.SectionType:
+		if msg.GetViewId() == m.currViewId {
+			switch msg.GetViewType() {
+			case view_explore.ViewType:
 				m.onViewedRowChanged()
 			}
 		}
@@ -156,16 +156,16 @@ func (m Model) View() string {
 	s := strings.Builder{}
 	s.WriteString(m.tabs.View(m.ctx))
 	s.WriteString("\n")
-	currSection := m.getCurrSection()
+	currView := m.getCurrView()
 	mainContent := ""
-	if currSection != nil {
+	if currView != nil {
 		mainContent = lipgloss.JoinHorizontal(
 			lipgloss.Top,
-			m.getCurrSection().View(),
+			m.getCurrView().View(),
 			m.sidebar.View(),
 		)
 	} else {
-		mainContent = "No sections defined..."
+		mainContent = "No views defined..."
 	}
 	s.WriteString(mainContent)
 	s.WriteString("\n")
@@ -183,9 +183,9 @@ type errMsg struct {
 
 func (e errMsg) Error() string { return e.error.Error() }
 
-func (m *Model) setCurrSectionId(newSectionId int) {
-	m.currSectionId = newSectionId
-	m.tabs.SetCurrSectionId(newSectionId)
+func (m *Model) setCurrViewId(newViewId int) {
+	m.currViewId = newViewId
+	m.tabs.SetCurrViewId(newViewId)
 }
 
 func (m *Model) onViewedRowChanged() {
@@ -201,19 +201,19 @@ func (m *Model) onWindowSizeChanged(msg tea.WindowSizeMsg) {
 }
 
 func (m *Model) syncProgramContext() {
-	for _, section := range m.getCurrentViewSections() {
-		section.UpdateProgramContext(&m.ctx)
+	for _, view := range m.getCurrentViews() {
+		view.UpdateProgramContext(&m.ctx)
 	}
 	m.sidebar.UpdateProgramContext(&m.ctx)
 }
 
-func (m *Model) updateRelevantSection(msg section.SectionMsg) (cmd tea.Cmd) {
-	var updatedSection section.Section
+func (m *Model) updateRelevantView(msg view.ViewMsg) (cmd tea.Cmd) {
+	var updatedView view.View
 
-	switch msg.GetSectionType() {
-	case section_explore.SectionType:
-		updatedSection, cmd = m.explore[msg.GetSectionId()].Update(msg)
-		m.explore[msg.GetSectionId()] = updatedSection
+	switch msg.GetViewType() {
+	case view_explore.ViewType:
+		updatedView, cmd = m.explore[msg.GetViewId()].Update(msg)
+		m.explore[msg.GetViewId()] = updatedView
 	}
 
 	return cmd
@@ -238,16 +238,16 @@ func (m *Model) syncSidebarExplore() {
 	}
 }
 
-func (m *Model) fetchAllViewSections() ([]section.Section, tea.Cmd) {
-	return section_explore.FetchAllSections(m.ctx)
+func (m *Model) fetchAllViews() ([]view.View, tea.Cmd) {
+	return view_explore.FetchAllViews(m.ctx)
 }
 
-func (m *Model) getCurrentViewSections() []section.Section {
+func (m *Model) getCurrentViews() []view.View {
 	return m.explore
 }
 
-func (m *Model) setCurrentViewSections(newSections []section.Section) {
+func (m *Model) setCurrentViews(newViews []view.View) {
 	if m.ctx.View == config.ExploreView {
-		m.explore = newSections
+		m.explore = newViews
 	}
 }
