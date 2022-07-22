@@ -5,6 +5,8 @@ import (
 	"log"
 	"time"
 
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/imroc/req/v3"
 )
 
@@ -42,14 +44,14 @@ type RepositoryData struct {
 	StarCount           int               `json:"star_count"`
 	Type                string            `json:"type"`
 	Updated_at          time.Time         `json:"updated_at"`
-	Labels              labels
+	Labels              []Label
 }
 
-type labels struct {
-	DockerOfficial    bool
-	VerifiedPublisher bool
-	OpenSourceProgram bool
-	Community         bool
+type Label struct {
+	Name    string
+	Glyph   string
+	Color   lipgloss.AdaptiveColor
+	Enabled bool
 }
 
 type Publisher struct {
@@ -78,12 +80,30 @@ func (data RepositoryData) GetLastUpdate() time.Time {
 }
 
 func (data *RepositoryData) setLabels() {
-	data.Labels = labels{
-		DockerOfficial:    (data.Source == "store"),
-		VerifiedPublisher: (data.Source == "verified_publisher"),
-		OpenSourceProgram: (data.Source == "open_source"),
-		Community:         (data.Source == "community"),
-	}
+	data.Labels = append(data.Labels, Label{
+		Name:    "DockerOfficial",
+		Glyph:   constants.GlyphLabelDockerOfficial,
+		Color:   constants.ColorLabelDockerOfficial,
+		Enabled: (data.Source == "store"),
+	})
+	data.Labels = append(data.Labels, Label{
+		Name:    "VerifiedPublisher",
+		Glyph:   constants.GlyphLabelVerifiedPublisher,
+		Color:   constants.ColorLabelVerifiedPublisher,
+		Enabled: (data.Source == "verified_publisher"),
+	})
+	data.Labels = append(data.Labels, Label{
+		Name:    "OpenSourceProgram",
+		Glyph:   constants.GlyphLabelOpenSourceProgram,
+		Color:   constants.ColorLabelOpenSourceProgram,
+		Enabled: (data.Source == "open_source"),
+	})
+	data.Labels = append(data.Labels, Label{
+		Name:    "Community",
+		Glyph:   constants.GlyphLabelCommunity,
+		Color:   constants.ColorLabelCommunity,
+		Enabled: (data.Source == "community"),
+	})
 }
 
 func FetchRepositories() ([]RepositoryData, error) {
