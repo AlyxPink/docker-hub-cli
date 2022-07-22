@@ -12,8 +12,8 @@ type KeyMap struct {
 	Refresh       key.Binding
 	PageDown      key.Binding
 	PageUp        key.Binding
-	NextSection   key.Binding
-	PrevSection   key.Binding
+	NextView      key.Binding
+	PrevView      key.Binding
 	Help          key.Binding
 	Quit          key.Binding
 }
@@ -26,7 +26,7 @@ func (k KeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
 		{k.Up, k.Down},
 		{k.FirstLine, k.LastLine},
-		{k.PrevSection, k.NextSection},
+		{k.PrevView, k.NextView},
 		{k.PageDown, k.PageUp},
 		{k.TogglePreview, k.OpenDockerHub},
 		{k.Refresh},
@@ -43,13 +43,13 @@ var Keys = KeyMap{
 		key.WithKeys("down", "j"),
 		key.WithHelp("↓/j", "move down"),
 	),
-	PrevSection: key.NewBinding(
+	PrevView: key.NewBinding(
 		key.WithKeys("left", "h"),
-		key.WithHelp("/h", "previous section"),
+		key.WithHelp("/h", "previous view"),
 	),
-	NextSection: key.NewBinding(
+	NextView: key.NewBinding(
 		key.WithKeys("right", "l"),
-		key.WithHelp("/l", "next section"),
+		key.WithHelp("/l", "next view"),
 	),
 	FirstLine: key.NewBinding(
 		key.WithKeys("g", "home"),

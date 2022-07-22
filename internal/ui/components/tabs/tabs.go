@@ -7,12 +7,12 @@ import (
 )
 
 type Model struct {
-	CurrSectionId int
+	CurrViewId int
 }
 
 func NewModel() Model {
 	return Model{
-		CurrSectionId: 0,
+		CurrViewId: 0,
 	}
 }
 
@@ -21,18 +21,18 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 func (m Model) View(ctx context.ProgramContext) string {
-	sectionsConfigs := ctx.GetViewSectionsConfig()
-	sectionTitles := make([]string, 0, len(sectionsConfigs))
-	for _, section := range sectionsConfigs {
-		sectionTitles = append(sectionTitles, section.Title)
+	viewsConfigs := ctx.GetViewsConfig()
+	viewTitles := make([]string, 0, len(viewsConfigs))
+	for _, view := range viewsConfigs {
+		viewTitles = append(viewTitles, view.Title)
 	}
 
 	var tabs []string
-	for i, sectionTitle := range sectionTitles {
-		if m.CurrSectionId == i {
-			tabs = append(tabs, activeTab.Render(sectionTitle))
+	for i, viewTitle := range viewTitles {
+		if m.CurrViewId == i {
+			tabs = append(tabs, activeTab.Render(viewTitle))
 		} else {
-			tabs = append(tabs, tab.Render(sectionTitle))
+			tabs = append(tabs, tab.Render(viewTitle))
 		}
 	}
 
@@ -47,6 +47,6 @@ func (m Model) View(ctx context.ProgramContext) string {
 		Render(lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs))
 }
 
-func (m *Model) SetCurrSectionId(id int) {
-	m.CurrSectionId = id
+func (m *Model) SetCurrViewId(id int) {
+	m.CurrViewId = id
 }

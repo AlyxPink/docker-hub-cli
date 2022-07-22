@@ -1,11 +1,11 @@
-package my_repos
+package view_explore
 
 import (
 	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/section"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
 	"github.com/VictorBersy/docker-hub-cli/internal/utils"
@@ -14,29 +14,29 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-const SectionType = "explore"
+const ViewType = "explore"
 
 type Model struct {
 	Repositories []data.RepositoryData
-	section      section.Model
+	view         view.Model
 }
 
-func NewModel(id int, ctx *context.ProgramContext, config config.SectionConfig) Model {
+func NewModel(id int, ctx *context.ProgramContext, config config.ViewConfig) Model {
 	m := Model{
 		Repositories: []data.RepositoryData{},
-		section: section.Model{
+		view: view.Model{
 			Id:        id,
 			Config:    config,
 			Ctx:       ctx,
 			Spinner:   spinner.Model{Spinner: spinner.Dot},
 			IsLoading: true,
-			Type:      SectionType,
+			Type:      ViewType,
 		},
 	}
 
-	m.section.Table = table.NewModel(
-		m.section.GetDimensions(),
-		m.GetSectionColumns(),
+	m.view.Table = table.NewModel(
+		m.view.GetDimensions(),
+		m.GetViewColumns(),
 		m.BuildRows(),
 		"Repositories",
 		utils.StringPtr(emptyStateStyle.Render("No repositories were found")),
@@ -46,26 +46,26 @@ func NewModel(id int, ctx *context.ProgramContext, config config.SectionConfig) 
 }
 
 func (m *Model) Id() int {
-	return m.section.Id
+	return m.view.Id
 }
 
-func (m Model) Update(msg tea.Msg) (section.Section, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (view.View, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
-	case SectionRepositoriesFetchedMsg:
+	case ViewRepositoriesFetchedMsg:
 		m.Repositories = msg.Repositories
-		m.section.IsLoading = false
-		m.section.Table.SetRows(m.BuildRows())
+		m.view.IsLoading = false
+		m.view.Table.SetRows(m.BuildRows())
 
-	case section.SectionTickMsg:
-		if !m.section.IsLoading {
+	case view.ViewTickMsg:
+		if !m.view.IsLoading {
 			return &m, nil
 		}
 
 		var internalTickCmd tea.Cmd
-		m.section.Spinner, internalTickCmd = m.section.Spinner.Update(msg.InternalTickMsg)
-		cmd = m.section.CreateNextTickCmd(internalTickCmd)
+		m.view.Spinner, internalTickCmd = m.view.Spinner.Update(msg.InternalTickMsg)
+		cmd = m.view.CreateNextTickCmd(internalTickCmd)
 	}
 
 	return &m, cmd
@@ -73,35 +73,35 @@ func (m Model) Update(msg tea.Msg) (section.Section, tea.Cmd) {
 
 func (m *Model) View() string {
 	var spinnerText *string
-	if m.section.IsLoading {
+	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
-			spinnerStyle.Copy().Render(m.section.Spinner.View()),
+			spinnerStyle.Copy().Render(m.view.Spinner.View()),
 			"Fetching Repositories...",
 		))
 	}
 
 	return containerStyle.Copy().Render(
-		m.section.Table.View(spinnerText),
+		m.view.Table.View(spinnerText),
 	)
 }
 
 func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
-	m.section.UpdateProgramContext(ctx)
+	m.view.UpdateProgramContext(ctx)
 }
 
 func renderColumnTitleLabels() string {
 	return lipgloss.JoinHorizontal(
 		lipgloss.Top,
-		section.LabelTitle.Copy().Foreground(constants.ColorLabelDockerOfficial).Render(constants.GlyphLabelDockerOfficial),
-		section.LabelTitle.Copy().Foreground(constants.ColorLabelVerifiedPublisher).Render(constants.GlyphLabelVerifiedPublisher),
-		section.LabelTitle.Copy().Foreground(constants.ColorLabelOpenSourceProgram).Render(constants.GlyphLabelOpenSourceProgram),
+		view.LabelTitle.Copy().Foreground(constants.ColorLabelDockerOfficial).Render(constants.GlyphLabelDockerOfficial),
+		view.LabelTitle.Copy().Foreground(constants.ColorLabelVerifiedPublisher).Render(constants.GlyphLabelVerifiedPublisher),
+		view.LabelTitle.Copy().Foreground(constants.ColorLabelOpenSourceProgram).Render(constants.GlyphLabelOpenSourceProgram),
 	)
 }
 
-func (m *Model) GetSectionColumns() []table.Column {
+func (m *Model) GetViewColumns() []table.Column {
 	return []table.Column{
 		{
-			Title: section.ColumnTitle.Render("Name"),
+			Title: view.ColumnTitle.Render("Name"),
 			Width: &nameWidth,
 		},
 		{
@@ -109,7 +109,7 @@ func (m *Model) GetSectionColumns() []table.Column {
 			Width: &labelsWidth,
 		},
 		{
-			Title: section.ColumnTitle.Render("Organization"),
+			Title: view.ColumnTitle.Render("Organization"),
 			Width: &organizationsnameWidth,
 		},
 		{
@@ -121,11 +121,11 @@ func (m *Model) GetSectionColumns() []table.Column {
 			Width: &statsWidth,
 		},
 		{
-			Title: section.ColumnTitle.Render("Updated At"),
+			Title: view.ColumnTitle.Render("Updated At"),
 			Width: &LastUpdateCellWidth,
 		},
 		{
-			Title: section.ColumnTitle.Render("Description"),
+			Title: view.ColumnTitle.Render("Description"),
 			Grow:  utils.BoolPtr(true),
 		},
 	}
@@ -145,65 +145,65 @@ func (m *Model) NumRows() int {
 	return len(m.Repositories)
 }
 
-type SectionRepositoriesFetchedMsg struct {
-	SectionId    int
+type ViewRepositoriesFetchedMsg struct {
+	ViewId       int
 	Repositories []data.RepositoryData
 }
 
-func (msg SectionRepositoriesFetchedMsg) GetSectionId() int {
-	return msg.SectionId
+func (msg ViewRepositoriesFetchedMsg) GetViewId() int {
+	return msg.ViewId
 }
 
-func (msg SectionRepositoriesFetchedMsg) GetSectionType() string {
-	return SectionType
+func (msg ViewRepositoriesFetchedMsg) GetViewType() string {
+	return ViewType
 }
 
 func (m *Model) GetCurrRow() data.RowData {
 	if len(m.Repositories) == 0 {
 		return nil
 	}
-	repo := m.Repositories[m.section.Table.GetCurrItem()]
+	repo := m.Repositories[m.view.Table.GetCurrItem()]
 	return &repo
 }
 
 func (m *Model) NextRow() int {
-	return m.section.NextRow()
+	return m.view.NextRow()
 }
 
 func (m *Model) PrevRow() int {
-	return m.section.PrevRow()
+	return m.view.PrevRow()
 }
 
 func (m *Model) FirstItem() int {
-	return m.section.FirstItem()
+	return m.view.FirstItem()
 }
 
 func (m *Model) LastItem() int {
-	return m.section.LastItem()
+	return m.view.LastItem()
 }
 
-func (m *Model) FetchSectionRows() tea.Cmd {
+func (m *Model) FetchViewRows() tea.Cmd {
 	if m == nil {
 		return nil
 	}
 	m.Repositories = nil
-	m.section.Table.ResetCurrItem()
-	m.section.Table.Rows = nil
-	m.section.IsLoading = true
+	m.view.Table.ResetCurrItem()
+	m.view.Table.Rows = nil
+	m.view.IsLoading = true
 	var cmds []tea.Cmd
-	cmds = append(cmds, m.section.CreateNextTickCmd(spinner.Tick))
+	cmds = append(cmds, m.view.CreateNextTickCmd(spinner.Tick))
 
 	cmds = append(cmds, func() tea.Msg {
 		fetchedRepos, err := data.FetchRepositories()
 		if err != nil {
-			return SectionRepositoriesFetchedMsg{
-				SectionId:    m.section.Id,
+			return ViewRepositoriesFetchedMsg{
+				ViewId:       m.view.Id,
 				Repositories: []data.RepositoryData{},
 			}
 		}
 
-		return SectionRepositoriesFetchedMsg{
-			SectionId:    m.section.Id,
+		return ViewRepositoriesFetchedMsg{
+			ViewId:       m.view.Id,
 			Repositories: fetchedRepos,
 		}
 	})
@@ -212,16 +212,16 @@ func (m *Model) FetchSectionRows() tea.Cmd {
 }
 
 func (m *Model) GetIsLoading() bool {
-	return m.section.IsLoading
+	return m.view.IsLoading
 }
 
-func FetchAllSections(ctx context.ProgramContext) (sections []section.Section, fetchAllCmd tea.Cmd) {
-	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.ExploreSections))
-	sections = make([]section.Section, 0, len(ctx.Config.ExploreSections))
-	for i, sectionConfig := range ctx.Config.ExploreSections {
-		sectionModel := NewModel(i, &ctx, sectionConfig)
-		sections = append(sections, &sectionModel)
-		fetchReposCmds = append(fetchReposCmds, sectionModel.FetchSectionRows())
+func FetchAllViews(ctx context.ProgramContext) (views []view.View, fetchAllCmd tea.Cmd) {
+	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.ExploreViews))
+	views = make([]view.View, 0, len(ctx.Config.ExploreViews))
+	for i, viewConfig := range ctx.Config.ExploreViews {
+		viewModel := NewModel(i, &ctx, viewConfig)
+		views = append(views, &viewModel)
+		fetchReposCmds = append(fetchReposCmds, viewModel.FetchViewRows())
 	}
-	return sections, tea.Batch(fetchReposCmds...)
+	return views, tea.Batch(fetchReposCmds...)
 }

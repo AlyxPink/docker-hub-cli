@@ -1,4 +1,4 @@
-package section
+package view
 
 import (
 	"github.com/VictorBersy/docker-hub-cli/internal/config"
@@ -12,7 +12,7 @@ import (
 
 type Model struct {
 	Id        int
-	Config    config.SectionConfig
+	Config    config.ViewConfig
 	Ctx       *context.ProgramContext
 	Spinner   spinner.Model
 	IsLoading bool
@@ -20,9 +20,9 @@ type Model struct {
 	Type      string
 }
 
-type Section interface {
+type View interface {
 	Id() int
-	Update(msg tea.Msg) (Section, tea.Cmd)
+	Update(msg tea.Msg) (View, tea.Cmd)
 	View() string
 	NumRows() int
 	GetCurrRow() data.RowData
@@ -30,9 +30,9 @@ type Section interface {
 	PrevRow() int
 	FirstItem() int
 	LastItem() int
-	FetchSectionRows() tea.Cmd
+	FetchViewRows() tea.Cmd
 	GetIsLoading() bool
-	GetSectionColumns() []table.Column
+	GetViewColumns() []table.Column
 	BuildRows() []table.Row
 	UpdateProgramContext(ctx *context.ProgramContext)
 }
@@ -42,8 +42,8 @@ func (m *Model) CreateNextTickCmd(nextTickCmd tea.Cmd) tea.Cmd {
 		return nil
 	}
 	return func() tea.Msg {
-		return SectionTickMsg{
-			SectionId:       m.Id,
+		return ViewTickMsg{
+			ViewId:          m.Id,
 			InternalTickMsg: nextTickCmd(),
 			Type:            m.Type,
 		}
@@ -68,30 +68,30 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 	}
 }
 
-type SectionMsg interface {
-	GetSectionId() int
-	GetSectionType() string
+type ViewMsg interface {
+	GetViewId() int
+	GetViewType() string
 }
 
-type SectionRowsFetchedMsg struct {
-	SectionId int
+type ViewRowsFetchedMsg struct {
+	ViewId int
 }
 
-func (msg SectionRowsFetchedMsg) GetSectionId() int {
-	return msg.SectionId
+func (msg ViewRowsFetchedMsg) GetViewId() int {
+	return msg.ViewId
 }
 
-type SectionTickMsg struct {
-	SectionId       int
+type ViewTickMsg struct {
+	ViewId          int
 	InternalTickMsg tea.Msg
 	Type            string
 }
 
-func (msg SectionTickMsg) GetSectionId() int {
-	return msg.SectionId
+func (msg ViewTickMsg) GetViewId() int {
+	return msg.ViewId
 }
 
-func (msg SectionTickMsg) GetSectionType() string {
+func (msg ViewTickMsg) GetViewType() string {
 	return msg.Type
 }
 

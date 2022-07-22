@@ -6,7 +6,7 @@ const (
 	ExploreView ViewType = "explore"
 )
 
-type SectionConfig struct {
+type ViewConfig struct {
 	Title string
 	Limit *int
 }
@@ -27,8 +27,8 @@ type Keybinding struct {
 }
 
 type Config struct {
-	ExploreSections []SectionConfig
-	Defaults        Defaults
+	ExploreViews []ViewConfig
+	Defaults     Defaults
 }
 
 func GetDefaultConfig() Config {
@@ -40,7 +40,7 @@ func GetDefaultConfig() Config {
 			},
 			View: ExploreView,
 		},
-		ExploreSections: []SectionConfig{
+		ExploreViews: []ViewConfig{
 			{
 				Title: " Explore",
 			},
