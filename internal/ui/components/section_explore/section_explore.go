@@ -89,6 +89,15 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.section.UpdateProgramContext(ctx)
 }
 
+func renderColumnTitleLabels() string {
+	return lipgloss.JoinHorizontal(
+		lipgloss.Top,
+		section.LabelTitle.Copy().Foreground(constants.ColorLabelDockerOfficial).Render(constants.GlyphLabelDockerOfficial),
+		section.LabelTitle.Copy().Foreground(constants.ColorLabelVerifiedPublisher).Render(constants.GlyphLabelVerifiedPublisher),
+		section.LabelTitle.Copy().Foreground(constants.ColorLabelOpenSourceProgram).Render(constants.GlyphLabelOpenSourceProgram),
+	)
+}
+
 func (m *Model) GetSectionColumns() []table.Column {
 	return []table.Column{
 		{
@@ -96,27 +105,19 @@ func (m *Model) GetSectionColumns() []table.Column {
 			Width: &nameWidth,
 		},
 		{
-			Title: columnTitleLabelDockerOfficial.Render(constants.LabelDockerOfficialGlyph),
-			Width: &labelWidth,
-		},
-		{
-			Title: columnTitleLabelVerifiedPublisher.Render(constants.LabelVerifiedPublisherGlyph),
-			Width: &labelWidth,
-		},
-		{
-			Title: columnTitleLabelOpenSourceProgram.Render(constants.LabelOpenSourceProgramGlyph),
-			Width: &labelWidth,
+			Title: renderColumnTitleLabels(),
+			Width: &labelsWidth,
 		},
 		{
 			Title: section.ColumnTitle.Render("Organization"),
 			Width: &organizationsnameWidth,
 		},
 		{
-			Title: columnTitleStatsDownloads.Render(constants.StatsDownloadsGlyph),
+			Title: columnTitleStatsDownloads.Render(constants.GlyphStatsDownloads),
 			Width: &statsWidth,
 		},
 		{
-			Title: columnTitleStatsStars.Render(constants.StatsStarsGlyph),
+			Title: columnTitleStatsStars.Render(constants.GlyphStatsStars),
 			Width: &statsWidth,
 		},
 		{
