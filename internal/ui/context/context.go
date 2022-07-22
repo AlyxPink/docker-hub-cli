@@ -12,5 +12,5 @@ type ProgramContext struct {
 }
 
 func (ctx *ProgramContext) GetViewsConfig() []config.ViewConfig {
-	return ctx.Config.ExploreViews
+	return ctx.Config.Views
 }

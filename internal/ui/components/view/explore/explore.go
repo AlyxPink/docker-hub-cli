@@ -216,9 +216,9 @@ func (m *Model) GetIsLoading() bool {
 }
 
 func FetchAllViews(ctx context.ProgramContext) (views []view.View, fetchAllCmd tea.Cmd) {
-	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.ExploreViews))
-	views = make([]view.View, 0, len(ctx.Config.ExploreViews))
-	for i, viewConfig := range ctx.Config.ExploreViews {
+	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.Views))
+	views = make([]view.View, 0, len(ctx.Config.Views))
+	for i, viewConfig := range ctx.Config.Views {
 		viewModel := NewModel(i, &ctx, viewConfig)
 		views = append(views, &viewModel)
 		fetchReposCmds = append(fetchReposCmds, viewModel.FetchViewRows())
