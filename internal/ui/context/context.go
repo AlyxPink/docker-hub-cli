@@ -1,6 +1,8 @@
 package context
 
-import "github.com/VictorBersy/docker-hub-cli/internal/config"
+import (
+	"github.com/VictorBersy/docker-hub-cli/internal/config"
+)
 
 type ProgramContext struct {
 	ScreenHeight      int

@@ -87,7 +87,7 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 func (m *Model) GetViewColumns() []table.Column {
 	return []table.Column{
 		{
-			Title: view.ColumnTitle.Render("Test"),
+			Title: view.ColumnTitle.Render("TESTGRNEJKGJNGJKNRGNEJKGRKJN"),
 			Width: &testWidth,
 		},
 	}
@@ -99,7 +99,7 @@ func (m *Model) BuildRows() []table.Row {
 }
 
 func (m *Model) NumRows() int {
-	return 0
+	return 123
 }
 
 type ViewFetchedMsg struct {
@@ -140,4 +140,15 @@ func (m *Model) FetchViewRows() tea.Cmd {
 
 func (m *Model) GetIsLoading() bool {
 	return m.view.IsLoading
+}
+
+func FetchAllViews(ctx context.ProgramContext) (views []view.View, fetchAllCmd tea.Cmd) {
+	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.Views))
+	views = make([]view.View, 0, len(ctx.Config.Views))
+	for i, viewConfig := range ctx.Config.Views {
+		viewModel := NewModel(i, &ctx, viewConfig)
+		views = append(views, &viewModel)
+		fetchReposCmds = append(fetchReposCmds, viewModel.FetchViewRows())
+	}
+	return views, tea.Batch(fetchReposCmds...)
 }
