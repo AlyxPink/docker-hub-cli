@@ -35,8 +35,8 @@ func GetDefaultConfig() Config {
 	return Config{
 		Defaults: Defaults{
 			Preview: PreviewConfig{
-				Open:  false,
-				Width: 50,
+				Open:  true,
+				Width: 70,
 			},
 			View: ExploreView,
 		},
