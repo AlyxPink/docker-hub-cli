@@ -45,10 +45,10 @@ func GetDefaultConfig() Config {
 				Title: " Explore",
 			},
 			{
-				Title: " My Repositories",
+				Title: "  My Repositories",
 			},
 			{
-				Title: " My Organizations",
+				Title: "  My Organizations",
 			},
 		},
 	}
