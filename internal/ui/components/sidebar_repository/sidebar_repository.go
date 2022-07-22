@@ -2,12 +2,9 @@ package sidebar_repository
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/styles"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -30,83 +27,64 @@ func NewModel(data *data.RepositoryData, width int) Model {
 }
 
 func (m Model) View() string {
-	s := strings.Builder{}
-	s.WriteString(m.renderTitle())
-	s.WriteString("\n")
-	s.WriteString(m.renderArchs())
-	s.WriteString("\n")
-	s.WriteString("\n")
-	s.WriteString(m.renderTags())
-	s.WriteString("\n")
-	s.WriteString("\n")
-	s.WriteString(m.renderPullCmd())
-	s.WriteString("\n")
-	s.WriteString(m.renderReadme())
-	s.WriteString("\n")
-
-	return s.String()
+	return lipgloss.JoinVertical(
+		lipgloss.Left,
+		m.renderTitle(),
+		m.renderDescription(),
+		m.renderArchs(),
+		m.renderPullCmd(),
+	)
 }
 
 func (m *Model) renderLabels() string {
-	render := strings.Builder{}
-	if m.repo.Data.Labels.DockerOfficial {
-		render.WriteString(label.Copy().Foreground(labelDockerOfficial).Align(lipgloss.Left).Render(constants.LabelDockerOfficialGlyph))
+	labels := []string{}
+	for _, label := range m.repo.Data.Labels {
+		if label.Enabled {
+			labels = append(labels, labelGlyph.Foreground(label.Color).Render(label.Glyph))
+		}
 	}
-	if m.repo.Data.Labels.VerifiedPublisher {
-		render.WriteString(label.Copy().Foreground(labelVerifiedPublisher).Align(lipgloss.Left).Render(constants.LabelVerifiedPublisherGlyph))
-	}
-	if m.repo.Data.Labels.OpenSourceProgram {
-		render.WriteString(label.Copy().Foreground(labelOpenSourceProgram).Align(lipgloss.Left).Render(constants.LabelOpenSourceProgramGlyph))
-	}
-	return render.String()
+	return lipgloss.JoinHorizontal(
+		lipgloss.Top,
+		labels...,
+	)
 }
 
 func (m *Model) renderTitle() string {
-	return styles.MainTextStyle.Copy().
-		Padding(1).
-		Bold(true).
-		Render(m.renderName() + m.renderLabels())
+	return lipgloss.JoinHorizontal(
+		lipgloss.Top,
+		m.renderName(),
+		m.renderLabels(),
+	)
 }
 
 func (m *Model) renderName() string {
-	return styles.MainTextStyle.Copy().
-		Bold(true).
-		Render(m.repo.Data.Name)
+	return titleRepo.Render(m.repo.Data.Name)
+}
+
+func (m *Model) renderDescription() string {
+	return description.Render(m.repo.Data.Description)
 }
 
 func (m *Model) renderArchs() string {
-	render := strings.Builder{}
-	render.WriteString(archTitle.Render("Archs"))
-	render.WriteString("\n")
-	archs := m.repo.Data.Architectures
-	for _, arch := range archs {
-		render.WriteString(archTag.Render(arch.Label))
+	archs := []string{}
+	for _, arch := range m.repo.Data.Architectures {
+		archs = append(archs, archLabel.Render(arch.Name))
 	}
-	return render.String()
-}
-
-func (m *Model) renderTags() string {
-	render := strings.Builder{}
-	render.WriteString(dockerImageTitle.Render("Tags"))
-	render.WriteString("\n")
-	tags := []string{"3.16.0", "3.16", "3", "latest"}
-	for _, tag := range tags {
-		render.WriteString(dockerImageTag.Render(tag))
-	}
-	return render.String()
+	return lipgloss.JoinVertical(
+		lipgloss.Top,
+		archsTitle.Render("Archs"),
+		lipgloss.JoinHorizontal(
+			lipgloss.Top,
+			archs...,
+		),
+	)
 }
 
 func (m *Model) renderPullCmd() string {
-	render := strings.Builder{}
-	render.WriteString(dockerPullCmdTitle.Render("Pull cmd"))
-	render.WriteString("\n")
 	cmd := fmt.Sprintf("$ docker pull %s", m.repo.Data.Slug)
-	render.WriteString(dockerPullCmdBox.Copy().Render(cmd))
-
-	return render.String()
-}
-
-func (m *Model) renderReadme() string {
-	return styles.MainTextStyle.Copy().
-		Render("# Todo: Render README")
+	return lipgloss.JoinVertical(
+		lipgloss.Top,
+		dockerPullCmdTitle.Render(fmt.Sprintf("How to pull %s?", m.repo.Data.Name)),
+		dockerPullCmdBox.Copy().Render(cmd),
+	)
 }
