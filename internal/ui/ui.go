@@ -32,11 +32,13 @@ type Model struct {
 func NewModel() Model {
 	tabsModel := tabs.NewModel()
 	return Model{
-		keys:          utils.Keys,
-		help:          help.NewModel(),
-		currSectionId: 0,
-		tabs:          tabsModel,
-		sidebar:       sidebar.NewModel(),
+		keys:    utils.Keys,
+		help:    help.NewModel(),
+		explore: []section.Section{},
+		tabs:    tabsModel,
+		ctx: context.ProgramContext{
+			Config: &config.Config{},
+		},
 	}
 }
 
