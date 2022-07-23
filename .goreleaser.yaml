@@ -15,7 +15,7 @@ builds:
   targets: ["go_first_class"]
 
 dockers:
-  - id: myimg
+  - id: docker-hub-cli
     image_templates:
     # Docker Hub
     - "victorbersy/{{ .ProjectName }}:latest"
