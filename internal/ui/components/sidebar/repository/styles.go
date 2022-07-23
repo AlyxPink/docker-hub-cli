@@ -29,5 +29,5 @@ var (
 				Background(dockerPullCmdBoxBg).
 				Foreground(dockerPullCmdBoxFg).
 				Padding(2).
-				Margin(2)
+				Margin(1, 0)
 )
