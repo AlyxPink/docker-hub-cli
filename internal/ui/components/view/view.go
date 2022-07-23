@@ -1,7 +1,6 @@
 package view
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
@@ -12,7 +11,6 @@ import (
 
 type Model struct {
 	Id        int
-	Config    config.ViewConfig
 	Ctx       *context.ProgramContext
 	Spinner   spinner.Model
 	IsLoading bool

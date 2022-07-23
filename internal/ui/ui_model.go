@@ -2,7 +2,6 @@ package ui
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
@@ -56,24 +55,15 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case key.Matches(msg, m.keys.PrevView):
 			prevView := m.getViewAt(m.getPrevViewId())
 			if prevView != nil {
-				log.Println("prevView")
 				m.ctx.View = m.switchSelectedView()
-				m.setCurrViewId(prevView.Id())
-				m.syncMainContentWidth() // TODO check if it's required
 				m.setCurrentView(prevView)
-				m.onViewedRowChanged()
 			}
 
 		case key.Matches(msg, m.keys.NextView):
-			nextViewId := m.getNextViewId()
-			nextView := m.getViewAt(nextViewId)
+			nextView := m.getViewAt(m.getNextViewId())
 			if nextView != nil {
-				log.Println("nextView")
 				m.ctx.View = m.switchSelectedView()
-				m.setCurrViewId(nextView.Id())
-				m.syncMainContentWidth() // TODO check if it's required
 				m.setCurrentView(nextView)
-				m.onViewedRowChanged()
 			}
 
 		case key.Matches(msg, m.keys.NextView):
@@ -109,7 +99,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			cmd = currView.FetchViewRows()
 
 		case key.Matches(msg, m.keys.Quit):
-			log.Println()
 			cmd = tea.Quit
 
 		}
@@ -121,14 +110,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.syncMainContentWidth()
 		newViews, fetchViewsCmds := m.fetchAllViews()
 		m.setViews(newViews)
+		m.setCurrentView(m.views[0])
 		cmd = fetchViewsCmds
 
 	case view.ViewMsg:
 		cmd = m.updateRelevantView(msg)
-
-		if msg.GetViewId() == m.currViewId {
-			m.onViewedRowChanged()
-		}
+		m.onViewedRowChanged()
 
 	case tea.WindowSizeMsg:
 		m.onWindowSizeChanged(msg)
@@ -142,11 +129,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	m.help, helpCmd = m.help.Update(msg)
 	cmds = append(cmds, cmd, sidebarCmd, helpCmd)
 	return m, tea.Batch(cmds...)
-}
-
-func (m *Model) setCurrViewId(newViewId int) {
-	m.currViewId = newViewId
-	m.tabs.SetCurrViewId(newViewId)
 }
 
 func (m *Model) onViewedRowChanged() {

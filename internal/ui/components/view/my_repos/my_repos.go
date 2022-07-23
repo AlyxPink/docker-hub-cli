@@ -1,7 +1,6 @@
 package my_repos
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
@@ -18,11 +17,10 @@ type Model struct {
 	view view.Model
 }
 
-func NewModel(id int, ctx *context.ProgramContext, config config.ViewConfig) Model {
+func NewModel(id int, ctx *context.ProgramContext) Model {
 	m := Model{
 		view: view.Model{
 			Id:        id,
-			Config:    config,
 			Ctx:       ctx,
 			Spinner:   spinner.Model{Spinner: spinner.Dot},
 			IsLoading: true,
@@ -50,7 +48,6 @@ func (m Model) Update(msg tea.Msg) (view.View, tea.Cmd) {
 
 	switch msg := msg.(type) {
 	case ViewFetchedMsg:
-		m.view.IsLoading = false
 		m.view.Table.SetRows(m.BuildRows())
 
 	case view.ViewTickMsg:
@@ -87,7 +84,7 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 func (m *Model) GetViewColumns() []table.Column {
 	return []table.Column{
 		{
-			Title: view.ColumnTitle.Render("TESTGRNEJKGJNGJKNRGNEJKGRKJN"),
+			Title: view.ColumnTitle.Render("TEST TODO"),
 			Width: &testWidth,
 		},
 	}
@@ -142,13 +139,8 @@ func (m *Model) GetIsLoading() bool {
 	return m.view.IsLoading
 }
 
-func FetchAllViews(ctx context.ProgramContext) (views []view.View, fetchAllCmd tea.Cmd) {
-	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.Views))
-	views = make([]view.View, 0, len(ctx.Config.Views))
-	for i, viewConfig := range ctx.Config.Views {
-		viewModel := NewModel(i, &ctx, viewConfig)
-		views = append(views, &viewModel)
-		fetchReposCmds = append(fetchReposCmds, viewModel.FetchViewRows())
-	}
-	return views, tea.Batch(fetchReposCmds...)
+func Fetch(ctx context.ProgramContext) (view view.View, fetchCmd tea.Cmd) {
+	viewModel := NewModel(1, &ctx)
+	fetchCmd = viewModel.FetchViewRows()
+	return &viewModel, tea.Batch(fetchCmd)
 }

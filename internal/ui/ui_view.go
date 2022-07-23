@@ -41,11 +41,11 @@ func (m Model) View() string {
 }
 
 func (m *Model) fetchAllViews() ([]view.View, tea.Cmd) {
-	if m.ctx.View == config.ExploreView {
-		return view_explore.FetchAllViews(m.ctx)
-	} else {
-		return view_my_repos.FetchAllViews(m.ctx)
-	}
+	explore, cmd_explore := view_explore.Fetch(m.ctx)
+	my_repos, cmd_my_repos := view_my_repos.Fetch(m.ctx)
+	views := []view.View{explore, my_repos}
+	cmds := []tea.Cmd{cmd_explore, cmd_my_repos}
+	return views, tea.Batch(cmds...)
 }
 
 func (m *Model) getViews() []view.View {
@@ -63,6 +63,8 @@ func (m *Model) setViews(newViews []view.View) {
 
 func (m *Model) setCurrentView(view view.View) {
 	m.currView = m.getCurrView()
+	m.currViewId = view.Id()
+	m.tabs.SetCurrViewId(m.currViewId)
 }
 
 func (m *Model) switchSelectedView() config.ViewType {
