@@ -65,6 +65,7 @@ func (m *Model) setCurrentView(view view.View) {
 	m.currView = m.getCurrView()
 	m.currViewId = view.Id()
 	m.tabs.SetCurrViewId(m.currViewId)
+	m.onViewedRowChanged()
 }
 
 func (m *Model) switchSelectedView() config.ViewType {
