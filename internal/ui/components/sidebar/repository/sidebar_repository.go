@@ -3,9 +3,9 @@ package sidebar_repository
 import (
 	"fmt"
 
-	"github.com/VictorBersy/docker-hub-cli/internal/data"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/data"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
 )
 
 type Model struct {

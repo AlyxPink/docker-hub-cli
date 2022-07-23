@@ -1,17 +1,17 @@
 package ui
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
-	"github.com/VictorBersy/docker-hub-cli/internal/data"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/help"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/sidebar"
-	sidebar_repository "github.com/VictorBersy/docker-hub-cli/internal/ui/components/sidebar/repository"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/tabs"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
-	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/victorbersy/docker-hub-cli/internal/config"
+	"github.com/victorbersy/docker-hub-cli/internal/data"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/help"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
+	sidebar_repository "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/repository"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/tabs"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
+	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
 type Model struct {

@@ -3,16 +3,16 @@ package my_repos
 import (
 	"time"
 
-	"github.com/VictorBersy/docker-hub-cli/internal/data"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
-	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/data"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
+	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
 const ViewType = "my_repos"

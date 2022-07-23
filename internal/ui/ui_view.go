@@ -3,12 +3,12 @@ package ui
 import (
 	"strings"
 
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
-	view_explore "github.com/VictorBersy/docker-hub-cli/internal/ui/components/view/explore"
-	view_my_repos "github.com/VictorBersy/docker-hub-cli/internal/ui/components/view/my_repos"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/config"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
+	view_explore "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/explore"
+	view_my_repos "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/my_repos"
 )
 
 func (m Model) View() string {

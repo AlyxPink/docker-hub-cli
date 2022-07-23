@@ -3,12 +3,12 @@ package sidebar
 import (
 	"fmt"
 
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
 )
 
 type Model struct {

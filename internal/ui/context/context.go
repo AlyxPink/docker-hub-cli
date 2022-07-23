@@ -1,7 +1,7 @@
 package context
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
+	"github.com/victorbersy/docker-hub-cli/internal/config"
 )
 
 type ProgramContext struct {

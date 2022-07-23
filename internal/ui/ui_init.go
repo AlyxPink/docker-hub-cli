@@ -1,8 +1,8 @@
 package ui
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/victorbersy/docker-hub-cli/internal/config"
 )
 
 func initScreen() tea.Msg {

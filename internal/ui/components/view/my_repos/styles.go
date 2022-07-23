@@ -1,8 +1,8 @@
 package my_repos
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
 )
 
 var (
