@@ -6,6 +6,7 @@ import (
 )
 
 var (
+	rowHeight = 1
 	cellStyle = lipgloss.NewStyle().
 			PaddingLeft(1).
 			PaddingRight(1).
@@ -29,5 +30,5 @@ var (
 			BorderStyle(lipgloss.NormalBorder()).
 			BorderForeground(styles.DefaultTheme.FaintBorder).
 			BorderBottom(true).
-			MaxHeight(1)
+			MaxHeight(rowHeight)
 )
