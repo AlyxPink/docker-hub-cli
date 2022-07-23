@@ -1,9 +1,13 @@
 package my_repos
 
 import (
+	"time"
+
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
+	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
 	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	"github.com/charmbracelet/bubbles/spinner"
@@ -14,11 +18,13 @@ import (
 const ViewType = "my_repos"
 
 type Model struct {
-	view view.Model
+	Repositories []data.RepositoryData
+	view         view.Model
 }
 
 func NewModel(id int, ctx *context.ProgramContext) Model {
 	m := Model{
+		Repositories: []data.RepositoryData{},
 		view: view.Model{
 			Id:        id,
 			Ctx:       ctx,
@@ -47,7 +53,9 @@ func (m Model) Update(msg tea.Msg) (view.View, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
-	case ViewFetchedMsg:
+	case ViewRepositoriesFetchedMsg:
+		m.Repositories = msg.Repositories
+		m.view.IsLoading = false
 		m.view.Table.SetRows(m.BuildRows())
 
 	case view.ViewTickMsg:
@@ -68,7 +76,7 @@ func (m *Model) View() string {
 	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
 			spinnerStyle.Copy().Render(m.view.Spinner.View()),
-			"Fetching Repositories...",
+			"Fetching nothing...",
 		))
 	}
 
@@ -84,35 +92,69 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 func (m *Model) GetViewColumns() []table.Column {
 	return []table.Column{
 		{
-			Title: view.ColumnTitle.Render("TEST TODO"),
-			Width: &testWidth,
+			Title: view.ColumnTitle.Render("Name"),
+			Width: &nameWidth,
+		},
+		{
+			Title: "TODO",
+			Width: &labelsWidth,
+		},
+		{
+			Title: view.ColumnTitle.Render("Organization"),
+			Width: &organizationsnameWidth,
+		},
+		{
+			Title: columnTitleStatsDownloads.Render(constants.GlyphStatsDownloads),
+			Width: &statsWidth,
+		},
+		{
+			Title: columnTitleStatsStars.Render(constants.GlyphStatsStars),
+			Width: &statsWidth,
+		},
+		{
+			Title: view.ColumnTitle.Render("Updated At"),
+			Width: &LastUpdateCellWidth,
+		},
+		{
+			Title: view.ColumnTitle.Render("Description"),
+			Grow:  utils.BoolPtr(true),
 		},
 	}
 }
 
 func (m *Model) BuildRows() []table.Row {
 	var rows []table.Row
+	for _, currRepo := range m.Repositories {
+		repoModel := repository.Repository{Data: currRepo}
+		rows = append(rows, repoModel.ToTableRow())
+	}
+
 	return rows
 }
 
 func (m *Model) NumRows() int {
-	return 123
+	return len(m.Repositories)
 }
 
-type ViewFetchedMsg struct {
-	ViewId int
+type ViewRepositoriesFetchedMsg struct {
+	ViewId       int
+	Repositories []data.RepositoryData
 }
 
-func (msg ViewFetchedMsg) GetViewId() int {
+func (msg ViewRepositoriesFetchedMsg) GetViewId() int {
 	return msg.ViewId
 }
 
-func (msg ViewFetchedMsg) GetViewType() string {
+func (msg ViewRepositoriesFetchedMsg) GetViewType() string {
 	return ViewType
 }
 
 func (m *Model) GetCurrRow() data.RowData {
-	return nil
+	if len(m.Repositories) == 0 {
+		return nil
+	}
+	repo := m.Repositories[m.view.Table.GetCurrItem()]
+	return &repo
 }
 
 func (m *Model) NextRow() int {
@@ -132,7 +174,69 @@ func (m *Model) LastItem() int {
 }
 
 func (m *Model) FetchViewRows() tea.Cmd {
-	return nil
+	if m == nil {
+		return nil
+	}
+	m.Repositories = nil
+	m.view.Table.ResetCurrItem()
+	m.view.Table.Rows = nil
+	m.view.IsLoading = true
+	var cmds []tea.Cmd
+	cmds = append(cmds, m.view.CreateNextTickCmd(spinner.Tick))
+
+	fake_repository := data.RepositoryData{
+		Architectures: []data.Architecture{
+			{
+				Name:  "My architecture",
+				Label: "Test",
+			},
+		},
+		Categories: []data.Category{
+			{
+				Name:  "My category",
+				Label: "Test",
+			},
+		},
+		CertificationStatus: "",
+		Created_at:          time.Now(),
+		Description:         "This is my very own Docker repository",
+		FilterType:          "",
+		Name:                "my-own-repo",
+		OperatingSystems: []data.OperatingSystem{
+			{
+				Name:  "linux",
+				Label: "linux",
+			},
+		},
+		Publisher: data.Publisher{
+			Id:   "myself",
+			Name: "myself",
+		},
+		PullCount:  "123",
+		Slug:       "my-own-repo",
+		Source:     "community",
+		StarCount:  456,
+		Type:       ViewType,
+		Updated_at: time.Now(),
+		Labels: []data.Label{
+			{
+				Name:    "my-label",
+				Glyph:   "X",
+				Color:   lipgloss.AdaptiveColor{Light: "#F0F", Dark: "#FF0"},
+				Enabled: false,
+			},
+		},
+	}
+	cmds = append(cmds, func() tea.Msg {
+		fetchedRepos := []data.RepositoryData{fake_repository, fake_repository, fake_repository, fake_repository}
+
+		return ViewRepositoriesFetchedMsg{
+			ViewId:       m.view.Id,
+			Repositories: fetchedRepos,
+		}
+	})
+
+	return tea.Batch(cmds...)
 }
 
 func (m *Model) GetIsLoading() bool {
