@@ -1,0 +1,5 @@
+FROM scratch as runner
+COPY --from=golang:alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+ENV TERM=xterm-256color
+ENTRYPOINT ["/docker-hub-cli"]
+COPY docker-hub-cli /
