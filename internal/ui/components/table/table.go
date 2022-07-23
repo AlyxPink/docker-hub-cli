@@ -29,7 +29,7 @@ func NewModel(dimensions constants.Dimensions, columns []Column, rows []Row, ite
 		Rows:         rows,
 		EmptyState:   emptyState,
 		dimensions:   dimensions,
-		rowsViewport: listviewport.NewModel(dimensions, itemTypeLabel, len(rows), 2),
+		rowsViewport: listviewport.NewModel(dimensions, itemTypeLabel, len(rows), rowHeight),
 	}
 }
 
