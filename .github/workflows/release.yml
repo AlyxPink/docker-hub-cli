@@ -12,9 +12,16 @@ permissions:
   packages: write
 
 jobs:
-  login:
+  goreleaser:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ~1.18
+          cache: true
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -26,16 +33,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-  goreleaser:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-go@v3
-        with:
-          go-version: ~1.18
-          cache: true
       - uses: goreleaser/goreleaser-action@v3
         with:
           version: latest
