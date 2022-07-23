@@ -14,6 +14,22 @@ builds:
   ldflags: ["-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }}"]
   targets: ["go_first_class"]
 
+dockers:
+  - id: myimg
+    image_templates:
+    # Docker Hub
+    - "victorbersy/{{ .ProjectName }}:latest"
+    - "victorbersy/{{ .ProjectName }}:{{ .Tag }}"
+    - "victorbersy/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+    - "victorbersy/{{ .ProjectName }}:v{{ .Major }}"
+    # Github
+    - "ghcr.io/victorbersy/{{ .ProjectName }}:latest"
+    - "ghcr.io/victorbersy/{{ .ProjectName }}:{{ .Tag }}"
+    - "ghcr.io/victorbersy/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/victorbersy/{{ .ProjectName }}:v{{ .Major }}"
+    dockerfile: Dockerfile.goreleaser
+    use: docker
+
 changelog:
   sort: asc
   use: github
