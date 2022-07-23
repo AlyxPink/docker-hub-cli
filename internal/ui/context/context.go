@@ -1,6 +1,8 @@
 package context
 
-import "github.com/VictorBersy/docker-hub-cli/internal/config"
+import (
+	"github.com/VictorBersy/docker-hub-cli/internal/config"
+)
 
 type ProgramContext struct {
 	ScreenHeight      int
@@ -12,5 +14,5 @@ type ProgramContext struct {
 }
 
 func (ctx *ProgramContext) GetViewsConfig() []config.ViewConfig {
-	return ctx.Config.ExploreViews
+	return ctx.Config.Views
 }

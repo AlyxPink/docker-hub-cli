@@ -18,15 +18,15 @@ var (
 	columnTitleStatsDownloads = view.ColumnTitle.Copy().Foreground(statsDownloads)
 	columnTitleStatsStars     = view.ColumnTitle.Copy().Foreground(statsStars)
 
-	ContainerPadding = 1
-
-	containerStyle = lipgloss.NewStyle().
-			Padding(0, ContainerPadding)
-
 	spinnerStyle = lipgloss.NewStyle().Padding(0, 1)
 
 	emptyStateStyle = lipgloss.NewStyle().
 			Faint(true).
 			PaddingLeft(1).
 			MarginBottom(1)
+
+	ContainerPadding = 1
+
+	containerStyle = lipgloss.NewStyle().
+			Padding(0, ContainerPadding)
 )

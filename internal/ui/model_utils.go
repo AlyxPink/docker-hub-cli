@@ -6,7 +6,7 @@ import (
 )
 
 func (m *Model) getCurrView() view.View {
-	views := m.getCurrentViews()
+	views := m.getViews()
 	if len(views) == 0 {
 		return nil
 	}
@@ -22,7 +22,7 @@ func (m *Model) getCurrRowData() data.RowData {
 }
 
 func (m *Model) getViewAt(id int) view.View {
-	views := m.getCurrentViews()
+	views := m.getViews()
 	if len(views) <= id {
 		return nil
 	}

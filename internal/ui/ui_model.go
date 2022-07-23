@@ -1,8 +1,6 @@
 package ui
 
 import (
-	"strings"
-
 	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/help"
@@ -10,12 +8,10 @@ import (
 	sidebar_repository "github.com/VictorBersy/docker-hub-cli/internal/ui/components/sidebar/repository"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/tabs"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/view"
-	view_explore "github.com/VictorBersy/docker-hub-cli/internal/ui/components/view/explore"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
 	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 )
 
 type Model struct {
@@ -23,8 +19,9 @@ type Model struct {
 	err        error
 	sidebar    sidebar.Model
 	currViewId int
+	currView   view.View
 	help       help.Model
-	explore    []view.View
+	views      []view.View
 	tabs       tabs.Model
 	ctx        context.ProgramContext
 }
@@ -32,22 +29,13 @@ type Model struct {
 func NewModel() Model {
 	tabsModel := tabs.NewModel()
 	return Model{
-		keys:    utils.Keys,
-		help:    help.NewModel(),
-		explore: []view.View{},
-		tabs:    tabsModel,
+		keys: utils.Keys,
+		help: help.NewModel(),
+		tabs: tabsModel,
 		ctx: context.ProgramContext{
 			Config: &config.Config{},
 		},
 	}
-}
-
-func initScreen() tea.Msg {
-	return initMsg{Config: config.GetDefaultConfig()}
-}
-
-func (m Model) Init() tea.Cmd {
-	return tea.Batch(initScreen, tea.EnterAltScreen)
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -65,16 +53,15 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case key.Matches(msg, m.keys.PrevView):
 			prevView := m.getViewAt(m.getPrevViewId())
 			if prevView != nil {
-				m.setCurrViewId(prevView.Id())
-				m.onViewedRowChanged()
+				m.ctx.View = m.switchSelectedView()
+				m.setCurrentView(prevView)
 			}
 
 		case key.Matches(msg, m.keys.NextView):
-			nextViewId := m.getNextViewId()
-			nextView := m.getViewAt(nextViewId)
+			nextView := m.getViewAt(m.getNextViewId())
 			if nextView != nil {
-				m.setCurrViewId(nextView.Id())
-				m.onViewedRowChanged()
+				m.ctx.View = m.switchSelectedView()
+				m.setCurrentView(nextView)
 			}
 
 		case key.Matches(msg, m.keys.Down):
@@ -117,18 +104,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.sidebar.IsOpen = msg.Config.Defaults.Preview.Open
 		m.syncMainContentWidth()
 		newViews, fetchViewsCmds := m.fetchAllViews()
-		m.setCurrentViews(newViews)
+		m.setViews(newViews)
+		m.setCurrentView(m.views[0])
 		cmd = fetchViewsCmds
 
 	case view.ViewMsg:
 		cmd = m.updateRelevantView(msg)
-
-		if msg.GetViewId() == m.currViewId {
-			switch msg.GetViewType() {
-			case view_explore.ViewType:
-				m.onViewedRowChanged()
-			}
-		}
+		m.onViewedRowChanged()
 
 	case tea.WindowSizeMsg:
 		m.onWindowSizeChanged(msg)
@@ -144,50 +126,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
-func (m Model) View() string {
-	if m.err != nil {
-		return m.err.Error()
-	}
-
-	if m.ctx.Config == nil {
-		return "Reading config...\n"
-	}
-
-	s := strings.Builder{}
-	s.WriteString(m.tabs.View(m.ctx))
-	s.WriteString("\n")
-	currView := m.getCurrView()
-	mainContent := ""
-	if currView != nil {
-		mainContent = lipgloss.JoinHorizontal(
-			lipgloss.Top,
-			m.getCurrView().View(),
-			m.sidebar.View(),
-		)
-	} else {
-		mainContent = "No views defined..."
-	}
-	s.WriteString(mainContent)
-	s.WriteString("\n")
-	s.WriteString(m.help.View(m.ctx))
-	return s.String()
-}
-
-type initMsg struct {
-	Config config.Config
-}
-
-type errMsg struct {
-	error
-}
-
-func (e errMsg) Error() string { return e.error.Error() }
-
-func (m *Model) setCurrViewId(newViewId int) {
-	m.currViewId = newViewId
-	m.tabs.SetCurrViewId(newViewId)
-}
-
 func (m *Model) onViewedRowChanged() {
 	m.syncSidebarExplore()
 }
@@ -201,7 +139,7 @@ func (m *Model) onWindowSizeChanged(msg tea.WindowSizeMsg) {
 }
 
 func (m *Model) syncProgramContext() {
-	for _, view := range m.getCurrentViews() {
+	for _, view := range m.getViews() {
 		view.UpdateProgramContext(&m.ctx)
 	}
 	m.sidebar.UpdateProgramContext(&m.ctx)
@@ -210,11 +148,8 @@ func (m *Model) syncProgramContext() {
 func (m *Model) updateRelevantView(msg view.ViewMsg) (cmd tea.Cmd) {
 	var updatedView view.View
 
-	switch msg.GetViewType() {
-	case view_explore.ViewType:
-		updatedView, cmd = m.explore[msg.GetViewId()].Update(msg)
-		m.explore[msg.GetViewId()] = updatedView
-	}
+	updatedView, cmd = m.views[msg.GetViewId()].Update(msg)
+	m.views[msg.GetViewId()] = updatedView
 
 	return cmd
 }
@@ -235,19 +170,5 @@ func (m *Model) syncSidebarExplore() {
 	case *data.RepositoryData:
 		content := sidebar_repository.NewModel(row_data, width).View()
 		m.sidebar.SetContent(content)
-	}
-}
-
-func (m *Model) fetchAllViews() ([]view.View, tea.Cmd) {
-	return view_explore.FetchAllViews(m.ctx)
-}
-
-func (m *Model) getCurrentViews() []view.View {
-	return m.explore
-}
-
-func (m *Model) setCurrentViews(newViews []view.View) {
-	if m.ctx.View == config.ExploreView {
-		m.explore = newViews
 	}
 }
