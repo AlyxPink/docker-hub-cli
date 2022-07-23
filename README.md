@@ -4,6 +4,8 @@
 
 CLI that helps users manage and browse Docker Hub resources (repositories, organizations, members, etc...)
 
+![image](https://user-images.githubusercontent.com/2109178/180596993-6b6638d8-6dfb-4a84-9bc8-172f282e8af3.png)
+
 ## Launch
 
 ### Go
@@ -23,13 +25,15 @@ docker run --rm -it ghcr.io/victorbersy/docker-hub-cli
 ```
 ## Screenshots
 
-![image](https://user-images.githubusercontent.com/2109178/177809263-02338c63-b354-4d4e-9db1-8eb122449346.png)
-
-![image](https://user-images.githubusercontent.com/2109178/177809251-48e3fcf5-8825-4963-8d8a-7924c91b3eb5.png)
+![image](https://user-images.githubusercontent.com/2109178/180597089-22be7878-8a27-4fe6-8401-be28cc26fa0b.png)
+![image](https://user-images.githubusercontent.com/2109178/180597084-c1e26447-91ce-4b82-994f-481886776fad.png)
+![image](https://user-images.githubusercontent.com/2109178/180597083-66beebdb-3b60-401f-ab78-343b866b3986.png)
+![image](https://user-images.githubusercontent.com/2109178/180597082-180ff55a-18e1-4056-83a9-26694c1fcc23.png)
 
 ## Credits
 
-- Heavily inspired by [gh-dash](https://github.com/dlvhdr/gh-dash/) from @dlvhdr
+- Heavily inspired from [gh-dash](https://github.com/dlvhdr/gh-dash/) created by [@dlvhdr](https://github.com/dlvhdr/)
 - [bubbletea by Charm](https://github.com/charmbracelet/bubbletea)
 - [glamour by Charm](https://github.com/charmbracelet/glamour)
 - [lipgloss by Charm](https://github.com/charmbracelet/lipgloss)
+- [Docker Hub](https://hub.docker.com/)
