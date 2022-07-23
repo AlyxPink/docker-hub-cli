@@ -81,19 +81,19 @@ func (data RepositoryData) GetLastUpdate() time.Time {
 
 func (data *RepositoryData) setLabels() {
 	data.Labels = append(data.Labels, Label{
-		Name:    "DockerOfficial",
+		Name:    "Docker Official",
 		Glyph:   constants.GlyphLabelDockerOfficial,
 		Color:   constants.ColorLabelDockerOfficial,
 		Enabled: (data.Source == "store"),
 	})
 	data.Labels = append(data.Labels, Label{
-		Name:    "VerifiedPublisher",
+		Name:    "Verified Publisher",
 		Glyph:   constants.GlyphLabelVerifiedPublisher,
 		Color:   constants.ColorLabelVerifiedPublisher,
 		Enabled: (data.Source == "verified_publisher"),
 	})
 	data.Labels = append(data.Labels, Label{
-		Name:    "OpenSourceProgram",
+		Name:    "Open Source Program",
 		Glyph:   constants.GlyphLabelOpenSourceProgram,
 		Color:   constants.ColorLabelOpenSourceProgram,
 		Enabled: (data.Source == "open_source"),

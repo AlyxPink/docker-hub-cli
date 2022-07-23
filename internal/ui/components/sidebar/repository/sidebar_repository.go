@@ -30,6 +30,7 @@ func (m Model) View() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
 		m.renderTitle(),
+		m.renderLabels(),
 		m.renderDescription(),
 		m.renderArchs(),
 		m.renderPullCmd(),
@@ -40,10 +41,14 @@ func (m *Model) renderLabels() string {
 	labels := []string{}
 	for _, label := range m.repo.Data.Labels {
 		if label.Enabled {
-			labels = append(labels, labelGlyph.Foreground(label.Color).Render(label.Glyph))
+			labels = append(labels, lipgloss.JoinHorizontal(
+				lipgloss.Top,
+				labelGlyph.Foreground(label.Color).Render(label.Glyph),
+				labelGlyph.Foreground(label.Color).Render(label.Name),
+			))
 		}
 	}
-	return lipgloss.JoinHorizontal(
+	return lipgloss.JoinVertical(
 		lipgloss.Top,
 		labels...,
 	)
@@ -51,9 +56,8 @@ func (m *Model) renderLabels() string {
 
 func (m *Model) renderTitle() string {
 	return lipgloss.JoinHorizontal(
-		lipgloss.Top,
+		lipgloss.Center,
 		m.renderName(),
-		m.renderLabels(),
 	)
 }
 

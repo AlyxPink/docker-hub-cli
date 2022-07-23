@@ -34,6 +34,8 @@ func (repo Repository) renderLabels() string {
 	for _, label := range repo.Data.Labels {
 		if label.Enabled {
 			labels = append(labels, lipgloss.NewStyle().Foreground(label.Color).Width(3).Render(label.Glyph))
+		} else {
+			labels = append(labels, lipgloss.NewStyle().Width(3).Render(""))
 		}
 	}
 	return lipgloss.JoinHorizontal(
