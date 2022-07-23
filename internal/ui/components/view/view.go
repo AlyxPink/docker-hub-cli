@@ -46,7 +46,6 @@ func (m *Model) CreateNextTickCmd(nextTickCmd tea.Cmd) tea.Cmd {
 			Type:            m.Type,
 		}
 	}
-
 }
 
 func (m *Model) GetDimensions() constants.Dimensions {
