@@ -1,8 +1,6 @@
 package ui
 
 import (
-	"fmt"
-
 	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/help"
@@ -65,9 +63,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.ctx.View = m.switchSelectedView()
 				m.setCurrentView(nextView)
 			}
-
-		case key.Matches(msg, m.keys.NextView):
-			fmt.Print()
 
 		case key.Matches(msg, m.keys.Down):
 			currView.NextRow()
