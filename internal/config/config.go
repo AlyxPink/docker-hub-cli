@@ -4,11 +4,12 @@ type ViewType string
 
 const (
 	ExploreView ViewType = "explore"
+	MyReposView ViewType = "my_repos"
 )
 
 type ViewConfig struct {
 	Title string
-	Limit *int
+	Type  ViewType
 }
 
 type PreviewConfig struct {
@@ -27,8 +28,8 @@ type Keybinding struct {
 }
 
 type Config struct {
-	ExploreViews []ViewConfig
-	Defaults     Defaults
+	Views    []ViewConfig
+	Defaults Defaults
 }
 
 func GetDefaultConfig() Config {
@@ -40,15 +41,14 @@ func GetDefaultConfig() Config {
 			},
 			View: ExploreView,
 		},
-		ExploreViews: []ViewConfig{
+		Views: []ViewConfig{
 			{
 				Title: " Explore",
+				Type:  ExploreView,
 			},
 			{
 				Title: "  My Repositories",
-			},
-			{
-				Title: "  My Organizations",
+				Type:  MyReposView,
 			},
 		},
 	}

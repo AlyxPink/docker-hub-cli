@@ -1,7 +1,6 @@
 package view_explore
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
@@ -21,12 +20,11 @@ type Model struct {
 	view         view.Model
 }
 
-func NewModel(id int, ctx *context.ProgramContext, config config.ViewConfig) Model {
+func NewModel(id int, ctx *context.ProgramContext) Model {
 	m := Model{
 		Repositories: []data.RepositoryData{},
 		view: view.Model{
 			Id:        id,
-			Config:    config,
 			Ctx:       ctx,
 			Spinner:   spinner.Model{Spinner: spinner.Dot},
 			IsLoading: true,
@@ -215,13 +213,8 @@ func (m *Model) GetIsLoading() bool {
 	return m.view.IsLoading
 }
 
-func FetchAllViews(ctx context.ProgramContext) (views []view.View, fetchAllCmd tea.Cmd) {
-	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.ExploreViews))
-	views = make([]view.View, 0, len(ctx.Config.ExploreViews))
-	for i, viewConfig := range ctx.Config.ExploreViews {
-		viewModel := NewModel(i, &ctx, viewConfig)
-		views = append(views, &viewModel)
-		fetchReposCmds = append(fetchReposCmds, viewModel.FetchViewRows())
-	}
-	return views, tea.Batch(fetchReposCmds...)
+func Fetch(ctx context.ProgramContext) (view view.View, fetchCmd tea.Cmd) {
+	viewModel := NewModel(0, &ctx)
+	fetchCmd = viewModel.FetchViewRows()
+	return &viewModel, tea.Batch(fetchCmd)
 }

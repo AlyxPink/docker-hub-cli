@@ -1,7 +1,8 @@
 package my_repos
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/config"
+	"time"
+
 	"github.com/VictorBersy/docker-hub-cli/internal/data"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/repository"
 	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
@@ -14,19 +15,18 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-const ViewType = "explore"
+const ViewType = "my_repos"
 
 type Model struct {
 	Repositories []data.RepositoryData
 	view         view.Model
 }
 
-func NewModel(id int, ctx *context.ProgramContext, config config.ViewConfig) Model {
+func NewModel(id int, ctx *context.ProgramContext) Model {
 	m := Model{
 		Repositories: []data.RepositoryData{},
 		view: view.Model{
 			Id:        id,
-			Config:    config,
 			Ctx:       ctx,
 			Spinner:   spinner.Model{Spinner: spinner.Dot},
 			IsLoading: true,
@@ -39,7 +39,7 @@ func NewModel(id int, ctx *context.ProgramContext, config config.ViewConfig) Mod
 		m.GetViewColumns(),
 		m.BuildRows(),
 		"Repositories",
-		utils.StringPtr(emptyStateStyle.Render("No repositories were found")),
+		utils.StringPtr(emptyStateStyle.Render("Nothing found")),
 	)
 
 	return m
@@ -76,7 +76,7 @@ func (m *Model) View() string {
 	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
 			spinnerStyle.Copy().Render(m.view.Spinner.View()),
-			"Fetching Repositories...",
+			"Fetching nothing...",
 		))
 	}
 
@@ -89,15 +89,6 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.view.UpdateProgramContext(ctx)
 }
 
-func renderColumnTitleLabels() string {
-	return lipgloss.JoinHorizontal(
-		lipgloss.Top,
-		view.LabelTitle.Copy().Foreground(constants.ColorLabelDockerOfficial).Render(constants.GlyphLabelDockerOfficial),
-		view.LabelTitle.Copy().Foreground(constants.ColorLabelVerifiedPublisher).Render(constants.GlyphLabelVerifiedPublisher),
-		view.LabelTitle.Copy().Foreground(constants.ColorLabelOpenSourceProgram).Render(constants.GlyphLabelOpenSourceProgram),
-	)
-}
-
 func (m *Model) GetViewColumns() []table.Column {
 	return []table.Column{
 		{
@@ -105,7 +96,7 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &nameWidth,
 		},
 		{
-			Title: renderColumnTitleLabels(),
+			Title: "TODO",
 			Width: &labelsWidth,
 		},
 		{
@@ -193,14 +184,51 @@ func (m *Model) FetchViewRows() tea.Cmd {
 	var cmds []tea.Cmd
 	cmds = append(cmds, m.view.CreateNextTickCmd(spinner.Tick))
 
+	fake_repository := data.RepositoryData{
+		Architectures: []data.Architecture{
+			{
+				Name:  "My architecture",
+				Label: "Test",
+			},
+		},
+		Categories: []data.Category{
+			{
+				Name:  "My category",
+				Label: "Test",
+			},
+		},
+		CertificationStatus: "",
+		Created_at:          time.Now(),
+		Description:         "This is my very own Docker repository",
+		FilterType:          "",
+		Name:                "my-own-repo",
+		OperatingSystems: []data.OperatingSystem{
+			{
+				Name:  "linux",
+				Label: "linux",
+			},
+		},
+		Publisher: data.Publisher{
+			Id:   "myself",
+			Name: "myself",
+		},
+		PullCount:  "123",
+		Slug:       "my-own-repo",
+		Source:     "community",
+		StarCount:  456,
+		Type:       ViewType,
+		Updated_at: time.Now(),
+		Labels: []data.Label{
+			{
+				Name:    "my-label",
+				Glyph:   "X",
+				Color:   lipgloss.AdaptiveColor{Light: "#F0F", Dark: "#FF0"},
+				Enabled: false,
+			},
+		},
+	}
 	cmds = append(cmds, func() tea.Msg {
-		fetchedRepos, err := data.FetchRepositories()
-		if err != nil {
-			return ViewRepositoriesFetchedMsg{
-				ViewId:       m.view.Id,
-				Repositories: []data.RepositoryData{},
-			}
-		}
+		fetchedRepos := []data.RepositoryData{fake_repository, fake_repository, fake_repository, fake_repository}
 
 		return ViewRepositoriesFetchedMsg{
 			ViewId:       m.view.Id,
@@ -215,13 +243,8 @@ func (m *Model) GetIsLoading() bool {
 	return m.view.IsLoading
 }
 
-func FetchAllViews(ctx context.ProgramContext) (views []view.View, fetchAllCmd tea.Cmd) {
-	fetchReposCmds := make([]tea.Cmd, 0, len(ctx.Config.ExploreViews))
-	views = make([]view.View, 0, len(ctx.Config.ExploreViews))
-	for i, viewConfig := range ctx.Config.ExploreViews {
-		viewModel := NewModel(i, &ctx, viewConfig)
-		views = append(views, &viewModel)
-		fetchReposCmds = append(fetchReposCmds, viewModel.FetchViewRows())
-	}
-	return views, tea.Batch(fetchReposCmds...)
+func Fetch(ctx context.ProgramContext) (view view.View, fetchCmd tea.Cmd) {
+	viewModel := NewModel(1, &ctx)
+	fetchCmd = viewModel.FetchViewRows()
+	return &viewModel, tea.Batch(fetchCmd)
 }
