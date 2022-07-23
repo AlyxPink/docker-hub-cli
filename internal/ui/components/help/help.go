@@ -1,11 +1,11 @@
 package help
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/context"
-	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	bbHelp "github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
+	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
 type Model struct {

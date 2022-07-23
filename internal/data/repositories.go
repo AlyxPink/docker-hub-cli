@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/imroc/req/v3"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
 )
 
 type RepositoryPage struct {

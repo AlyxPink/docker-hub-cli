@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/VictorBersy/docker-hub-cli/internal/ui"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/victorbersy/docker-hub-cli/internal/ui"
 )
 
 func main() {

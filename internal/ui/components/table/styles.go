@@ -1,8 +1,8 @@
 package table
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/styles"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
 
 var (

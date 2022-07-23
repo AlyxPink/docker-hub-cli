@@ -3,10 +3,10 @@ package repository
 import (
 	"fmt"
 
-	"github.com/VictorBersy/docker-hub-cli/internal/data"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/table"
-	"github.com/VictorBersy/docker-hub-cli/internal/utils"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/data"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
+	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
 type Repository struct {

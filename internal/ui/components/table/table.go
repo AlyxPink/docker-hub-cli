@@ -1,10 +1,10 @@
 package table
 
 import (
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/components/listviewport"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/constants"
-	"github.com/VictorBersy/docker-hub-cli/internal/ui/styles"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/listviewport"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
 
 type Model struct {
