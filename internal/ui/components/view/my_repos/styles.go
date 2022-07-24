@@ -6,15 +6,16 @@ import (
 )
 
 var (
-	nameWidth              = 25
-	organizationsnameWidth = 20
-	LastUpdateCellWidth    = lipgloss.Width(" Last Update ")
-	labelsWidth            = 12
-	statsWidth             = 8
+	isPrivateWidth = 4
+	updatedAtWidth = lipgloss.Width(" Last Update ")
+	createdAtWidth = lipgloss.Width(" Created at ")
+	statsWidth     = 8
 
+	isPrivate      = lipgloss.AdaptiveColor{Light: "#edede9", Dark: "#edede9"}
 	statsDownloads = lipgloss.AdaptiveColor{Light: "#00BBF9", Dark: "#00BBF9"}
 	statsStars     = lipgloss.AdaptiveColor{Light: "#FFB703", Dark: "#FFB703"}
 
+	columnTitleIsPrivate      = view.ColumnTitle.Copy().Foreground(isPrivate)
 	columnTitleStatsDownloads = view.ColumnTitle.Copy().Foreground(statsDownloads)
 	columnTitleStatsStars     = view.ColumnTitle.Copy().Foreground(statsStars)
 

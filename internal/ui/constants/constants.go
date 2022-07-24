@@ -33,6 +33,9 @@ var (
 	GlyphLabelCommunity         = "וֹ"
 	GlyphStatsDownloads         = ""
 	GlyphStatsStars             = ""
+	GlyphIsPrivate              = ""
+	GlyphPrivate                = ""
+	GlyphPublic                 = ""
 
 	ColorLabelDockerOfficial    = lipgloss.AdaptiveColor{Light: "#83c5be", Dark: "#2E7F74"}
 	ColorLabelVerifiedPublisher = lipgloss.AdaptiveColor{Light: "#48cae4", Dark: "#086DD7"}

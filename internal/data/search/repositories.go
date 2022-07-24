@@ -1,4 +1,4 @@
-package data
+package data_search
 
 import (
 	"fmt"
@@ -43,7 +43,7 @@ type RepositoryData struct {
 	Source              string            `json:"source"`
 	StarCount           int               `json:"star_count"`
 	Type                string            `json:"type"`
-	Updated_at          time.Time         `json:"updated_at"`
+	UpdatedAt           time.Time         `json:"updated_at"`
 	Labels              []Label
 }
 
@@ -64,19 +64,11 @@ type Architecture struct {
 	Label string `json:"label"`
 }
 
-func (data RepositoryData) GetRepoNameWithOwner() string {
-	return data.Name
-}
-
 func (data RepositoryData) GetUrl() string {
 	if data.Publisher.Id == "docker" {
 		return fmt.Sprintf("https://hub.docker.com/_/%s", data.Slug)
 	}
 	return fmt.Sprintf("https://hub.docker.com/r/%s", data.Slug)
-}
-
-func (data RepositoryData) GetLastUpdate() time.Time {
-	return data.Updated_at
 }
 
 func (data *RepositoryData) setLabels() {

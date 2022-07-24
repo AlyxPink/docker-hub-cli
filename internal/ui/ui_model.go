@@ -4,7 +4,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/victorbersy/docker-hub-cli/internal/config"
-	"github.com/victorbersy/docker-hub-cli/internal/data"
+	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/help"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
 	sidebar_repository "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/repository"
@@ -167,7 +167,7 @@ func (m *Model) syncSidebarExplore() {
 	width := m.sidebar.GetSidebarContentWidth()
 
 	switch row_data := currRowData.(type) {
-	case *data.RepositoryData:
+	case *data_search.RepositoryData:
 		content := sidebar_repository.NewModel(row_data, width).View()
 		m.sidebar.SetContent(content)
 	}
