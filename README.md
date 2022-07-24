@@ -1,6 +1,10 @@
 # Docker Hub CLI
 
-![build](https://github.com/VictorBersy/docker-hub-cli/actions/workflows/build.yml/badge.svg)
+|Purpose        | Badges |
+|---------------|--------|
+| Documentation |[![Go Reference](https://pkg.go.dev/badge/github.com/victorbersy/docker-hub-cli.svg)](https://pkg.go.dev/github.com/victorbersy/docker-hub-cli)|
+| Tests         |[![Go Report Card](https://goreportcard.com/badge/github.com/victorbersy/docker-hub-cli)](https://goreportcard.com/report/github.com/victorbersy/docker-hub-cli) ![build](https://github.com/VictorBersy/docker-hub-cli/actions/workflows/build.yml/badge.svg) [![codecov](https://codecov.io/github/victorbersy/docker-hub-cli/branch/main/graph/badge.svg?token=ODN9OUF0A4)](https://codecov.io/github/victorbersy/docker-hub-cli)|
+| Triage        |[![Open Source Helpers](https://www.codetriage.com/victorbersy/docker-hub-cli/badges/users.svg)](https://www.codetriage.com/victorbersy/docker-hub-cli)|
 
 CLI that helps users manage and browse Docker Hub resources (repositories, organizations, members, etc...)
 
