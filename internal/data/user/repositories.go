@@ -53,6 +53,10 @@ func FetchRepositories() ([]RepositoryData, error) {
 		return nil, err
 	}
 
+	if resp.IsSuccess() {
+		return repositoryPage.Repositories, err
+	}
+
 	log.Println("unknown status", resp.Status)
 	log.Println("raw content:")
 	log.Println(resp.Dump()) // Record raw content when server returned unknown status code.
