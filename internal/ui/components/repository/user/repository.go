@@ -11,7 +11,7 @@ import (
 )
 
 type Repository struct {
-	Data data_user.RepositoryData
+	Data data_user.Repository
 }
 
 func (repo Repository) ToTableRow() table.Row {

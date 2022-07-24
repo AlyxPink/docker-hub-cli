@@ -10,7 +10,7 @@ import (
 )
 
 type Repository struct {
-	Data data_search.RepositoryData
+	Data data_search.Repository
 }
 
 func (repo Repository) ToTableRow() table.Row {

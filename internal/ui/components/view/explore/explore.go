@@ -17,13 +17,13 @@ import (
 const ViewType = "explore"
 
 type Model struct {
-	Repositories []data_search.RepositoryData
+	Repositories []data_search.Repository
 	view         view.Model
 }
 
 func NewModel(id int, ctx *context.ProgramContext) Model {
 	m := Model{
-		Repositories: []data_search.RepositoryData{},
+		Repositories: []data_search.Repository{},
 		view: view.Model{
 			Id:        id,
 			Ctx:       ctx,
@@ -146,7 +146,7 @@ func (m *Model) NumRows() int {
 
 type ViewRepositoriesFetchedMsg struct {
 	ViewId       int
-	Repositories []data_search.RepositoryData
+	Repositories []data_search.Repository
 }
 
 func (msg ViewRepositoriesFetchedMsg) GetViewId() int {
@@ -197,7 +197,7 @@ func (m *Model) FetchViewRows() tea.Cmd {
 		if err != nil {
 			return ViewRepositoriesFetchedMsg{
 				ViewId:       m.view.Id,
-				Repositories: []data_search.RepositoryData{},
+				Repositories: []data_search.Repository{},
 			}
 		}
 

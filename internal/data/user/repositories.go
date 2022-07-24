@@ -10,13 +10,13 @@ import (
 )
 
 type RepositoryPage struct {
-	Count        int              `json:"count"`
-	NextUrl      string           `json:"next"`
-	PreviousUrl  string           `json:"previous"`
-	Repositories []RepositoryData `json:"results"`
+	Count        int          `json:"count"`
+	NextUrl      string       `json:"next"`
+	PreviousUrl  string       `json:"previous"`
+	Repositories []Repository `json:"results"`
 }
 
-type RepositoryData struct {
+type Repository struct {
 	Name           string    `json:"name"`
 	Namespace      string    `json:"namespace"`
 	RepositoryType string    `json:"repository_type"`
@@ -29,11 +29,11 @@ type RepositoryData struct {
 	Affiliation    string    `json:"affiliation"`
 }
 
-func (data RepositoryData) GetUrl() string {
+func (data Repository) GetUrl() string {
 	return fmt.Sprintf("https://hub.docker.com/repository/docker/%s/%s", data.Namespace, data.Name)
 }
 
-func FetchRepositories() ([]RepositoryData, error) {
+func FetchRepositories() ([]Repository, error) {
 	client := req.C().
 		SetTimeout(5 * time.Second)
 

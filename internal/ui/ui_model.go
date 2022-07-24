@@ -167,7 +167,7 @@ func (m *Model) syncSidebarExplore() {
 	width := m.sidebar.GetSidebarContentWidth()
 
 	switch row_data := currRowData.(type) {
-	case *data_search.RepositoryData:
+	case *data_search.Repository:
 		content := sidebar_repository.NewModel(row_data, width).View()
 		m.sidebar.SetContent(content)
 	}

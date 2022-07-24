@@ -13,7 +13,7 @@ type Model struct {
 	width int
 }
 
-func NewModel(data *data_search.RepositoryData, width int) Model {
+func NewModel(data *data_search.Repository, width int) Model {
 	var r *repository_search.Repository
 	if data == nil {
 		r = nil
