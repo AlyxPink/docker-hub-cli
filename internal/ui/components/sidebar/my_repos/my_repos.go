@@ -7,7 +7,7 @@ import (
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	repository_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
@@ -53,9 +53,9 @@ func (m *Model) renderName() string {
 func (m *Model) renderVisibility() string {
 	var visibility string
 	if m.repo.Data.IsPrivate {
-		visibility = visibilityPrivate.Render(fmt.Sprintf("%s Private", constants.GlyphPrivate))
+		visibility = visibilityPrivate.Render(fmt.Sprintf("%s Private", styles.DefaultGlyphs.Private))
 	} else {
-		visibility = visibilityPublic.Render(fmt.Sprintf("%s Public", constants.GlyphPublic))
+		visibility = visibilityPublic.Render(fmt.Sprintf("%s Public", styles.DefaultGlyphs.Public))
 	}
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
@@ -70,12 +70,12 @@ func (m *Model) renderStats() string {
 		sidebar.Title.Render("Stats:"),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
-			statsStars.Render(constants.GlyphStatsStars),
+			statsStars.Render(styles.DefaultGlyphs.StatsStars),
 			fmt.Sprint(m.repo.Data.StarCount),
 		),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
-			statsDownloads.Render(constants.GlyphStatsDownloads),
+			statsDownloads.Render(styles.DefaultGlyphs.StatsDownloads),
 			fmt.Sprint(m.repo.Data.PullCount),
 		),
 	)

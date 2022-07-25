@@ -7,7 +7,7 @@ import (
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
@@ -32,9 +32,9 @@ func (repo Repository) renderName() string {
 
 func (repo Repository) renderIsPrivate() string {
 	if repo.Data.IsPrivate {
-		return repository.VisibilityPrivate.Render(constants.GlyphPrivate)
+		return repository.VisibilityPrivate.Render(styles.DefaultGlyphs.Private)
 	} else {
-		return repository.VisibilityPublic.Render(constants.GlyphPublic)
+		return repository.VisibilityPublic.Render(styles.DefaultGlyphs.Public)
 	}
 }
 

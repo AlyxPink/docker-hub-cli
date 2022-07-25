@@ -9,7 +9,6 @@ import (
 	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
@@ -92,9 +91,9 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 func renderColumnTitleLabels() string {
 	return lipgloss.JoinHorizontal(
 		lipgloss.Top,
-		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelDockerOfficial).Render(constants.GlyphLabelDockerOfficial),
-		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelVerifiedPublisher).Render(constants.GlyphLabelVerifiedPublisher),
-		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelOpenSourceProgram).Render(constants.GlyphLabelOpenSourceProgram),
+		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelDockerOfficial).Render(styles.DefaultGlyphs.LabelDockerOfficial),
+		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelVerifiedPublisher).Render(styles.DefaultGlyphs.LabelVerifiedPublisher),
+		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelOpenSourceProgram).Render(styles.DefaultGlyphs.LabelOpenSourceProgram),
 	)
 }
 
@@ -113,11 +112,11 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &organizationsnameWidth,
 		},
 		{
-			Title: columnTitleStatsDownloads.Render(constants.GlyphStatsDownloads),
+			Title: columnTitleStatsDownloads.Render(styles.DefaultGlyphs.StatsDownloads),
 			Width: &statsWidth,
 		},
 		{
-			Title: columnTitleStatsStars.Render(constants.GlyphStatsStars),
+			Title: columnTitleStatsStars.Render(styles.DefaultGlyphs.StatsStars),
 			Width: &statsWidth,
 		},
 		{
