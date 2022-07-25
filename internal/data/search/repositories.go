@@ -1,4 +1,4 @@
-package data
+package data_search
 
 import (
 	"fmt"
@@ -11,11 +11,11 @@ import (
 )
 
 type RepositoryPage struct {
-	PageSize     int              `json:"page_size"`
-	PageId       int              `json:"page"`
-	NextUrl      string           `json:"next"`
-	PreviousUrl  string           `json:"previous"`
-	Repositories []RepositoryData `json:"summaries"`
+	PageSize     int          `json:"page_size"`
+	PageId       int          `json:"page"`
+	NextUrl      string       `json:"next"`
+	PreviousUrl  string       `json:"previous"`
+	Repositories []Repository `json:"summaries"`
 }
 
 type Category struct {
@@ -28,7 +28,7 @@ type OperatingSystem struct {
 	Label string `json:"label"`
 }
 
-type RepositoryData struct {
+type Repository struct {
 	Architectures       []Architecture    `json:"architectures"`
 	Categories          []Category        `json:"categories"`
 	CertificationStatus string            `json:"certification_status"`
@@ -43,7 +43,7 @@ type RepositoryData struct {
 	Source              string            `json:"source"`
 	StarCount           int               `json:"star_count"`
 	Type                string            `json:"type"`
-	Updated_at          time.Time         `json:"updated_at"`
+	UpdatedAt           time.Time         `json:"updated_at"`
 	Labels              []Label
 }
 
@@ -64,22 +64,14 @@ type Architecture struct {
 	Label string `json:"label"`
 }
 
-func (data RepositoryData) GetRepoNameWithOwner() string {
-	return data.Name
-}
-
-func (data RepositoryData) GetUrl() string {
+func (data Repository) GetUrl() string {
 	if data.Publisher.Id == "docker" {
 		return fmt.Sprintf("https://hub.docker.com/_/%s", data.Slug)
 	}
 	return fmt.Sprintf("https://hub.docker.com/r/%s", data.Slug)
 }
 
-func (data RepositoryData) GetLastUpdate() time.Time {
-	return data.Updated_at
-}
-
-func (data *RepositoryData) setLabels() {
+func (data *Repository) setLabels() {
 	data.Labels = append(data.Labels, Label{
 		Name:    "Docker Official",
 		Glyph:   constants.GlyphLabelDockerOfficial,
@@ -106,7 +98,7 @@ func (data *RepositoryData) setLabels() {
 	})
 }
 
-func FetchRepositories() ([]RepositoryData, error) {
+func FetchRepositories() ([]Repository, error) {
 	client := req.C().
 		SetTimeout(5 * time.Second)
 

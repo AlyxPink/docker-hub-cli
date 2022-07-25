@@ -1,4 +1,4 @@
-package sidebar_repository
+package explore_sidebar
 
 import (
 	"github.com/charmbracelet/lipgloss"
