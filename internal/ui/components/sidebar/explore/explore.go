@@ -1,24 +1,24 @@
-package sidebar_repository
+package explore_sidebar
 
 import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/victorbersy/docker-hub-cli/internal/data"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
+	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
+	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
 )
 
 type Model struct {
-	repo  *repository.Repository
+	repo  *repository_search.Repository
 	width int
 }
 
-func NewModel(data *data.RepositoryData, width int) Model {
-	var r *repository.Repository
+func NewModel(data *data_search.Repository, width int) Model {
+	var r *repository_search.Repository
 	if data == nil {
 		r = nil
 	} else {
-		r = &repository.Repository{Data: *data}
+		r = &repository_search.Repository{Data: *data}
 	}
 	return Model{
 		repo:  r,

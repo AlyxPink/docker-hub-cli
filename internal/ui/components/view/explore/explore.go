@@ -5,7 +5,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/victorbersy/docker-hub-cli/internal/data"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
+	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
+	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
@@ -16,13 +17,13 @@ import (
 const ViewType = "explore"
 
 type Model struct {
-	Repositories []data.RepositoryData
+	Repositories []data_search.Repository
 	view         view.Model
 }
 
 func NewModel(id int, ctx *context.ProgramContext) Model {
 	m := Model{
-		Repositories: []data.RepositoryData{},
+		Repositories: []data_search.Repository{},
 		view: view.Model{
 			Id:        id,
 			Ctx:       ctx,
@@ -132,7 +133,7 @@ func (m *Model) GetViewColumns() []table.Column {
 func (m *Model) BuildRows() []table.Row {
 	var rows []table.Row
 	for _, currRepo := range m.Repositories {
-		repoModel := repository.Repository{Data: currRepo}
+		repoModel := repository_search.Repository{Data: currRepo}
 		rows = append(rows, repoModel.ToTableRow())
 	}
 
@@ -145,7 +146,7 @@ func (m *Model) NumRows() int {
 
 type ViewRepositoriesFetchedMsg struct {
 	ViewId       int
-	Repositories []data.RepositoryData
+	Repositories []data_search.Repository
 }
 
 func (msg ViewRepositoriesFetchedMsg) GetViewId() int {
@@ -192,11 +193,11 @@ func (m *Model) FetchViewRows() tea.Cmd {
 	cmds = append(cmds, m.view.CreateNextTickCmd(spinner.Tick))
 
 	cmds = append(cmds, func() tea.Msg {
-		fetchedRepos, err := data.FetchRepositories()
+		fetchedRepos, err := data_search.FetchRepositories()
 		if err != nil {
 			return ViewRepositoriesFetchedMsg{
 				ViewId:       m.view.Id,
-				Repositories: []data.RepositoryData{},
+				Repositories: []data_search.Repository{},
 			}
 		}
 

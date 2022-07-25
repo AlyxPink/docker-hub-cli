@@ -4,10 +4,12 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/victorbersy/docker-hub-cli/internal/config"
-	"github.com/victorbersy/docker-hub-cli/internal/data"
+	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
+	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/help"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
-	sidebar_repository "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/repository"
+	explore_sidebar "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/explore"
+	my_repos_sidebar "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/my_repos"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/tabs"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
@@ -52,17 +54,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch {
 		case key.Matches(msg, m.keys.PrevView):
 			prevView := m.getViewAt(m.getPrevViewId())
-			if prevView != nil {
-				m.ctx.View = m.switchSelectedView()
-				m.setCurrentView(prevView)
-			}
+			m.ctx.View = m.switchSelectedView()
+			m.setCurrentView(prevView)
 
 		case key.Matches(msg, m.keys.NextView):
 			nextView := m.getViewAt(m.getNextViewId())
-			if nextView != nil {
-				m.ctx.View = m.switchSelectedView()
-				m.setCurrentView(nextView)
-			}
+			m.ctx.View = m.switchSelectedView()
+			m.setCurrentView(nextView)
 
 		case key.Matches(msg, m.keys.Down):
 			currView.NextRow()
@@ -127,7 +125,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *Model) onViewedRowChanged() {
-	m.syncSidebarExplore()
+	m.syncSidebar()
 }
 
 func (m *Model) onWindowSizeChanged(msg tea.WindowSizeMsg) {
@@ -154,21 +152,23 @@ func (m *Model) updateRelevantView(msg view.ViewMsg) (cmd tea.Cmd) {
 	return cmd
 }
 
+func (m *Model) syncSidebar() {
+	currRowData := m.getCurrRowData()
+	width := m.sidebar.GetSidebarContentWidth()
+	switch data := currRowData.(type) {
+	case *data_search.Repository:
+		content := explore_sidebar.NewModel(data, width).View()
+		m.sidebar.SetContent(content)
+	case *data_user.Repository:
+		content := my_repos_sidebar.NewModel(data, width).View()
+		m.sidebar.SetContent(content)
+	}
+}
+
 func (m *Model) syncMainContentWidth() {
 	sideBarOffset := 0
 	if m.sidebar.IsOpen {
 		sideBarOffset = m.ctx.Config.Defaults.Preview.Width
 	}
 	m.ctx.MainContentWidth = m.ctx.ScreenWidth - sideBarOffset
-}
-
-func (m *Model) syncSidebarExplore() {
-	currRowData := m.getCurrRowData()
-	width := m.sidebar.GetSidebarContentWidth()
-
-	switch row_data := currRowData.(type) {
-	case *data.RepositoryData:
-		content := sidebar_repository.NewModel(row_data, width).View()
-		m.sidebar.SetContent(content)
-	}
 }
