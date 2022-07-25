@@ -32,20 +32,6 @@ type Theme struct {
 	StatsStars             lipgloss.AdaptiveColor
 }
 
-type Glyphs struct {
-	LabelCommunity         string
-	LabelDockerOfficial    string
-	LabelOpenSourceProgram string
-	LabelVerifiedPublisher string
-
-	IsPrivate string
-	Private   string
-	Public    string
-
-	StatsDownloads string
-	StatsStars     string
-}
-
 var subtleIndigo = lipgloss.AdaptiveColor{Light: "#FFC8DD", Dark: "#242347"}
 
 var DefaultTheme = Theme{
@@ -74,20 +60,6 @@ var DefaultTheme = Theme{
 	LabelVerifiedPublisher: lipgloss.AdaptiveColor{Light: "#48CAE4", Dark: "#086DD7"},
 	StatsDownloads:         lipgloss.AdaptiveColor{Light: "#00BBF9", Dark: "#00BBF9"},
 	StatsStars:             lipgloss.AdaptiveColor{Light: "#FFB703", Dark: "#FFB703"},
-}
-
-var DefaultGlyphs = Glyphs{
-	LabelCommunity:         "וֹ",
-	LabelDockerOfficial:    "",
-	LabelOpenSourceProgram: "",
-	LabelVerifiedPublisher: "﫠",
-
-	IsPrivate: "",
-	Private:   "",
-	Public:    "",
-
-	StatsDownloads: "",
-	StatsStars:     "",
 }
 
 var (
