@@ -1,4 +1,4 @@
-package sidebar_repository
+package explore_sidebar
 
 import (
 	"fmt"
