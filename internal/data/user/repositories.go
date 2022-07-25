@@ -30,7 +30,7 @@ type Repository struct {
 }
 
 func (data Repository) GetUrl() string {
-	return fmt.Sprintf("https://hub.docker.com/repository/docker/%s/%s", data.Namespace, data.Name)
+	return fmt.Sprintf("https://hub.docker.com/r/%s/%s", data.Namespace, data.Name)
 }
 
 func FetchRepositories() ([]Repository, error) {
