@@ -8,8 +8,8 @@ import (
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/help"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/explore_details"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/my_repos_details"
+	explore_sidebar "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/explore"
+	my_repos_sidebar "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/my_repos"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/tabs"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
@@ -157,10 +157,10 @@ func (m *Model) syncSidebar() {
 	width := m.sidebar.GetSidebarContentWidth()
 	switch data := currRowData.(type) {
 	case *data_search.Repository:
-		content := explore_details.NewModel(data, width).View()
+		content := explore_sidebar.NewModel(data, width).View()
 		m.sidebar.SetContent(content)
 	case *data_user.Repository:
-		content := my_repos_details.NewModel(data, width).View()
+		content := my_repos_sidebar.NewModel(data, width).View()
 		m.sidebar.SetContent(content)
 	}
 }
