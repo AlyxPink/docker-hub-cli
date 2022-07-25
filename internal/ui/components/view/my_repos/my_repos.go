@@ -107,11 +107,11 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &statsWidth,
 		},
 		{
-			Title: view.ColumnTitle.Render("Updated At"),
+			Title: view.ColumnTitle.Render("Last Update"),
 			Width: &updatedAtWidth,
 		},
 		{
-			Title: view.ColumnTitle.Render("Created At"),
+			Title: view.ColumnTitle.Render("Created"),
 			Width: &createdAtWidth,
 		},
 	}
