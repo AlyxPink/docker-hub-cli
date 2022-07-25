@@ -52,13 +52,13 @@ func (m *Model) renderName() string {
 func (m *Model) renderVisibility() string {
 	var visibility string
 	if m.repo.Data.IsPrivate {
-		visibility = lipgloss.NewStyle().Foreground(lipgloss.Color("#EF476F")).Padding(1, 0, 2, 0).Render(fmt.Sprintf("%s Private", constants.GlyphPrivate))
+		visibility = visibilityPrivate.Render(fmt.Sprintf("%s Private", constants.GlyphPrivate))
 	} else {
-		visibility = lipgloss.NewStyle().Foreground(lipgloss.Color("#06D6A0")).Padding(1, 0, 2, 0).Render(fmt.Sprintf("%s Public", constants.GlyphPublic))
+		visibility = visibilityPublic.Render(fmt.Sprintf("%s Public", constants.GlyphPublic))
 	}
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		lipgloss.NewStyle().Bold(true).Underline(true).Render("Visibility:"),
+		visibilityTitle.Render("Visibility:"),
 		visibility,
 	)
 }
@@ -66,7 +66,7 @@ func (m *Model) renderVisibility() string {
 func (m *Model) renderStats() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		lipgloss.NewStyle().Bold(true).Underline(true).PaddingBottom(1).Render("Stats:"),
+		statsTitle.Render("Stats:"),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
 			statsStars.Render(constants.GlyphStatsStars),
@@ -81,12 +81,12 @@ func (m *Model) renderStats() string {
 }
 
 func (m *Model) renderTimestamps() string {
-	updated_at := lipgloss.NewStyle().Bold(true).Render("Last update:")
-	created_at := lipgloss.NewStyle().Bold(true).Render("Created at:")
+	updated_at := timestampName.Render("Last update:")
+	created_at := timestampName.Render("Created at:")
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		lipgloss.NewStyle().Bold(true).Underline(true).Padding(1, 0).Render("Timestamps:"),
-		lipgloss.NewStyle().Render(fmt.Sprintf("%s %s", updated_at, utils.TimeElapsed(m.repo.Data.UpdatedAt))),
-		lipgloss.NewStyle().Render(fmt.Sprintf("%s %s", created_at, utils.TimeElapsed(m.repo.Data.CreatedAt))),
+		timestampTitle.Render("Timestamps:"),
+		fmt.Sprintf("%s %s", updated_at, utils.TimeElapsed(m.repo.Data.UpdatedAt)),
+		fmt.Sprintf("%s %s", created_at, utils.TimeElapsed(m.repo.Data.CreatedAt)),
 	)
 }

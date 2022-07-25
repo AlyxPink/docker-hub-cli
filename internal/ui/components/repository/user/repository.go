@@ -31,9 +31,9 @@ func (repo Repository) renderName() string {
 
 func (repo Repository) renderIsPrivate() string {
 	if repo.Data.IsPrivate {
-		return lipgloss.NewStyle().Foreground(lipgloss.Color("#EF476F")).Render(constants.GlyphPrivate)
+		return visibilityPrivate.Render(constants.GlyphPrivate)
 	} else {
-		return lipgloss.NewStyle().Foreground(lipgloss.Color("#06D6A0")).Render(constants.GlyphPublic)
+		return visibilityPublic.Render(constants.GlyphPublic)
 	}
 }
 
