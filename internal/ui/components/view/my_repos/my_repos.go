@@ -38,7 +38,13 @@ func NewModel(id int, ctx *context.ProgramContext) Model {
 		m.GetViewColumns(),
 		m.BuildRows(),
 		"Repositories",
-		utils.StringPtr(emptyStateStyle.Render("Nothing found")),
+		utils.StringPtr(
+			lipgloss.JoinVertical(
+				lipgloss.Top,
+				emptyStateStyle.Render("No repositories found."),
+				emptyStateStyle.Render("Have you set DOCKER_USERNAME and DOCKER_BEARER?"),
+			),
+		),
 	)
 
 	return m

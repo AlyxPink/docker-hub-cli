@@ -30,7 +30,7 @@ type Repository struct {
 }
 
 func (data Repository) GetUrl() string {
-	return fmt.Sprintf("https://hub.docker.com/r/%s/%s", data.Namespace, data.Name)
+	return fmt.Sprintf("https://hub.docker.com/repository/docker/%s/%s", data.Namespace, data.Name)
 }
 
 func FetchRepositories() ([]Repository, error) {
@@ -38,6 +38,10 @@ func FetchRepositories() ([]Repository, error) {
 		SetTimeout(5 * time.Second)
 
 	var repositoryPage RepositoryPage
+	if os.Getenv("DOCKER_USERNAME") == "" {
+		return nil, nil
+	}
+	repo_url := fmt.Sprintf("https://hub.docker.com/v2/repositories/%s", os.Getenv("DOCKER_USERNAME"))
 	resp, err := client.R().
 		SetHeader("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("DOCKER_BEARER"))).
 		SetResult(&repositoryPage).
@@ -45,7 +49,7 @@ func FetchRepositories() ([]Repository, error) {
 		SetQueryParam("page_size", "100").
 		SetQueryParam("page", "1").
 		SetQueryParam("ordering", "last_updated").
-		Get("https://hub.docker.com/v2/repositories/victorbersy")
+		Get(repo_url)
 	if err != nil {
 		log.Println("error:", err)
 		log.Println("raw content:")
