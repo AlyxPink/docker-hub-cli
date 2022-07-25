@@ -3,6 +3,7 @@ package view_explore
 import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
 
 var (
@@ -12,11 +13,8 @@ var (
 	labelsWidth            = 12
 	statsWidth             = 8
 
-	statsDownloads = lipgloss.AdaptiveColor{Light: "#00BBF9", Dark: "#00BBF9"}
-	statsStars     = lipgloss.AdaptiveColor{Light: "#FFB703", Dark: "#FFB703"}
-
-	columnTitleStatsDownloads = view.ColumnTitle.Copy().Foreground(statsDownloads)
-	columnTitleStatsStars     = view.ColumnTitle.Copy().Foreground(statsStars)
+	columnTitleStatsDownloads = view.ColumnTitle.Copy().Foreground(styles.DefaultTheme.StatsDownloads)
+	columnTitleStatsStars     = view.ColumnTitle.Copy().Foreground(styles.DefaultTheme.StatsStars)
 
 	ContainerPadding = 1
 

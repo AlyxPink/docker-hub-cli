@@ -11,6 +11,7 @@ import (
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
@@ -91,9 +92,9 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 func renderColumnTitleLabels() string {
 	return lipgloss.JoinHorizontal(
 		lipgloss.Top,
-		view.LabelTitle.Copy().Foreground(constants.ColorLabelDockerOfficial).Render(constants.GlyphLabelDockerOfficial),
-		view.LabelTitle.Copy().Foreground(constants.ColorLabelVerifiedPublisher).Render(constants.GlyphLabelVerifiedPublisher),
-		view.LabelTitle.Copy().Foreground(constants.ColorLabelOpenSourceProgram).Render(constants.GlyphLabelOpenSourceProgram),
+		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelDockerOfficial).Render(constants.GlyphLabelDockerOfficial),
+		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelVerifiedPublisher).Render(constants.GlyphLabelVerifiedPublisher),
+		view.LabelTitle.Copy().Foreground(styles.DefaultTheme.LabelOpenSourceProgram).Render(constants.GlyphLabelOpenSourceProgram),
 	)
 }
 

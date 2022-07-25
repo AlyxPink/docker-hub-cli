@@ -2,15 +2,13 @@ package my_repos_sidebar
 
 import (
 	"github.com/charmbracelet/lipgloss"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
 
 var (
-	visibilityPrivate = lipgloss.NewStyle().Foreground(lipgloss.Color("#EF476F")).Padding(1, 0, 2, 0)
-	visibilityPublic  = lipgloss.NewStyle().Foreground(lipgloss.Color("#06D6A0")).Padding(1, 0, 2, 0)
+	visibilityPrivate = lipgloss.NewStyle().Foreground(styles.DefaultTheme.ErrorText).Padding(1, 0, 2, 0)
+	visibilityPublic  = lipgloss.NewStyle().Foreground(styles.DefaultTheme.SuccessText).Padding(1, 0, 2, 0)
 
-	statsDownloadsColors = lipgloss.AdaptiveColor{Light: "#00BBF9", Dark: "#00BBF9"}
-	statsStarsColors     = lipgloss.AdaptiveColor{Light: "#FFB703", Dark: "#FFB703"}
-
-	statsDownloads = lipgloss.NewStyle().Bold(true).PaddingRight(2).Foreground(statsDownloadsColors)
-	statsStars     = lipgloss.NewStyle().Bold(true).PaddingRight(2).Foreground(statsStarsColors)
+	statsDownloads = lipgloss.NewStyle().Bold(true).PaddingRight(2).Foreground(styles.DefaultTheme.StatsDownloads)
+	statsStars     = lipgloss.NewStyle().Bold(true).PaddingRight(2).Foreground(styles.DefaultTheme.StatsStars)
 )

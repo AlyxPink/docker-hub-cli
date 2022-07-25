@@ -2,7 +2,6 @@ package constants
 
 import (
 	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/lipgloss"
 )
 
 type KeyMap struct {
@@ -36,11 +35,6 @@ var (
 	GlyphIsPrivate              = ""
 	GlyphPrivate                = ""
 	GlyphPublic                 = ""
-
-	ColorLabelDockerOfficial    = lipgloss.AdaptiveColor{Light: "#83c5be", Dark: "#2E7F74"}
-	ColorLabelVerifiedPublisher = lipgloss.AdaptiveColor{Light: "#48cae4", Dark: "#086DD7"}
-	ColorLabelOpenSourceProgram = lipgloss.AdaptiveColor{Light: "#7D2EFF", Dark: "#7D2EFF"}
-	ColorLabelCommunity         = lipgloss.AdaptiveColor{Light: "#BDE0FE", Dark: "#BDE0FE"}
 
 	Keys = KeyMap{
 		Up: key.NewBinding(

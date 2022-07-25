@@ -3,6 +3,7 @@ package my_repos
 import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
 
 var (
@@ -11,13 +12,9 @@ var (
 	createdAtWidth = lipgloss.Width(" Created at ")
 	statsWidth     = 8
 
-	isPrivate      = lipgloss.AdaptiveColor{Light: "#edede9", Dark: "#edede9"}
-	statsDownloads = lipgloss.AdaptiveColor{Light: "#00BBF9", Dark: "#00BBF9"}
-	statsStars     = lipgloss.AdaptiveColor{Light: "#FFB703", Dark: "#FFB703"}
-
-	columnTitleIsPrivate      = view.ColumnTitle.Copy().Foreground(isPrivate)
-	columnTitleStatsDownloads = view.ColumnTitle.Copy().Foreground(statsDownloads)
-	columnTitleStatsStars     = view.ColumnTitle.Copy().Foreground(statsStars)
+	columnTitleIsPrivate      = view.ColumnTitle.Copy().Foreground(styles.DefaultTheme.MainText)
+	columnTitleStatsDownloads = view.ColumnTitle.Copy().Foreground(styles.DefaultTheme.StatsDownloads)
+	columnTitleStatsStars     = view.ColumnTitle.Copy().Foreground(styles.DefaultTheme.StatsStars)
 
 	spinnerStyle = lipgloss.NewStyle().Padding(0, 1)
 

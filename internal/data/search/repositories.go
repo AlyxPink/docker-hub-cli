@@ -8,6 +8,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/imroc/req/v3"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
 
 type RepositoryPage struct {
@@ -75,25 +76,25 @@ func (data *Repository) setLabels() {
 	data.Labels = append(data.Labels, Label{
 		Name:    "Docker Official",
 		Glyph:   constants.GlyphLabelDockerOfficial,
-		Color:   constants.ColorLabelDockerOfficial,
+		Color:   styles.DefaultTheme.LabelDockerOfficial,
 		Enabled: (data.Source == "store"),
 	})
 	data.Labels = append(data.Labels, Label{
 		Name:    "Verified Publisher",
 		Glyph:   constants.GlyphLabelVerifiedPublisher,
-		Color:   constants.ColorLabelVerifiedPublisher,
+		Color:   styles.DefaultTheme.LabelVerifiedPublisher,
 		Enabled: (data.Source == "verified_publisher"),
 	})
 	data.Labels = append(data.Labels, Label{
 		Name:    "Open Source Program",
 		Glyph:   constants.GlyphLabelOpenSourceProgram,
-		Color:   constants.ColorLabelOpenSourceProgram,
+		Color:   styles.DefaultTheme.LabelOpenSourceProgram,
 		Enabled: (data.Source == "open_source"),
 	})
 	data.Labels = append(data.Labels, Label{
 		Name:    "Community",
 		Glyph:   constants.GlyphLabelCommunity,
-		Color:   constants.ColorLabelCommunity,
+		Color:   styles.DefaultTheme.LabelCommunity,
 		Enabled: (data.Source == "community"),
 	})
 }
