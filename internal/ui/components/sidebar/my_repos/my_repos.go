@@ -6,6 +6,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	repository_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/user"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
@@ -46,7 +47,7 @@ func (m *Model) renderTitle() string {
 }
 
 func (m *Model) renderName() string {
-	return titleRepo.Render(m.repo.Data.Name)
+	return sidebar.Title.Render(m.repo.Data.Name)
 }
 
 func (m *Model) renderVisibility() string {
@@ -58,7 +59,7 @@ func (m *Model) renderVisibility() string {
 	}
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		visibilityTitle.Render("Visibility:"),
+		sidebar.Title.Render("Visibility:"),
 		visibility,
 	)
 }
@@ -66,7 +67,7 @@ func (m *Model) renderVisibility() string {
 func (m *Model) renderStats() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		statsTitle.Render("Stats:"),
+		sidebar.Title.Render("Stats:"),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
 			statsStars.Render(constants.GlyphStatsStars),
@@ -81,11 +82,11 @@ func (m *Model) renderStats() string {
 }
 
 func (m *Model) renderTimestamps() string {
-	updated_at := timestampName.Render("Last update:")
-	created_at := timestampName.Render("Created at:")
+	updated_at := sidebar.AttributeName.Render("Last update:")
+	created_at := sidebar.AttributeName.Render("Created at:")
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		timestampTitle.Render("Timestamps:"),
+		sidebar.Title.Render("Timestamps:"),
 		fmt.Sprintf("%s %s", updated_at, utils.TimeElapsed(m.repo.Data.UpdatedAt)),
 		fmt.Sprintf("%s %s", created_at, utils.TimeElapsed(m.repo.Data.CreatedAt)),
 	)

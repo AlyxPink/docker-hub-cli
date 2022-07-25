@@ -6,6 +6,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
 	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
 )
 
 type Model struct {
@@ -62,11 +63,11 @@ func (m *Model) renderTitle() string {
 }
 
 func (m *Model) renderName() string {
-	return titleRepo.Render(m.repo.Data.Name)
+	return sidebar.Title.Render(m.repo.Data.Name)
 }
 
 func (m *Model) renderDescription() string {
-	return description.Render(m.repo.Data.Description)
+	return sidebar.TextBox.Render(m.repo.Data.Description)
 }
 
 func (m *Model) renderArchs() string {

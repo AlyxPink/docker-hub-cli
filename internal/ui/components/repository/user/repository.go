@@ -5,6 +5,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
@@ -31,9 +32,9 @@ func (repo Repository) renderName() string {
 
 func (repo Repository) renderIsPrivate() string {
 	if repo.Data.IsPrivate {
-		return visibilityPrivate.Render(constants.GlyphPrivate)
+		return repository.VisibilityPrivate.Render(constants.GlyphPrivate)
 	} else {
-		return visibilityPublic.Render(constants.GlyphPublic)
+		return repository.VisibilityPublic.Render(constants.GlyphPublic)
 	}
 }
 
