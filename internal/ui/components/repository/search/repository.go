@@ -5,6 +5,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
@@ -33,9 +34,9 @@ func (repo Repository) renderLabels() string {
 	labels := []string{}
 	for _, label := range repo.Data.Labels {
 		if label.Enabled {
-			labels = append(labels, lipgloss.NewStyle().Foreground(label.Color).Width(3).Render(label.Glyph))
+			labels = append(labels, repository.LabelWithGlyph.Foreground(label.Color).Render(label.Glyph))
 		} else {
-			labels = append(labels, lipgloss.NewStyle().Width(3).Render(""))
+			labels = append(labels, repository.EmptyLabel)
 		}
 	}
 	return lipgloss.JoinHorizontal(

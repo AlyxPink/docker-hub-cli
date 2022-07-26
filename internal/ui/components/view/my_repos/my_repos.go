@@ -9,8 +9,8 @@ import (
 	repository_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
@@ -101,15 +101,15 @@ func (m *Model) GetViewColumns() []table.Column {
 			Grow:  utils.BoolPtr(true),
 		},
 		{
-			Title: columnTitleIsPrivate.Render(constants.GlyphIsPrivate),
+			Title: columnTitleIsPrivate.Render(styles.DefaultGlyphs.IsPrivate),
 			Width: &isPrivateWidth,
 		},
 		{
-			Title: columnTitleStatsDownloads.Render(constants.GlyphStatsDownloads),
+			Title: columnTitleStatsDownloads.Render(styles.DefaultGlyphs.StatsDownloads),
 			Width: &statsWidth,
 		},
 		{
-			Title: columnTitleStatsStars.Render(constants.GlyphStatsStars),
+			Title: columnTitleStatsStars.Render(styles.DefaultGlyphs.StatsStars),
 			Width: &statsWidth,
 		},
 		{
