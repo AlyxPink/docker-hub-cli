@@ -6,7 +6,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	repository_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/user"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
@@ -46,19 +47,19 @@ func (m *Model) renderTitle() string {
 }
 
 func (m *Model) renderName() string {
-	return titleRepo.Render(m.repo.Data.Name)
+	return sidebar.Title.Render(m.repo.Data.Name)
 }
 
 func (m *Model) renderVisibility() string {
 	var visibility string
 	if m.repo.Data.IsPrivate {
-		visibility = lipgloss.NewStyle().Foreground(lipgloss.Color("#EF476F")).Padding(1, 0, 2, 0).Render(fmt.Sprintf("%s Private", constants.GlyphPrivate))
+		visibility = visibilityPrivate.Render(fmt.Sprintf("%s Private", styles.DefaultGlyphs.Private))
 	} else {
-		visibility = lipgloss.NewStyle().Foreground(lipgloss.Color("#06D6A0")).Padding(1, 0, 2, 0).Render(fmt.Sprintf("%s Public", constants.GlyphPublic))
+		visibility = visibilityPublic.Render(fmt.Sprintf("%s Public", styles.DefaultGlyphs.Public))
 	}
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		lipgloss.NewStyle().Bold(true).Underline(true).Render("Visibility:"),
+		sidebar.Title.Render("Visibility:"),
 		visibility,
 	)
 }
@@ -66,27 +67,27 @@ func (m *Model) renderVisibility() string {
 func (m *Model) renderStats() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		lipgloss.NewStyle().Bold(true).Underline(true).PaddingBottom(1).Render("Stats:"),
+		sidebar.Title.Render("Stats:"),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
-			statsStars.Render(constants.GlyphStatsStars),
+			statsStars.Render(styles.DefaultGlyphs.StatsStars),
 			fmt.Sprint(m.repo.Data.StarCount),
 		),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
-			statsDownloads.Render(constants.GlyphStatsDownloads),
+			statsDownloads.Render(styles.DefaultGlyphs.StatsDownloads),
 			fmt.Sprint(m.repo.Data.PullCount),
 		),
 	)
 }
 
 func (m *Model) renderTimestamps() string {
-	updated_at := lipgloss.NewStyle().Bold(true).Render("Last update:")
-	created_at := lipgloss.NewStyle().Bold(true).Render("Created at:")
+	updated_at := sidebar.AttributeName.Render("Last update:")
+	created_at := sidebar.AttributeName.Render("Created at:")
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		lipgloss.NewStyle().Bold(true).Underline(true).Padding(1, 0).Render("Timestamps:"),
-		lipgloss.NewStyle().Render(fmt.Sprintf("%s %s", updated_at, utils.TimeElapsed(m.repo.Data.UpdatedAt))),
-		lipgloss.NewStyle().Render(fmt.Sprintf("%s %s", created_at, utils.TimeElapsed(m.repo.Data.CreatedAt))),
+		sidebar.Title.Render("Timestamps:"),
+		fmt.Sprintf("%s %s", updated_at, utils.TimeElapsed(m.repo.Data.UpdatedAt)),
+		fmt.Sprintf("%s %s", created_at, utils.TimeElapsed(m.repo.Data.CreatedAt)),
 	)
 }

@@ -30,4 +30,9 @@ var (
 			PaddingTop(1).
 			Bold(true).
 			Foreground(styles.DefaultTheme.FaintText)
+
+	Title         = lipgloss.NewStyle().Bold(true).MarginBottom(1)
+	SubTitle      = Title.Copy().Margin(0, 1, 1, 0)
+	AttributeName = lipgloss.NewStyle().Bold(true)
+	TextBox       = lipgloss.NewStyle().Margin(1, 0, 2, 0)
 )
