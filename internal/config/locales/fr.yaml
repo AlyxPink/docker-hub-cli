@@ -5,13 +5,13 @@ tab_my_repos_title:
   description: "Top screen tab name"
   other: "Mes dépôts"
 
-explorer_repositories_item_type_label:
+explore_repositories_item_type_label:
   description: "Label name used to identify the resource, like to count them"
   other: "Dépôts"
-explorer_repositories_not_found:
+explore_repositories_not_found:
   description: "Displayed when none are found"
   other: "Aucun dépôt trouvé."
-explorer_repositories_fetching:
+explore_repositories_fetching:
   description: "Displayed when fetching repositories"
   other: "Récupération des dépôts..."
 
