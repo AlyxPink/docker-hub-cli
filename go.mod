@@ -8,7 +8,6 @@ require (
 	github.com/charmbracelet/bubbles v0.13.0
 	github.com/charmbracelet/glamour v0.5.0
 	github.com/charmbracelet/lipgloss v0.5.0
-	github.com/cloudfoundry/jibber_jabber v0.0.0-20151120183258-bcc4c8345a21
 	github.com/imroc/req/v3 v3.14.0
 	github.com/nicksnyder/go-i18n/v2 v2.2.0
 	golang.org/x/text v0.3.7
@@ -20,6 +19,7 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/cheekybits/genny v1.0.0 // indirect
 	github.com/containerd/console v1.0.3 // indirect
+	github.com/cubiest/jibberjabber v1.0.1
 	github.com/dlclark/regexp2 v1.4.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 // indirect

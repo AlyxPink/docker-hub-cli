@@ -1,7 +1,7 @@
 package locales
 
 import (
-	"github.com/cloudfoundry/jibber_jabber"
+	"github.com/cubiest/jibberjabber"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"golang.org/x/text/language"
 	"gopkg.in/yaml.v2"
@@ -24,7 +24,7 @@ func GetLocalizer() *i18n.Localizer {
 }
 
 func getLanguage() language.Tag {
-	userLanguage, err := jibber_jabber.DetectLanguage()
+	userLanguage, err := jibberjabber.DetectLanguage()
 	if err != nil {
 		return default_language
 	}
