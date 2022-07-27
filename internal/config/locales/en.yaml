@@ -1,0 +1,45 @@
+tab_explore_title:
+  description: "Top screen tab name"
+  other: "Explore"
+tab_my_repos_title:
+  description: "Top screen tab name"
+  other: "My repositories"
+
+explorer_repositories_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Repositories"
+explorer_repositories_not_found:
+  description: "Displayed when none are found"
+  other: "No repositories found."
+explorer_repositories_fetching:
+  description: "Displayed when fetching repositories"
+  other: "Fetching repositories..."
+
+my_repositories_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Repositories"
+my_repositories_not_found:
+  description: "Displayed when none are found"
+  other: "No repositories found."
+my_repositories_not_found_tip:
+  description: "Displayed when none are found"
+  other: "Have you set DOCKER_USERNAME and DOCKER_BEARER?"
+my_repositories_fetching:
+  description: "Displayed when fetching repositories"
+  other: "Fetching repositories..."
+
+column_header_name:
+  description: "Common table column header"
+  other: "Name"
+column_header_organization:
+  description: "Common table column header"
+  other: "Organization"
+column_header_updated_at:
+  description: "Common table column header"
+  other: "Updated At"
+column_header_created_at:
+  description: "Common table column header"
+  other: "Created At"
+column_header_description:
+  description: "Common table column header"
+  other: "Description"

@@ -1,6 +1,7 @@
 package context
 
 import (
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/victorbersy/docker-hub-cli/internal/config"
 )
 
@@ -11,6 +12,7 @@ type ProgramContext struct {
 	MainContentHeight int
 	Config            *config.Config
 	View              config.ViewType
+	Localizer         *i18n.Localizer
 }
 
 func (ctx *ProgramContext) GetViewsConfig() []config.ViewConfig {

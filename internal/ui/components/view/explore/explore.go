@@ -4,6 +4,7 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/victorbersy/docker-hub-cli/internal/data"
 	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
 	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
@@ -33,12 +34,15 @@ func NewModel(id int, ctx *context.ProgramContext) Model {
 		},
 	}
 
+	repositories := ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explorer_repositories_item_type_label"})
+	repositories_not_found := ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explorer_repositories_not_found"})
+
 	m.view.Table = table.NewModel(
 		m.view.GetDimensions(),
 		m.GetViewColumns(),
 		m.BuildRows(),
-		"Repositories",
-		utils.StringPtr(emptyStateStyle.Render("No repositories were found")),
+		repositories,
+		utils.StringPtr(emptyStateStyle.Render(repositories_not_found)),
 	)
 
 	return m
@@ -71,11 +75,12 @@ func (m Model) Update(msg tea.Msg) (view.View, tea.Cmd) {
 }
 
 func (m *Model) View() string {
+	fetching_repositories := m.view.Ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explorer_repositories_fetching"})
 	var spinnerText *string
 	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
 			spinnerStyle.Copy().Render(m.view.Spinner.View()),
-			"Fetching Repositories...",
+			fetching_repositories,
 		))
 	}
 
@@ -98,9 +103,11 @@ func renderColumnTitleLabels() string {
 }
 
 func (m *Model) GetViewColumns() []table.Column {
+	explore_column_updated_at := view.ColumnTitle.Render(m.view.Ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "column_header_updated_at"}))
+	explore_column_updated_at_width := (lipgloss.Width(explore_column_updated_at) + 2)
 	return []table.Column{
 		{
-			Title: view.ColumnTitle.Render("Name"),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "column_header_name"})),
 			Width: &nameWidth,
 		},
 		{
@@ -108,7 +115,7 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &labelsWidth,
 		},
 		{
-			Title: view.ColumnTitle.Render("Organization"),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "column_header_organization"})),
 			Width: &organizationsnameWidth,
 		},
 		{
@@ -120,11 +127,11 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &statsWidth,
 		},
 		{
-			Title: view.ColumnTitle.Render("Updated At"),
-			Width: &LastUpdateCellWidth,
+			Title: explore_column_updated_at,
+			Width: &explore_column_updated_at_width,
 		},
 		{
-			Title: view.ColumnTitle.Render("Description"),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "column_header_description"})),
 			Grow:  utils.BoolPtr(true),
 		},
 	}

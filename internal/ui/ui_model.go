@@ -4,6 +4,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/victorbersy/docker-hub-cli/internal/config"
+	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
 	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/help"
@@ -35,7 +36,8 @@ func NewModel() Model {
 		help: help.NewModel(),
 		tabs: tabsModel,
 		ctx: context.ProgramContext{
-			Config: &config.Config{},
+			Config:    &config.Config{},
+			Localizer: locales.GetLocalizer(),
 		},
 	}
 }

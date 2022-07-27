@@ -1,5 +1,13 @@
 package config
 
+import (
+	"fmt"
+
+	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
+)
+
 type ViewType string
 
 const (
@@ -33,6 +41,9 @@ type Config struct {
 }
 
 func GetDefaultConfig() Config {
+	localizer := locales.GetLocalizer()
+	explore_title := localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "tab_explore_title"})
+	my_repos_title := localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "tab_my_repos_title"})
 	return Config{
 		Defaults: Defaults{
 			Preview: PreviewConfig{
@@ -43,11 +54,11 @@ func GetDefaultConfig() Config {
 		},
 		Views: []ViewConfig{
 			{
-				Title: " Explore",
+				Title: fmt.Sprint(styles.DefaultGlyphs.TabExplore, " ", explore_title),
 				Type:  ExploreView,
 			},
 			{
-				Title: "  My Repositories",
+				Title: fmt.Sprint(styles.DefaultGlyphs.TabMyRepos, "  ", my_repos_title),
 				Type:  MyReposView,
 			},
 		},
