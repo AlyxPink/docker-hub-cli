@@ -34,8 +34,8 @@ func NewModel(id int, ctx *context.ProgramContext) Model {
 		},
 	}
 
-	repositories := ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explorer_repositories_item_type_label"})
-	repositories_not_found := ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explorer_repositories_not_found"})
+	repositories := ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explore_repositories_item_type_label"})
+	repositories_not_found := ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explore_repositories_not_found"})
 
 	m.view.Table = table.NewModel(
 		m.view.GetDimensions(),
@@ -75,7 +75,7 @@ func (m Model) Update(msg tea.Msg) (view.View, tea.Cmd) {
 }
 
 func (m *Model) View() string {
-	fetching_repositories := m.view.Ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explorer_repositories_fetching"})
+	fetching_repositories := m.view.Ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explore_repositories_fetching"})
 	var spinnerText *string
 	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,

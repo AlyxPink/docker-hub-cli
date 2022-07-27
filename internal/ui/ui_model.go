@@ -159,10 +159,10 @@ func (m *Model) syncSidebar() {
 	width := m.sidebar.GetSidebarContentWidth()
 	switch data := currRowData.(type) {
 	case *data_search.Repository:
-		content := explore_sidebar.NewModel(data, width).View()
+		content := explore_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent(content)
 	case *data_user.Repository:
-		content := my_repos_sidebar.NewModel(data, width).View()
+		content := my_repos_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent(content)
 	}
 }
