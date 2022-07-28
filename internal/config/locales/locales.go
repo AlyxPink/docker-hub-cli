@@ -7,9 +7,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var (
-	default_language = language.English
-)
+var default_language = language.English
 
 type Locales struct {
 	Localizer *i18n.Localizer
