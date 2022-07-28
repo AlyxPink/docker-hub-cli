@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
 	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
@@ -90,11 +91,16 @@ func (m *Model) renderArchs() string {
 }
 
 func (m *Model) renderPullCmd() string {
-	how_to_txt := m.ctx.Localizer.L("explore_sidebar_how_to_pull_instructions")
+	howToPullInstructions := &i18n.Message{ID: "explore_sidebar_how_to_pull_instructions"}
+	howToPullInstructionsTemplate := map[string]interface{}{"Name": m.repo.Data.Slug, "Count": 1}
+	how_to_txt := m.ctx.Localizer.Localizer.MustLocalize(&i18n.LocalizeConfig{
+		DefaultMessage: howToPullInstructions,
+		TemplateData:   howToPullInstructionsTemplate,
+	})
 	cmd := fmt.Sprintf("$ docker pull %s", m.repo.Data.Slug)
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		dockerPullCmdTitle.Render(fmt.Sprintf("%s %s?", how_to_txt, m.repo.Data.Name)), // TODO: use translation template
+		dockerPullCmdTitle.Render(how_to_txt),
 		dockerPullCmdBox.Copy().Render(cmd),
 	)
 }

@@ -27,7 +27,7 @@ explore_sidebar_architectures:
   other: "Architectures"
 explore_sidebar_how_to_pull_instructions:
   description: "Instructions on how to pull the selected image"
-  other: "How to pull"
+  other: "How to pull \"{{.Name}}\"?"
 
 my_repositories_item_type_label:
   description: "Label name used to identify the resource, like to count them"
