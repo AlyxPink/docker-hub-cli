@@ -37,12 +37,12 @@ func NewModel(id int, ctx *context.ProgramContext) Model {
 		m.view.GetDimensions(),
 		m.GetViewColumns(),
 		m.BuildRows(),
-		"Repositories",
+		m.view.Ctx.Localizer.L("my_repositories_item_type_label"),
 		utils.StringPtr(
 			lipgloss.JoinVertical(
 				lipgloss.Top,
-				emptyStateStyle.Render("No repositories found."),
-				emptyStateStyle.Render("Have you set DOCKER_USERNAME and DOCKER_BEARER?"),
+				emptyStateStyle.Render(m.view.Ctx.Localizer.L("my_repositories_not_found")),
+				emptyStateStyle.Render(m.view.Ctx.Localizer.L("my_repositories_not_found_tip")),
 			),
 		),
 	)
@@ -81,7 +81,7 @@ func (m *Model) View() string {
 	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
 			spinnerStyle.Copy().Render(m.view.Spinner.View()),
-			"Fetching nothing...",
+			m.view.Ctx.Localizer.L("my_repositories_fetching"),
 		))
 	}
 
@@ -97,7 +97,7 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 func (m *Model) GetViewColumns() []table.Column {
 	return []table.Column{
 		{
-			Title: view.ColumnTitle.Render("Name"),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_name")),
 			Grow:  utils.BoolPtr(true),
 		},
 		{
@@ -113,11 +113,11 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &statsWidth,
 		},
 		{
-			Title: view.ColumnTitle.Render("Last Update"),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_updated_at")),
 			Width: &updatedAtWidth,
 		},
 		{
-			Title: view.ColumnTitle.Render("Created"),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_created_at")),
 			Width: &createdAtWidth,
 		},
 	}

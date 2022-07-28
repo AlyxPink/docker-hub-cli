@@ -4,6 +4,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/victorbersy/docker-hub-cli/internal/config"
+	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
 	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/help"
@@ -35,7 +36,8 @@ func NewModel() Model {
 		help: help.NewModel(),
 		tabs: tabsModel,
 		ctx: context.ProgramContext{
-			Config: &config.Config{},
+			Config:    &config.Config{},
+			Localizer: locales.NewLocales(),
 		},
 	}
 }
@@ -157,10 +159,10 @@ func (m *Model) syncSidebar() {
 	width := m.sidebar.GetSidebarContentWidth()
 	switch data := currRowData.(type) {
 	case *data_search.Repository:
-		content := explore_sidebar.NewModel(data, width).View()
+		content := explore_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent(content)
 	case *data_user.Repository:
-		content := my_repos_sidebar.NewModel(data, width).View()
+		content := my_repos_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent(content)
 	}
 }

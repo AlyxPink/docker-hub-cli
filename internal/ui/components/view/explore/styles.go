@@ -9,7 +9,6 @@ import (
 var (
 	nameWidth              = 25
 	organizationsnameWidth = 20
-	LastUpdateCellWidth    = lipgloss.Width(" Last Update ")
 	labelsWidth            = 12
 	statsWidth             = 8
 

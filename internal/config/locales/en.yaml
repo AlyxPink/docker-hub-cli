@@ -1,0 +1,81 @@
+startup_reading:
+  description:
+  other: "Reading config..."
+startup_no_views_defined:
+  description:
+  other: "No views defined..."
+
+tab_explore_title:
+  description: "Top screen tab name"
+  other: "Explore"
+tab_my_repos_title:
+  description: "Top screen tab name"
+  other: "My repositories"
+
+explore_repositories_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Repositories"
+explore_repositories_not_found:
+  description: "Displayed when none are found"
+  other: "No repositories found."
+explore_repositories_fetching:
+  description: "Displayed when fetching repositories"
+  other: "Fetching repositories..."
+
+explore_sidebar_architectures:
+  description: "Explore sidebar architectures title"
+  other: "Architectures"
+explore_sidebar_how_to_pull_instructions:
+  description: "Instructions on how to pull the selected image"
+  other: "How to pull \"{{.Name}}\"?"
+
+my_repositories_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Repositories"
+my_repositories_not_found:
+  description: "Displayed when none are found"
+  other: "No repositories found."
+my_repositories_not_found_tip:
+  description: "Displayed when none are found"
+  other: "Have you set DOCKER_USERNAME and DOCKER_BEARER?"
+my_repositories_fetching:
+  description: "Displayed when fetching repositories"
+  other: "Fetching repositories..."
+
+my_repos_sidebar_visibility:
+  description: ""
+  other: "Visibility"
+my_repos_sidebar_visibility_private:
+  description: ""
+  other: "Private"
+my_repos_sidebar_visibility_public:
+  description: ""
+  other: "Public"
+my_repos_sidebar_stats:
+  description: ""
+  other: "Stats"
+my_repos_sidebar_timestamps:
+  description: ""
+  other: "Timestamps"
+my_repos_sidebar_updated_at:
+  description: ""
+  other: "Last Update"
+my_repos_sidebar_created_at:
+  description: ""
+  other: "Created At"
+
+column_header_name:
+  description: "Common table column header"
+  other: "Name"
+column_header_organization:
+  description: "Common table column header"
+  other: "Organization"
+column_header_updated_at:
+  description: "Common table column header"
+  other: "Updated At"
+column_header_created_at:
+  description: "Common table column header"
+  other: "Created At"
+column_header_description:
+  description: "Common table column header"
+  other: "Description"

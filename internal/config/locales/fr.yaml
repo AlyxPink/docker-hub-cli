@@ -1,0 +1,81 @@
+startup_reading:
+  description:
+  other: "Récupération de la configuration..."
+startup_no_views_defined:
+  description:
+  other: "Aucune vues trouvées..."
+
+tab_explore_title:
+  description: "Top screen tab name"
+  other: "Explorer"
+tab_my_repos_title:
+  description: "Top screen tab name"
+  other: "Mes dépôts"
+
+explore_repositories_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Dépôts"
+explore_repositories_not_found:
+  description: "Displayed when none are found"
+  other: "Aucun dépôt trouvé."
+explore_repositories_fetching:
+  description: "Displayed when fetching repositories"
+  other: "Récupération des dépôts..."
+
+explore_sidebar_architectures:
+  description: "Explore sidebar architectures title"
+  other: "Architectures"
+explore_sidebar_how_to_pull_instructions:
+  description: "Instructions on how to pull the selected image"
+  other: "Comment obtenir \"{{.Name}}\" ?"
+
+my_repositories_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Dépôts"
+my_repositories_not_found:
+  description: "Displayed when none are found"
+  other: "Aucun de vos dépôts n'a été trouvé."
+my_repositories_not_found_tip:
+  description: "Displayed when none are found"
+  other: "Avez-vous configuré DOCKER_USERNAME et DOCKER_BEARER ?"
+my_repositories_fetching:
+  description: "Displayed when fetching repositories"
+  other: "Récupération des dépôts..."
+
+my_repos_sidebar_visibility:
+  description: ""
+  other: "Visibilité"
+my_repos_sidebar_visibility_private:
+  description: ""
+  other: "Privé"
+my_repos_sidebar_visibility_public:
+  description: ""
+  other: "Publique"
+my_repos_sidebar_stats:
+  description: ""
+  other: "Stats"
+my_repos_sidebar_timestamps:
+  description: ""
+  other: "Dates"
+my_repos_sidebar_updated_at:
+  description: ""
+  other: "Dernière mise à jour"
+my_repos_sidebar_created_at:
+  description: ""
+  other: "Créé le"
+
+column_header_name:
+  description: "Column name used in explore view"
+  other: "Nom"
+column_header_organization:
+  description: "Column name used in explore view"
+  other: "Société"
+column_header_updated_at:
+  description: "Column name used in explore view"
+  other: "Dernière mise à jour"
+column_header_created_at:
+  description: "Column name used in explore view"
+  other: "Créé le"
+column_header_description:
+  description: "Column name used in explore view"
+  other: "Description"
