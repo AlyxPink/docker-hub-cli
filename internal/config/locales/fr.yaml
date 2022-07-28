@@ -1,3 +1,10 @@
+startup_reading:
+  description:
+  other: "Récupération de la configuration..."
+startup_no_views_defined:
+  description:
+  other: "Aucune vues trouvées..."
+
 tab_explore_title:
   description: "Top screen tab name"
   other: "Explorer"

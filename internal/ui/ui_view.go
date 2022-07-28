@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"fmt"
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -17,8 +18,7 @@ func (m Model) View() string {
 	}
 
 	if m.ctx.Config == nil {
-		m.ctx.Localizer.L("startup_reading")
-		return "Reading config...\n"
+		return fmt.Sprintln(m.ctx.Localizer.L("startup_reading"))
 	}
 
 	s := strings.Builder{}
@@ -33,7 +33,7 @@ func (m Model) View() string {
 			m.sidebar.View(),
 		)
 	} else {
-		mainContent = "No views defined..."
+		mainContent = fmt.Sprintln(m.ctx.Localizer.L("startup_no_views_defined"))
 	}
 	s.WriteString(mainContent)
 	s.WriteString("\n")

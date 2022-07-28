@@ -1,3 +1,10 @@
+startup_reading:
+  description:
+  other: "Reading config..."
+startup_no_views_defined:
+  description:
+  other: "No views defined..."
+
 tab_explore_title:
   description: "Top screen tab name"
   other: "Explore"
