@@ -15,7 +15,13 @@ type Locales struct {
 	Localizer *i18n.Localizer
 }
 
-func GetLocalizer() *i18n.Localizer {
+func NewLocales() Locales {
+	return Locales{
+		Localizer: getLocalizer(),
+	}
+}
+
+func getLocalizer() *i18n.Localizer {
 	bundle := i18n.NewBundle(default_language)
 	bundle.RegisterUnmarshalFunc("yaml", yaml.Unmarshal)
 	bundle.MustLoadMessageFile("./internal/config/locales/en.yaml")
@@ -31,6 +37,6 @@ func getLanguage() language.Tag {
 	return language.Make(userLanguage)
 }
 
-func (locales Locales) Localize(msgId string) string {
+func (locales Locales) T(msgId string) string {
 	return locales.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: msgId})
 }

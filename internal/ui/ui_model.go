@@ -37,7 +37,7 @@ func NewModel() Model {
 		tabs: tabsModel,
 		ctx: context.ProgramContext{
 			Config:    &config.Config{},
-			Localizer: locales.GetLocalizer(),
+			Localizer: locales.NewLocales(),
 		},
 	}
 }

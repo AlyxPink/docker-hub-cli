@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/nicksnyder/go-i18n/v2/i18n"
 	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
 	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
@@ -75,7 +74,7 @@ func (m *Model) renderDescription() string {
 }
 
 func (m *Model) renderArchs() string {
-	architecture_title := m.ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explore_sidebar_architectures"})
+	architecture_title := m.ctx.Localizer.T("explore_sidebar_architectures")
 	archs := []string{}
 	for _, arch := range m.repo.Data.Architectures {
 		archs = append(archs, archLabel.Render(arch.Name))
@@ -91,7 +90,7 @@ func (m *Model) renderArchs() string {
 }
 
 func (m *Model) renderPullCmd() string {
-	how_to_txt := m.ctx.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "explore_sidebar_how_to_pull_instructions"})
+	how_to_txt := m.ctx.Localizer.T("explore_sidebar_how_to_pull_instructions")
 	cmd := fmt.Sprintf("$ docker pull %s", m.repo.Data.Slug)
 	return lipgloss.JoinVertical(
 		lipgloss.Top,

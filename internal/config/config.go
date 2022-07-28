@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 
-	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
@@ -41,9 +40,9 @@ type Config struct {
 }
 
 func GetDefaultConfig() Config {
-	localizer := locales.GetLocalizer()
-	explore_title := localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "tab_explore_title"})
-	my_repos_title := localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "tab_my_repos_title"})
+	localizer := locales.NewLocales()
+	explore_title := localizer.T("tab_explore_title")
+	my_repos_title := localizer.T("tab_my_repos_title")
 	return Config{
 		Defaults: Defaults{
 			Preview: PreviewConfig{
