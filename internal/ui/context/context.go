@@ -2,6 +2,7 @@ package context
 
 import (
 	"github.com/victorbersy/docker-hub-cli/internal/config"
+	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
 )
 
 type ProgramContext struct {
@@ -11,6 +12,7 @@ type ProgramContext struct {
 	MainContentHeight int
 	Config            *config.Config
 	View              config.ViewType
+	Localizer         locales.Locales
 }
 
 func (ctx *ProgramContext) GetViewsConfig() []config.ViewConfig {

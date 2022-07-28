@@ -7,6 +7,7 @@ import (
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
 	repository_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
+	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
@@ -14,9 +15,10 @@ import (
 type Model struct {
 	repo  *repository_user.Repository
 	width int
+	ctx   *context.ProgramContext
 }
 
-func NewModel(data *data_user.Repository, width int) Model {
+func NewModel(data *data_user.Repository, width int, ctx *context.ProgramContext) Model {
 	var r *repository_user.Repository
 	if data == nil {
 		r = nil
@@ -26,6 +28,7 @@ func NewModel(data *data_user.Repository, width int) Model {
 	return Model{
 		repo:  r,
 		width: width,
+		ctx:   ctx,
 	}
 }
 
@@ -51,15 +54,18 @@ func (m *Model) renderName() string {
 }
 
 func (m *Model) renderVisibility() string {
+	visibility_txt := m.ctx.Localizer.L("my_repos_sidebar_visibility")
+	private_txt := m.ctx.Localizer.L("my_repos_sidebar_visibility_private")
+	public_txt := m.ctx.Localizer.L("my_repos_sidebar_visibility_public")
 	var visibility string
 	if m.repo.Data.IsPrivate {
-		visibility = visibilityPrivate.Render(fmt.Sprintf("%s Private", styles.DefaultGlyphs.Private))
+		visibility = visibilityPrivate.Render(fmt.Sprintf("%s %s", styles.DefaultGlyphs.Private, private_txt))
 	} else {
-		visibility = visibilityPublic.Render(fmt.Sprintf("%s Public", styles.DefaultGlyphs.Public))
+		visibility = visibilityPublic.Render(fmt.Sprintf("%s %s", styles.DefaultGlyphs.Public, public_txt))
 	}
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		sidebar.Title.Render("Visibility:"),
+		sidebar.Title.Render(fmt.Sprintf("%s:", visibility_txt)),
 		visibility,
 	)
 }
@@ -67,7 +73,7 @@ func (m *Model) renderVisibility() string {
 func (m *Model) renderStats() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		sidebar.Title.Render("Stats:"),
+		sidebar.Title.Render(fmt.Sprintf("%s:", m.ctx.Localizer.L("my_repos_sidebar_stats"))),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
 			statsStars.Render(styles.DefaultGlyphs.StatsStars),
@@ -82,11 +88,14 @@ func (m *Model) renderStats() string {
 }
 
 func (m *Model) renderTimestamps() string {
-	updated_at := sidebar.AttributeName.Render("Last update:")
-	created_at := sidebar.AttributeName.Render("Created at:")
+	timestamps_txt := m.ctx.Localizer.L("my_repos_sidebar_timestamps")
+	updated_at_txt := m.ctx.Localizer.L("my_repos_sidebar_updated_at")
+	created_at_txt := m.ctx.Localizer.L("my_repos_sidebar_created_at")
+	updated_at := sidebar.AttributeName.Render(fmt.Sprintf("%s:", updated_at_txt))
+	created_at := sidebar.AttributeName.Render(fmt.Sprintf("%s:", created_at_txt))
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		sidebar.Title.Render("Timestamps:"),
+		sidebar.Title.Render(fmt.Sprintf("%s:", timestamps_txt)),
 		fmt.Sprintf("%s %s", updated_at, utils.TimeElapsed(m.repo.Data.UpdatedAt)),
 		fmt.Sprintf("%s %s", created_at, utils.TimeElapsed(m.repo.Data.CreatedAt)),
 	)

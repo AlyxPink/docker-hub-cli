@@ -1,6 +1,9 @@
 package styles
 
 type Glyphs struct {
+	TabExplore string
+	TabMyRepos string
+
 	LabelCommunity         string
 	LabelDockerOfficial    string
 	LabelOpenSourceProgram string
@@ -15,6 +18,9 @@ type Glyphs struct {
 }
 
 var DefaultGlyphs = Glyphs{
+	TabExplore: "",
+	TabMyRepos: "",
+
 	LabelCommunity:         "וֹ",
 	LabelDockerOfficial:    "",
 	LabelOpenSourceProgram: "",
