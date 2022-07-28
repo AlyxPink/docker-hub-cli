@@ -33,8 +33,8 @@ func NewModel(id int, ctx *context.ProgramContext) Model {
 		},
 	}
 
-	repositories := ctx.Localizer.T("explore_repositories_item_type_label")
-	repositories_not_found := ctx.Localizer.T("explore_repositories_not_found")
+	repositories := ctx.Localizer.L("explore_repositories_item_type_label")
+	repositories_not_found := ctx.Localizer.L("explore_repositories_not_found")
 
 	m.view.Table = table.NewModel(
 		m.view.GetDimensions(),
@@ -74,7 +74,7 @@ func (m Model) Update(msg tea.Msg) (view.View, tea.Cmd) {
 }
 
 func (m *Model) View() string {
-	fetching_repositories := m.view.Ctx.Localizer.T("explore_repositories_fetching")
+	fetching_repositories := m.view.Ctx.Localizer.L("explore_repositories_fetching")
 	var spinnerText *string
 	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
@@ -102,11 +102,11 @@ func renderColumnTitleLabels() string {
 }
 
 func (m *Model) GetViewColumns() []table.Column {
-	explore_column_updated_at := view.ColumnTitle.Render(m.view.Ctx.Localizer.T("column_header_updated_at"))
+	explore_column_updated_at := view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_updated_at"))
 	explore_column_updated_at_width := (lipgloss.Width(explore_column_updated_at) + 2)
 	return []table.Column{
 		{
-			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.T("column_header_name")),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_name")),
 			Width: &nameWidth,
 		},
 		{
@@ -114,7 +114,7 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &labelsWidth,
 		},
 		{
-			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.T("column_header_organization")),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_organization")),
 			Width: &organizationsnameWidth,
 		},
 		{
@@ -130,7 +130,7 @@ func (m *Model) GetViewColumns() []table.Column {
 			Width: &explore_column_updated_at_width,
 		},
 		{
-			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.T("column_header_description")),
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_description")),
 			Grow:  utils.BoolPtr(true),
 		},
 	}

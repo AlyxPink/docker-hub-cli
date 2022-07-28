@@ -37,6 +37,6 @@ func getLanguage() language.Tag {
 	return language.Make(userLanguage)
 }
 
-func (locales Locales) T(msgId string) string {
+func (locales Locales) L(msgId string) string {
 	return locales.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: msgId})
 }

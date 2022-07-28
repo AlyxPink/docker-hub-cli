@@ -41,8 +41,8 @@ type Config struct {
 
 func GetDefaultConfig() Config {
 	localizer := locales.NewLocales()
-	explore_title := localizer.T("tab_explore_title")
-	my_repos_title := localizer.T("tab_my_repos_title")
+	explore_title := localizer.L("tab_explore_title")
+	my_repos_title := localizer.L("tab_my_repos_title")
 	return Config{
 		Defaults: Defaults{
 			Preview: PreviewConfig{

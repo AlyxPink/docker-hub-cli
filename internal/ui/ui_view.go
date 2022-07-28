@@ -17,6 +17,7 @@ func (m Model) View() string {
 	}
 
 	if m.ctx.Config == nil {
+		m.ctx.Localizer.L("startup_reading")
 		return "Reading config...\n"
 	}
 

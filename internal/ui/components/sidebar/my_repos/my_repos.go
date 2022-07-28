@@ -54,9 +54,9 @@ func (m *Model) renderName() string {
 }
 
 func (m *Model) renderVisibility() string {
-	visibility_txt := m.ctx.Localizer.T("my_repos_sidebar_visibility")
-	private_txt := m.ctx.Localizer.T("my_repos_sidebar_visibility_private")
-	public_txt := m.ctx.Localizer.T("my_repos_sidebar_visibility_public")
+	visibility_txt := m.ctx.Localizer.L("my_repos_sidebar_visibility")
+	private_txt := m.ctx.Localizer.L("my_repos_sidebar_visibility_private")
+	public_txt := m.ctx.Localizer.L("my_repos_sidebar_visibility_public")
 	var visibility string
 	if m.repo.Data.IsPrivate {
 		visibility = visibilityPrivate.Render(fmt.Sprintf("%s %s", styles.DefaultGlyphs.Private, private_txt))
@@ -73,7 +73,7 @@ func (m *Model) renderVisibility() string {
 func (m *Model) renderStats() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		sidebar.Title.Render(fmt.Sprintf("%s:", m.ctx.Localizer.T("my_repos_sidebar_stats"))),
+		sidebar.Title.Render(fmt.Sprintf("%s:", m.ctx.Localizer.L("my_repos_sidebar_stats"))),
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
 			statsStars.Render(styles.DefaultGlyphs.StatsStars),
@@ -88,9 +88,9 @@ func (m *Model) renderStats() string {
 }
 
 func (m *Model) renderTimestamps() string {
-	timestamps_txt := m.ctx.Localizer.T("my_repos_sidebar_timestamps")
-	updated_at_txt := m.ctx.Localizer.T("my_repos_sidebar_updated_at")
-	created_at_txt := m.ctx.Localizer.T("my_repos_sidebar_created_at")
+	timestamps_txt := m.ctx.Localizer.L("my_repos_sidebar_timestamps")
+	updated_at_txt := m.ctx.Localizer.L("my_repos_sidebar_updated_at")
+	created_at_txt := m.ctx.Localizer.L("my_repos_sidebar_created_at")
 	updated_at := sidebar.AttributeName.Render(fmt.Sprintf("%s:", updated_at_txt))
 	created_at := sidebar.AttributeName.Render(fmt.Sprintf("%s:", created_at_txt))
 	return lipgloss.JoinVertical(
