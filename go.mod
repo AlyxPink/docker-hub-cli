@@ -8,10 +8,10 @@ require (
 	github.com/charmbracelet/bubbles v0.13.0
 	github.com/charmbracelet/glamour v0.5.0
 	github.com/charmbracelet/lipgloss v0.5.0
-	github.com/imroc/req/v3 v3.14.0
 	github.com/nicksnyder/go-i18n/v2 v2.2.0
 	golang.org/x/text v0.3.7
 	gopkg.in/yaml.v2 v2.4.0
+	github.com/imroc/req/v3 v3.14.1
 )
 
 require (
