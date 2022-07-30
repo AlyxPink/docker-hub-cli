@@ -9,6 +9,7 @@ import (
 	"github.com/victorbersy/docker-hub-cli/internal/config"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
 	view_explore "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/explore"
+	view_my_orgs "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/my_orgs"
 	view_my_repos "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/my_repos"
 )
 
@@ -42,10 +43,11 @@ func (m Model) View() string {
 }
 
 func (m *Model) fetchAllViews() ([]view.View, tea.Cmd) {
-	explore, cmd_explore := view_explore.Fetch(m.ctx)
-	my_repos, cmd_my_repos := view_my_repos.Fetch(m.ctx)
-	views := []view.View{explore, my_repos}
-	cmds := []tea.Cmd{cmd_explore, cmd_my_repos}
+	explore, cmd_explore := view_explore.Fetch(0, m.ctx)
+	my_repos, cmd_my_repos := view_my_repos.Fetch(1, m.ctx)
+	my_orgs, cmd_my_orgs := view_my_orgs.Fetch(2, m.ctx)
+	views := []view.View{explore, my_repos, my_orgs}
+	cmds := []tea.Cmd{cmd_explore, cmd_my_repos, cmd_my_orgs}
 	return views, tea.Batch(cmds...)
 }
 
@@ -54,26 +56,13 @@ func (m *Model) getViews() []view.View {
 }
 
 func (m *Model) setViews(newViews []view.View) {
-	// TODO: add multiple views
-	if m.ctx.View == config.ExploreView {
-		m.views = newViews
-	} else {
-		m.views = newViews
-	}
+	m.views = newViews
 }
 
 func (m *Model) setCurrentView(view view.View) {
 	m.currView = m.getCurrView()
 	m.currViewId = view.Id()
+	m.ctx.View = config.ViewType(m.currView.View())
 	m.tabs.SetCurrViewId(m.currViewId)
 	m.onViewedRowChanged()
-}
-
-func (m *Model) switchSelectedView() config.ViewType {
-	// TODO: add multiple views
-	if m.ctx.View == config.ExploreView {
-		return config.MyReposView
-	} else {
-		return config.ExploreView
-	}
 }

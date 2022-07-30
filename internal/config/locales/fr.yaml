@@ -11,6 +11,9 @@ tab_explore_title:
 tab_my_repos_title:
   description: "Top screen tab name"
   other: "Mes dépôts"
+tab_my_orgs_title:
+  description: "Top screen tab name"
+  other: "Mes entreprises"
 
 explore_repositories_item_type_label:
   description: "Label name used to identify the resource, like to count them"
@@ -42,6 +45,19 @@ my_repositories_fetching:
   description: "Displayed when fetching repositories"
   other: "Récupération des dépôts..."
 
+my_orgs_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Entreprises"
+my_orgs_not_found:
+  description: "Displayed when none are found"
+  other: "Aucune de vos entreprises n'a été trouvé."
+my_orgs_not_found_tip:
+  description: "Displayed when none are found"
+  other: "Avez-vous configuré DOCKER_USERNAME et DOCKER_BEARER ?"
+my_orgs_fetching:
+  description: "Displayed when fetching repositories"
+  other: "Récupération des entreprises..."
+
 my_repos_sidebar_visibility:
   description: ""
   other: "Visibilité"
@@ -69,7 +85,7 @@ column_header_name:
   other: "Nom"
 column_header_organization:
   description: "Column name used in explore view"
-  other: "Société"
+  other: "Entreprise"
 column_header_updated_at:
   description: "Column name used in explore view"
   other: "Dernière mise à jour"

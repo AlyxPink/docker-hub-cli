@@ -12,6 +12,7 @@ type ViewType string
 const (
 	ExploreView ViewType = "explore"
 	MyReposView ViewType = "my_repos"
+	MyOrgsView  ViewType = "my_orgs"
 )
 
 type ViewConfig struct {
@@ -43,6 +44,7 @@ func GetDefaultConfig() Config {
 	localizer := locales.NewLocales()
 	explore_title := localizer.L("tab_explore_title")
 	my_repos_title := localizer.L("tab_my_repos_title")
+	my_orgs_title := localizer.L("tab_my_orgs_title")
 	return Config{
 		Defaults: Defaults{
 			Preview: PreviewConfig{
@@ -59,6 +61,10 @@ func GetDefaultConfig() Config {
 			{
 				Title: fmt.Sprint(styles.DefaultGlyphs.TabMyRepos, "  ", my_repos_title),
 				Type:  MyReposView,
+			},
+			{
+				Title: fmt.Sprint(styles.DefaultGlyphs.TabMyOrgs, "  ", my_orgs_title),
+				Type:  MyOrgsView,
 			},
 		},
 	}

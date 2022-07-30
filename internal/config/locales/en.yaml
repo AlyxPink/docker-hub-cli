@@ -11,6 +11,9 @@ tab_explore_title:
 tab_my_repos_title:
   description: "Top screen tab name"
   other: "My repositories"
+tab_my_orgs_title:
+  description: "Top screen tab name"
+  other: "My organizations"
 
 explore_repositories_item_type_label:
   description: "Label name used to identify the resource, like to count them"
@@ -41,6 +44,19 @@ my_repositories_not_found_tip:
 my_repositories_fetching:
   description: "Displayed when fetching repositories"
   other: "Fetching repositories..."
+
+my_orgs_item_type_label:
+  description: "Label name used to identify the resource, like to count them"
+  other: "Organizations"
+my_orgs_not_found:
+  description: "Displayed when none are found"
+  other: "No organizations found."
+my_orgs_not_found_tip:
+  description: "Displayed when none are found"
+  other: "Have you set DOCKER_USERNAME and DOCKER_BEARER?"
+my_orgs_fetching:
+  description: "Displayed when fetching organizations"
+  other: "Fetching organizations..."
 
 my_repos_sidebar_visibility:
   description: ""

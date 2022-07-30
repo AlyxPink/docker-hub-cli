@@ -220,8 +220,8 @@ func (m *Model) GetIsLoading() bool {
 	return m.view.IsLoading
 }
 
-func Fetch(ctx context.ProgramContext) (view view.View, fetchCmd tea.Cmd) {
-	viewModel := NewModel(0, &ctx)
+func Fetch(id int, ctx context.ProgramContext) (view view.View, fetchCmd tea.Cmd) {
+	viewModel := NewModel(id, &ctx)
 	fetchCmd = viewModel.FetchViewRows()
 	return &viewModel, tea.Batch(fetchCmd)
 }

@@ -56,12 +56,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch {
 		case key.Matches(msg, m.keys.PrevView):
 			prevView := m.getViewAt(m.getPrevViewId())
-			m.ctx.View = m.switchSelectedView()
 			m.setCurrentView(prevView)
 
 		case key.Matches(msg, m.keys.NextView):
 			nextView := m.getViewAt(m.getNextViewId())
-			m.ctx.View = m.switchSelectedView()
 			m.setCurrentView(nextView)
 
 		case key.Matches(msg, m.keys.Down):
@@ -164,6 +162,9 @@ func (m *Model) syncSidebar() {
 	case *data_user.Repository:
 		content := my_repos_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent(content)
+	case *data_user.Organization:
+		//content := my_orgs_sidebar.NewModel(data, width, &m.ctx).View()
+		m.sidebar.SetContent("")
 	}
 }
 
