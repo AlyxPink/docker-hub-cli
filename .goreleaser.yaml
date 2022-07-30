@@ -16,18 +16,57 @@ builds:
 
 dockers:
   - image_templates:
-    # Docker Hub
-    - "victorbersy/docker-hub-cli:latest"
-    - "victorbersy/docker-hub-cli:{{ .Tag }}"
-    - "victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}"
-    - "victorbersy/docker-hub-cli:v{{ .Major }}"
-    # Github
-    - "ghcr.io/victorbersy/docker-hub-cli:latest"
-    - "ghcr.io/victorbersy/docker-hub-cli:{{ .Tag }}"
-    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}"
-    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}"
+    # Docker Hub (amd64)
+    - "victorbersy/docker-hub-cli:latest-amd64"
+    - "victorbersy/docker-hub-cli:{{ .Tag }}-amd64"
+    - "victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-amd64"
+    - "victorbersy/docker-hub-cli:v{{ .Major }}-amd64"
+    # Github (amd64)
+    - "ghcr.io/victorbersy/docker-hub-cli:latest-amd64"
+    - "ghcr.io/victorbersy/docker-hub-cli:{{ .Tag }}-amd64"
+    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-amd64"
+    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}-amd64"
     dockerfile: Dockerfile.goreleaser
-    use: docker
+    use: buildx
+  - image_templates:
+    # Docker Hub (arm64)
+    - "victorbersy/docker-hub-cli:latest-arm64"
+    - "victorbersy/docker-hub-cli:{{ .Tag }}-arm64"
+    - "victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-arm64"
+    - "victorbersy/docker-hub-cli:v{{ .Major }}-arm64"
+    # Github (arm64)
+    - "ghcr.io/victorbersy/docker-hub-cli:latest-arm64"
+    - "ghcr.io/victorbersy/docker-hub-cli:{{ .Tag }}-arm64"
+    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-arm64"
+    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}-arm64"
+    dockerfile: Dockerfile.goreleaser
+    use: buildx
+
+docker_manifests:
+- name_template: victorbersy/docker-hub-cli:{{ .Version }}
+  image_templates:
+  # Docker Hub (amd64)
+  - "victorbersy/docker-hub-cli:latest-amd64"
+  - "victorbersy/docker-hub-cli:{{ .Tag }}-amd64"
+  - "victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-amd64"
+  - "victorbersy/docker-hub-cli:v{{ .Major }}-amd64"
+  # Docker Hub (arm64)
+  - "victorbersy/docker-hub-cli:latest-arm64"
+  - "victorbersy/docker-hub-cli:{{ .Tag }}-arm64"
+  - "victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-arm64"
+  - "victorbersy/docker-hub-cli:v{{ .Major }}-arm64"
+- name_template: ghcr.io/victorbersy/docker-hub-cli:{{ .Version }}
+  image_templates:
+  # Github (amd64)
+  - "ghcr.io/victorbersy/docker-hub-cli:latest-amd64"
+  - "ghcr.io/victorbersy/docker-hub-cli:{{ .Tag }}-amd64"
+  - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-amd64"
+  - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}-amd64"
+  # Github (arm64)
+  - "ghcr.io/victorbersy/docker-hub-cli:latest-arm64"
+  - "ghcr.io/victorbersy/docker-hub-cli:{{ .Tag }}-arm64"
+  - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}-arm64"
+  - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}-arm64"
 
 changelog:
   sort: asc
