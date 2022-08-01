@@ -10,6 +10,7 @@ import (
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/help"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
 	explore_sidebar "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/explore"
+	my_orgs_sidebar "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/my_orgs"
 	my_repos_sidebar "github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar/my_repos"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/tabs"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
@@ -163,8 +164,8 @@ func (m *Model) syncSidebar() {
 		content := my_repos_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent(content)
 	case *data_user.Organization:
-		// content := my_orgs_sidebar.NewModel(data, width, &m.ctx).View()
-		m.sidebar.SetContent("")
+		content := my_orgs_sidebar.NewModel(data, width, &m.ctx).View()
+		m.sidebar.SetContent(content)
 	}
 }
 

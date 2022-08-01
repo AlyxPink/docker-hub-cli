@@ -17,22 +17,17 @@ type OrganizationPage struct {
 }
 
 type Organization struct {
-	Id             string    `json:"id"`
-	Orgname        string    `json:"orgname"`
-	Name           string    `json:"full_name"`
-	Location       string    `json:"location"`
-	Company        string    `json:"company"`
-	ProfileUrl     string    `json:"profile_url"`
-	DateJoined     time.Time `json:"date_joined"`
-	GravatarUrl    string    `json:"gravatar_url"`
-	GravatarEmail  string    `json:"gravatar_email"`
-	Type           string    `json:"type"`
-	Badge          string    `json:"badge"`
-	IsActive       bool      `json:"is_active"`
-	UserRole       string    `json:"user_role"`
-	UserGroups     []string  `json:"user_groups"`
-	OrgGroupsCount int       `json:"org_groups_count"`
-	PlanName       string    `json:"plan_name"`
+	Id            string    `json:"id"`
+	Orgname       string    `json:"orgname"`
+	Name          string    `json:"full_name"`
+	Location      string    `json:"location"`
+	Company       string    `json:"company"`
+	ProfileUrl    string    `json:"profile_url"`
+	DateJoined    time.Time `json:"date_joined"`
+	GravatarUrl   string    `json:"gravatar_url"`
+	GravatarEmail string    `json:"gravatar_email"`
+	Type          string    `json:"type"`
+	Badge         string    `json:"badge"`
 }
 
 func (data Organization) GetUrl() string {
