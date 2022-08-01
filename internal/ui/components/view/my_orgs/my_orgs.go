@@ -1,4 +1,4 @@
-package my_repos
+package my_orgs
 
 import (
 	"github.com/charmbracelet/bubbles/spinner"
@@ -6,24 +6,23 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/victorbersy/docker-hub-cli/internal/data"
 	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
-	repository_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/user"
+	organization_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/organization/user"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 	"github.com/victorbersy/docker-hub-cli/internal/utils"
 )
 
-const ViewType = "my_repos"
+const ViewType = "my_orgs"
 
 type Model struct {
-	Repositories []data_user.Repository
-	view         view.Model
+	Organizations []data_user.Organization
+	view          view.Model
 }
 
 func NewModel(id int, ctx *context.ProgramContext) Model {
 	m := Model{
-		Repositories: []data_user.Repository{},
+		Organizations: []data_user.Organization{},
 		view: view.Model{
 			Id:        id,
 			Ctx:       ctx,
@@ -37,12 +36,12 @@ func NewModel(id int, ctx *context.ProgramContext) Model {
 		m.view.GetDimensions(),
 		m.GetViewColumns(),
 		m.BuildRows(),
-		m.view.Ctx.Localizer.L("my_repositories_item_type_label"),
+		m.view.Ctx.Localizer.L("my_orgs_item_type_label"),
 		utils.StringPtr(
 			lipgloss.JoinVertical(
 				lipgloss.Top,
-				emptyStateStyle.Render(m.view.Ctx.Localizer.L("my_repositories_not_found")),
-				emptyStateStyle.Render(m.view.Ctx.Localizer.L("my_repositories_not_found_tip")),
+				emptyStateStyle.Render(m.view.Ctx.Localizer.L("my_orgs_not_found")),
+				emptyStateStyle.Render(m.view.Ctx.Localizer.L("my_orgs_not_found_tip")),
 			),
 		),
 	)
@@ -58,8 +57,8 @@ func (m Model) Update(msg tea.Msg) (view.View, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
-	case ViewRepositoriesFetchedMsg:
-		m.Repositories = msg.Repositories
+	case ViewOrganizationsFetchedMsg:
+		m.Organizations = msg.Organizations
 		m.view.IsLoading = false
 		m.view.Table.SetRows(m.BuildRows())
 
@@ -81,7 +80,7 @@ func (m *Model) View() string {
 	if m.view.IsLoading {
 		spinnerText = utils.StringPtr(lipgloss.JoinHorizontal(lipgloss.Top,
 			spinnerStyle.Copy().Render(m.view.Spinner.View()),
-			m.view.Ctx.Localizer.L("my_repositories_fetching"),
+			m.view.Ctx.Localizer.L("my_orgs_fetching"),
 		))
 	}
 
@@ -101,61 +100,49 @@ func (m *Model) GetViewColumns() []table.Column {
 			Grow:  utils.BoolPtr(true),
 		},
 		{
-			Title: columnTitleIsPrivate.Render(styles.DefaultGlyphs.IsPrivate),
-			Width: &isPrivateWidth,
-		},
-		{
-			Title: columnTitleStatsDownloads.Render(styles.DefaultGlyphs.StatsDownloads),
-			Width: &statsWidth,
-		},
-		{
-			Title: columnTitleStatsStars.Render(styles.DefaultGlyphs.StatsStars),
-			Width: &statsWidth,
-		},
-		{
-			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_updated_at")),
-			Width: &updatedAtWidth,
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_badge")),
+			Grow:  utils.BoolPtr(true),
 		},
 		{
 			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_created_at")),
-			Width: &createdAtWidth,
+			Grow:  utils.BoolPtr(true),
 		},
 	}
 }
 
 func (m *Model) BuildRows() []table.Row {
 	var rows []table.Row
-	for _, currRepo := range m.Repositories {
-		repoModel := repository_user.Repository{Data: currRepo}
-		rows = append(rows, repoModel.ToTableRow())
+	for _, currOrg := range m.Organizations {
+		orgModel := organization_user.Organization{Data: currOrg}
+		rows = append(rows, orgModel.ToTableRow())
 	}
 
 	return rows
 }
 
 func (m *Model) NumRows() int {
-	return len(m.Repositories)
+	return len(m.Organizations)
 }
 
-type ViewRepositoriesFetchedMsg struct {
-	ViewId       int
-	Repositories []data_user.Repository
+type ViewOrganizationsFetchedMsg struct {
+	ViewId        int
+	Organizations []data_user.Organization
 }
 
-func (msg ViewRepositoriesFetchedMsg) GetViewId() int {
+func (msg ViewOrganizationsFetchedMsg) GetViewId() int {
 	return msg.ViewId
 }
 
-func (msg ViewRepositoriesFetchedMsg) GetViewType() string {
+func (msg ViewOrganizationsFetchedMsg) GetViewType() string {
 	return ViewType
 }
 
 func (m *Model) GetCurrRow() data.RowData {
-	if len(m.Repositories) == 0 {
+	if len(m.Organizations) == 0 {
 		return nil
 	}
-	repo := m.Repositories[m.view.Table.GetCurrItem()]
-	return &repo
+	org := m.Organizations[m.view.Table.GetCurrItem()]
+	return &org
 }
 
 func (m *Model) NextRow() int {
@@ -178,7 +165,7 @@ func (m *Model) FetchViewRows() tea.Cmd {
 	if m == nil {
 		return nil
 	}
-	m.Repositories = nil
+	m.Organizations = nil
 	m.view.Table.ResetCurrItem()
 	m.view.Table.Rows = nil
 	m.view.IsLoading = true
@@ -186,17 +173,17 @@ func (m *Model) FetchViewRows() tea.Cmd {
 	cmds = append(cmds, m.view.CreateNextTickCmd(spinner.Tick))
 
 	cmds = append(cmds, func() tea.Msg {
-		fetchedRepos, err := data_user.FetchRepositories()
+		fetchedOrgs, err := data_user.FetchOrganizations()
 		if err != nil {
-			return ViewRepositoriesFetchedMsg{
-				ViewId:       m.view.Id,
-				Repositories: []data_user.Repository{},
+			return ViewOrganizationsFetchedMsg{
+				ViewId:        m.view.Id,
+				Organizations: []data_user.Organization{},
 			}
 		}
 
-		return ViewRepositoriesFetchedMsg{
-			ViewId:       m.view.Id,
-			Repositories: fetchedRepos,
+		return ViewOrganizationsFetchedMsg{
+			ViewId:        m.view.Id,
+			Organizations: fetchedOrgs,
 		}
 	})
 
