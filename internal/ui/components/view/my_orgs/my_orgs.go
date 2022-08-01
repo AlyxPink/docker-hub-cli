@@ -99,6 +99,14 @@ func (m *Model) GetViewColumns() []table.Column {
 			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_name")),
 			Grow:  utils.BoolPtr(true),
 		},
+		{
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_badge")),
+			Grow:  utils.BoolPtr(true),
+		},
+		{
+			Title: view.ColumnTitle.Render(m.view.Ctx.Localizer.L("column_header_created_at")),
+			Grow:  utils.BoolPtr(true),
+		},
 	}
 }
 

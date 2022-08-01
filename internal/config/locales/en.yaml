@@ -83,6 +83,9 @@ my_repos_sidebar_created_at:
 column_header_name:
   description: "Common table column header"
   other: "Name"
+column_header_badge:
+description: "Common table column header"
+other: "Badge"
 column_header_organization:
   description: "Common table column header"
   other: "Organization"
