@@ -25,6 +25,18 @@ explore_repositories_fetching:
   description: "Displayed when fetching repositories"
   other: "Récupération des dépôts..."
 
+explore_sidebar_label_docker_official:
+  description: "Explore sidebar label description"
+  other: "Officiel Docker"
+explore_sidebar_label_verified_publisher:
+  description: "Explore sidebar label description"
+  other: "Éditeur Certifié"
+explore_sidebar_label_open_source_program:
+  description: "Explore sidebar label description"
+  other: "Programme Open Source"
+explore_sidebar_label_community:
+  description: "Explore sidebar label description"
+  other: "Communauté"
 explore_sidebar_architectures:
   description: "Explore sidebar architectures title"
   other: "Architectures"
@@ -77,6 +89,19 @@ my_repos_sidebar_updated_at:
   description: ""
   other: "Dernière mise à jour"
 my_repos_sidebar_created_at:
+  description: ""
+  other: "Créé le"
+
+my_orgs_label_verified_publisher:
+  description: "Explore sidebar label description"
+  other: "Éditeur Certifié"
+my_orgs_label_open_source_program:
+  description: "Explore sidebar label description"
+  other: "Programme Open Source"
+my_orgs_sidebar_timestamps:
+  description: ""
+  other: "Dates"
+my_orgs_sidebar_created_at:
   description: ""
   other: "Créé le"
 

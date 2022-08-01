@@ -7,6 +7,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/imroc/req/v3"
+	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
 	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
 )
 
@@ -72,26 +73,27 @@ func (data Repository) GetUrl() string {
 }
 
 func (data *Repository) setLabels() {
+	localizer := locales.NewLocales()
 	data.Labels = append(data.Labels, Label{
-		Name:    "Docker Official",
+		Name:    localizer.L("explore_sidebar_label_docker_official"),
 		Glyph:   styles.DefaultGlyphs.LabelDockerOfficial,
 		Color:   styles.DefaultTheme.LabelDockerOfficial,
 		Enabled: (data.Source == "store"),
 	})
 	data.Labels = append(data.Labels, Label{
-		Name:    "Verified Publisher",
+		Name:    localizer.L("explore_sidebar_label_verified_publisher"),
 		Glyph:   styles.DefaultGlyphs.LabelVerifiedPublisher,
 		Color:   styles.DefaultTheme.LabelVerifiedPublisher,
 		Enabled: (data.Source == "verified_publisher"),
 	})
 	data.Labels = append(data.Labels, Label{
-		Name:    "Open Source Program",
+		Name:    localizer.L("explore_sidebar_label_open_source_program"),
 		Glyph:   styles.DefaultGlyphs.LabelOpenSourceProgram,
 		Color:   styles.DefaultTheme.LabelOpenSourceProgram,
 		Enabled: (data.Source == "open_source"),
 	})
 	data.Labels = append(data.Labels, Label{
-		Name:    "Community",
+		Name:    localizer.L("explore_sidebar_label_community"),
 		Glyph:   styles.DefaultGlyphs.LabelCommunity,
 		Color:   styles.DefaultTheme.LabelCommunity,
 		Enabled: (data.Source == "community"),
