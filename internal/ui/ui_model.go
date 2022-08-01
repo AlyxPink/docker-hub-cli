@@ -163,7 +163,7 @@ func (m *Model) syncSidebar() {
 		content := my_repos_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent(content)
 	case *data_user.Organization:
-		//content := my_orgs_sidebar.NewModel(data, width, &m.ctx).View()
+		// content := my_orgs_sidebar.NewModel(data, width, &m.ctx).View()
 		m.sidebar.SetContent("")
 	}
 }
