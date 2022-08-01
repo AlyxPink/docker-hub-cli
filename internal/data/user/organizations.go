@@ -36,7 +36,7 @@ type Organization struct {
 }
 
 func (data Organization) GetUrl() string {
-	return fmt.Sprintf("https: //hub.docker.com/orgs/%s", data.Orgname)
+	return fmt.Sprintf("https://hub.docker.com/u/%s", data.Orgname)
 }
 
 func FetchOrganizations() ([]Organization, error) {
