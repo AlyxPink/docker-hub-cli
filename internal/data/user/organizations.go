@@ -48,7 +48,7 @@ func FetchOrganizations() ([]Organization, error) {
 		return nil, nil
 	}
 
-	orgs_url := fmt.Sprintf("https://hub.docker.com/v2/users/%s/orgs/", os.Getenv("DOCKER_USERNAME"))
+	orgs_url := "https://hub.docker.com/v2/user/orgs/"
 	resp, err := client.R().
 		SetHeader("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("DOCKER_BEARER"))).
 		SetResult(&organizationPage).
