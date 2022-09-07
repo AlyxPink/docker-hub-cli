@@ -5,7 +5,7 @@ go 1.18
 require github.com/charmbracelet/bubbletea v0.22.1
 
 require (
-	github.com/charmbracelet/bubbles v0.13.0
+	github.com/charmbracelet/bubbles v0.14.0
 	github.com/charmbracelet/glamour v0.5.0
 	github.com/charmbracelet/lipgloss v0.6.0
 	github.com/imroc/req/v3 v3.22.0
