@@ -97,8 +97,8 @@ github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brv
 github.com/hashicorp/go-multierror v1.1.1 h1:H5DkEtf6CXdFp0N0Em5UCwQpXMWke8IA0+lD48awMYo=
 github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9/fmwbPZ6JB6eMoM=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
-github.com/imroc/req/v3 v3.30.0 h1:4iSXgIQfh/3N7JK9Lt7S0q3n/ZvuGICYwV3iv/MWY1M=
-github.com/imroc/req/v3 v3.30.0/go.mod h1:DKtNwSxMdpqZKJ6neBw8VwRioq78uwmQB4ynQEXNNUk=
+github.com/imroc/req/v3 v3.31.0 h1:IwAlsQEuzkAMjTJ9CtDuXoCf3eKpOPcPGko6xJKEkVo=
+github.com/imroc/req/v3 v3.31.0/go.mod h1:DKtNwSxMdpqZKJ6neBw8VwRioq78uwmQB4ynQEXNNUk=
 github.com/jellevandenhooff/dkim v0.0.0-20150330215556-f50fe3d243e1/go.mod h1:E0B/fFc00Y+Rasa88328GlI/XbtyysCtTHZS8h7IrBU=
 github.com/json-iterator/go v1.1.6/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
