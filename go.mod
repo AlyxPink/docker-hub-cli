@@ -10,7 +10,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.6.0
 	github.com/imroc/req/v3 v3.32.0
 	github.com/nicksnyder/go-i18n/v2 v2.2.1
-	golang.org/x/text v0.6.0
+	golang.org/x/text v0.7.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
