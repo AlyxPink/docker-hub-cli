@@ -8,7 +8,7 @@ require (
 	github.com/charmbracelet/bubbles v0.15.0
 	github.com/charmbracelet/glamour v0.6.0
 	github.com/charmbracelet/lipgloss v0.7.1
-	github.com/imroc/req/v3 v3.33.1
+	github.com/imroc/req/v3 v3.33.2
 	github.com/nicksnyder/go-i18n/v2 v2.2.1
 	golang.org/x/text v0.8.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -22,7 +22,6 @@ require (
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/onsi/ginkgo/v2 v2.9.0 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
-	github.com/quic-go/qtls-go1-18 v0.2.0 // indirect
 	github.com/quic-go/qtls-go1-19 v0.2.1 // indirect
 	github.com/quic-go/qtls-go1-20 v0.1.1 // indirect
 	github.com/quic-go/quic-go v0.33.0 // indirect
