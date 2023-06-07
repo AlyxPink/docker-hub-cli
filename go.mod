@@ -2,7 +2,7 @@ module github.com/victorbersy/docker-hub-cli
 
 go 1.18
 
-require github.com/charmbracelet/bubbletea v0.24.1
+require github.com/charmbracelet/bubbletea v0.24.2
 
 require (
 	github.com/charmbracelet/bubbles v0.16.1
