@@ -8,7 +8,7 @@ require (
 	github.com/charmbracelet/bubbles v0.16.1
 	github.com/charmbracelet/glamour v0.6.0
 	github.com/charmbracelet/lipgloss v0.7.1
-	github.com/imroc/req/v3 v3.37.1
+	github.com/imroc/req/v3 v3.37.2
 	github.com/nicksnyder/go-i18n/v2 v2.2.1
 	golang.org/x/text v0.10.0
 	gopkg.in/yaml.v2 v2.4.0
