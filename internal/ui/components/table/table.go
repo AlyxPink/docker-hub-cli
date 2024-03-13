@@ -2,9 +2,9 @@ package table
 
 import (
 	"github.com/charmbracelet/lipgloss"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/listviewport"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/listviewport"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/constants"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/styles"
 )
 
 type Model struct {

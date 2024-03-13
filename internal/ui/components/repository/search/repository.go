@@ -4,10 +4,10 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
-	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/repository"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
-	"github.com/victorbersy/docker-hub-cli/internal/utils"
+	data_search "github.com/AlyxPink/docker-hub-cli/internal/data/search"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/repository"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/table"
+	"github.com/AlyxPink/docker-hub-cli/internal/utils"
 )
 
 type Repository struct {

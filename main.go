@@ -5,7 +5,7 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/victorbersy/docker-hub-cli/internal/ui"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui"
 )
 
 func main() {

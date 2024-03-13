@@ -1,8 +1,8 @@
 package ui
 
 import (
-	"github.com/victorbersy/docker-hub-cli/internal/data"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
+	"github.com/AlyxPink/docker-hub-cli/internal/data"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/view"
 )
 
 func (m *Model) getCurrView() view.View {

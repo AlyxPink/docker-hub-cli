@@ -1,8 +1,8 @@
 package context
 
 import (
-	"github.com/victorbersy/docker-hub-cli/internal/config"
-	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
+	"github.com/AlyxPink/docker-hub-cli/internal/config"
+	"github.com/AlyxPink/docker-hub-cli/internal/config/locales"
 )
 
 type ProgramContext struct {

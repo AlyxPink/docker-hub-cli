@@ -5,10 +5,10 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
-	data_search "github.com/victorbersy/docker-hub-cli/internal/data/search"
-	repository_search "github.com/victorbersy/docker-hub-cli/internal/ui/components/repository/search"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
+	data_search "github.com/AlyxPink/docker-hub-cli/internal/data/search"
+	repository_search "github.com/AlyxPink/docker-hub-cli/internal/ui/components/repository/search"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/sidebar"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/context"
 )
 
 type Model struct {

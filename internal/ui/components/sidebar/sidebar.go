@@ -7,8 +7,8 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/constants"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/context"
 )
 
 type Model struct {

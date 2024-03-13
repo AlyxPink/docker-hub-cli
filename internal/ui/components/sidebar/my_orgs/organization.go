@@ -4,12 +4,12 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
-	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
-	organization_user "github.com/victorbersy/docker-hub-cli/internal/ui/components/organization/user"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/sidebar"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
-	"github.com/victorbersy/docker-hub-cli/internal/utils"
+	data_user "github.com/AlyxPink/docker-hub-cli/internal/data/user"
+	organization_user "github.com/AlyxPink/docker-hub-cli/internal/ui/components/organization/user"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/sidebar"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/context"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/styles"
+	"github.com/AlyxPink/docker-hub-cli/internal/utils"
 )
 
 type Model struct {

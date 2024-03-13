@@ -5,8 +5,8 @@ import (
 
 	"github.com/charmbracelet/bubbles/viewport"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/constants"
-	"github.com/victorbersy/docker-hub-cli/internal/utils"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/constants"
+	"github.com/AlyxPink/docker-hub-cli/internal/utils"
 )
 
 type Model struct {

@@ -17,15 +17,15 @@ builds:
 dockers:
   - image_templates:
     # Docker Hub
-    - "victorbersy/docker-hub-cli:latest"
-    - "victorbersy/docker-hub-cli:{{ .Tag }}"
-    - "victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}"
-    - "victorbersy/docker-hub-cli:v{{ .Major }}"
+    - "AlyxPink/docker-hub-cli:latest"
+    - "AlyxPink/docker-hub-cli:{{ .Tag }}"
+    - "AlyxPink/docker-hub-cli:v{{ .Major }}.{{ .Minor }}"
+    - "AlyxPink/docker-hub-cli:v{{ .Major }}"
     # Github
-    - "ghcr.io/victorbersy/docker-hub-cli:latest"
-    - "ghcr.io/victorbersy/docker-hub-cli:{{ .Tag }}"
-    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}.{{ .Minor }}"
-    - "ghcr.io/victorbersy/docker-hub-cli:v{{ .Major }}"
+    - "ghcr.io/AlyxPink/docker-hub-cli:latest"
+    - "ghcr.io/AlyxPink/docker-hub-cli:{{ .Tag }}"
+    - "ghcr.io/AlyxPink/docker-hub-cli:v{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/AlyxPink/docker-hub-cli:v{{ .Major }}"
     dockerfile: Dockerfile.goreleaser
     use: docker
 

@@ -1,4 +1,4 @@
-module github.com/victorbersy/docker-hub-cli
+module github.com/AlyxPink/docker-hub-cli
 
 go 1.18
 

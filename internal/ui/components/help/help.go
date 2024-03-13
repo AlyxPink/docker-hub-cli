@@ -4,8 +4,8 @@ import (
 	bbHelp "github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/context"
-	"github.com/victorbersy/docker-hub-cli/internal/utils"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/context"
+	"github.com/AlyxPink/docker-hub-cli/internal/utils"
 )
 
 type Model struct {

@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 
-	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
+	"github.com/AlyxPink/docker-hub-cli/internal/config/locales"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/styles"
 )
 
 type ViewType string

@@ -6,11 +6,11 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/victorbersy/docker-hub-cli/internal/config"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/view"
-	view_explore "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/explore"
-	view_my_orgs "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/my_orgs"
-	view_my_repos "github.com/victorbersy/docker-hub-cli/internal/ui/components/view/my_repos"
+	"github.com/AlyxPink/docker-hub-cli/internal/config"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/view"
+	view_explore "github.com/AlyxPink/docker-hub-cli/internal/ui/components/view/explore"
+	view_my_orgs "github.com/AlyxPink/docker-hub-cli/internal/ui/components/view/my_orgs"
+	view_my_repos "github.com/AlyxPink/docker-hub-cli/internal/ui/components/view/my_repos"
 )
 
 func (m Model) View() string {

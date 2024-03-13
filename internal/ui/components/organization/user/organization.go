@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
-	data_user "github.com/victorbersy/docker-hub-cli/internal/data/user"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/components/table"
-	"github.com/victorbersy/docker-hub-cli/internal/utils"
+	data_user "github.com/AlyxPink/docker-hub-cli/internal/data/user"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/components/table"
+	"github.com/AlyxPink/docker-hub-cli/internal/utils"
 )
 
 type Organization struct {

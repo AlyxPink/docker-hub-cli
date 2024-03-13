@@ -7,8 +7,8 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/imroc/req/v3"
-	"github.com/victorbersy/docker-hub-cli/internal/config/locales"
-	"github.com/victorbersy/docker-hub-cli/internal/ui/styles"
+	"github.com/AlyxPink/docker-hub-cli/internal/config/locales"
+	"github.com/AlyxPink/docker-hub-cli/internal/ui/styles"
 )
 
 type RepositoryPage struct {

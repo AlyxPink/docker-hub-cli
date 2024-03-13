@@ -1,6 +1,6 @@
 # Docker Hub CLI
 
-![build](https://github.com/VictorBersy/docker-hub-cli/actions/workflows/build.yml/badge.svg)
+![build](https://github.com/AlyxPink/docker-hub-cli/actions/workflows/build.yml/badge.svg)
 
 CLI that helps users manage and browse Docker Hub resources (repositories, organizations, members, etc...)
 
@@ -10,18 +10,18 @@ CLI that helps users manage and browse Docker Hub resources (repositories, organ
 
 ### Go
 ```console
-go install github.com/victorbersy/docker-hub-cli@latest
+go install github.com/AlyxPink/docker-hub-cli@latest
 docker-hub-cli
 ```
 ### Docker
 ```console
 # Docker Hub
-docker pull victorbersy/docker-hub-cli:latest
-docker run --rm -it victorbersy/docker-hub-cli
+docker pull AlyxPink/docker-hub-cli:latest
+docker run --rm -it AlyxPink/docker-hub-cli
 
 # Github Container Registry
-docker pull ghcr.io/victorbersy/docker-hub-cli:latest
-docker run --rm -it ghcr.io/victorbersy/docker-hub-cli
+docker pull ghcr.io/AlyxPink/docker-hub-cli:latest
+docker run --rm -it ghcr.io/AlyxPink/docker-hub-cli
 ```
 
 ## Authentication
@@ -31,17 +31,17 @@ The authentication system is rough at the moment. Hopefully, it will be better s
 Set `DOCKER_BEARER` with your token and launch the program:
 
 ```console
-$ DOCKER_BEARER=$DOCKER_BEARER DOCKER_USERNAME=victorbersy go run main.go
+$ DOCKER_BEARER=$DOCKER_BEARER DOCKER_USERNAME=AlyxPink go run main.go
 ```
 
 or with a compiled version:
 ```console
-$ DOCKER_BEARER=$DOCKER_BEARER DOCKER_USERNAME=victorbersy ./docker-hub-cli
+$ DOCKER_BEARER=$DOCKER_BEARER DOCKER_USERNAME=AlyxPink ./docker-hub-cli
 ```
 
 To get your Bearer token:
 ```console
-$ username=victorbersy \
+$ username=AlyxPink \
   password=my_docker_pat_token \
   curl -s 'https://hub.docker.com/api/v2/users/login' \
   -H 'Accept: application/json' \
