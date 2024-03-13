@@ -1,6 +1,6 @@
 # Docker Hub CLI
 
-![build](https://github.com/VictorBersy/docker-hub-cli/actions/workflows/build.yml/badge.svg)
+![build](https://github.com/AlyxPink/docker-hub-cli/actions/workflows/build.yml/badge.svg)
 
 CLI that helps users manage and browse Docker Hub resources (repositories, organizations, members, etc...)
 
