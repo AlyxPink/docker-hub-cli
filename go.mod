@@ -2,7 +2,7 @@ module github.com/AlyxPink/docker-hub-cli
 
 go 1.18
 
-require github.com/charmbracelet/bubbletea v0.24.2
+require github.com/charmbracelet/bubbletea v0.25.0
 
 require (
 	github.com/charmbracelet/bubbles v0.16.1
@@ -50,7 +50,7 @@ require (
 	github.com/muesli/ansi v0.0.0-20230307104941-78d3738a59f2 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
 	github.com/muesli/reflow v0.3.0 // indirect
-	github.com/muesli/termenv v0.15.1 // indirect
+	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
